@@ -10021,3 +10021,47 @@ a.text-dark:focus {
         transform: translateY(-15px);
     }
 }
+
+/* Language Switcher Styles */
+.lang-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+}
+
+.lang-switcher li {
+    margin: 0;
+}
+
+.lang-btn {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border: 1px solid transparent;
+}
+
+.lang-btn:hover {
+    color: #d19c97 !important;
+    background-color: rgba(209, 156, 151, 0.1);
+}
+
+.lang-btn.active {
+    color: #d19c97 !important;
+    background-color: rgba(209, 156, 151, 0.15);
+    border-color: #d19c97;
+    font-weight: 600;
+}
+
+@media (max-width: 991.98px) {
+    .lang-switcher {
+        margin-right: 0.5rem !important;
+    }
+    
+    .lang-btn {
+        font-size: 0.8rem;
+        padding: 0.2rem 0.4rem;
+    }
+}

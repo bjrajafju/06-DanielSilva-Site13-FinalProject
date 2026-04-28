@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['lingua'])) {
-    $_SESSION['lingua'] = 'en';
+    $_SESSION['lingua'] = 'gb';
 }
 
 // cenas base
@@ -26,13 +26,7 @@ $SETTINGS['fotos_auth'] = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
 
 $SETTINGS['fotos_maxUpload'] = 3000000;
 
-
-$LANG_MAP = [
-    'en' => 1,
-    'pt' => 2
-];
-
-$LANG_ID = $LANG_MAP[$_SESSION['lingua']] ?? 1;
+$LANG_CODE = $_SESSION['lingua'] ?? 'pt';
 
 // database
 include_once 'db.php';

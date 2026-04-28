@@ -56,3 +56,24 @@ function db_get_translated(
     return my_query($sql);
 }
 
+// especificos
+function t($code, $lang_code = null)
+{
+    static $translations = [];
+
+    if ($lang_code === null) {
+        global $LANG_CODE;
+        $lang_code = $LANG_CODE ?? 'pt';
+    }
+
+    // Carregar tudo só uma vez
+    if (!isset($translations[$lang_code])) {
+        $rows = db_get_all("traduz", "lang_code = '" . addslashes($lang_code) . "'");
+
+        $translations[$lang_code] = [];
+        foreach ($rows as $row) {
+            $translations[$lang_code][$row['code']] = $row['text'];
+        }
+    }
+    return $translations[$lang_code][$code] ?? $code;
+}

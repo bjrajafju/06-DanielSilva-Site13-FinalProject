@@ -43,6 +43,14 @@ include_once 'config.php';
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
+                    <ul class="lang-switcher list-unstyled mb-0 mr-3">
+                        <li class="d-inline-block">
+                            <a href="<?= $SETTINGS['url_site'] ?>/trocaLingua.php?id=pt" class="lang-btn text-dark px-2 <?= $_SESSION['lingua'] === 'pt' ? 'active' : '' ?>">🇵🇹 PT</a>
+                        </li>
+                        <li class="d-inline-block">
+                            <a href="<?= $SETTINGS['url_site'] ?>/trocaLingua.php?id=en" class="lang-btn text-dark px-2 <?= $_SESSION['lingua'] === 'gb' ? 'active' : '' ?>">🇬🇧 EN</a>
+                        </li>
+                    </ul>
                     <a class="text-dark px-2" href="">
                         <i class="fab fa-facebook-f"></i>
                     </a>

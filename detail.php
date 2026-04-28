@@ -8,11 +8,11 @@ include 'includes/header.php';
 <!-- Page Header Start -->
 <div class="container-fluid bg-secondary mb-5">
     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-        <h1 class="font-weight-semi-bold text-uppercase mb-3">Shop Detail</h1>
+        <h1 class="font-weight-semi-bold text-uppercase mb-3"><?= t('detail.header.title') ?></h1>
         <div class="d-inline-flex">
-            <p class="m-0"><a href="">Home</a></p>
+            <p class="m-0"><a href=""><?= t('detail.header.breadcrumb_home') ?></a></p>
             <p class="m-0 px-2">-</p>
-            <p class="m-0">Shop Detail</p>
+            <p class="m-0"><?= t('detail.header.breadcrumb_detail') ?></p>
         </div>
     </div>
 </div>
@@ -65,7 +65,7 @@ include 'includes/header.php';
                 Accus labore stet, est lorem sit diam sea et justo, amet at lorem et eirmod ipsum diam et rebum kasd
                 rebum.</p>
             <div class="d-flex mb-3">
-                <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
+                <p class="text-dark font-weight-medium mb-0 mr-3"><?= t('detail.product.sizes_label') ?></p>
                 <form>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" class="custom-control-input" id="size-1" name="size">
@@ -90,7 +90,7 @@ include 'includes/header.php';
                 </form>
             </div>
             <div class="d-flex mb-4">
-                <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
+                <p class="text-dark font-weight-medium mb-0 mr-3"><?= t('detail.product.colors_label') ?></p>
                 <form>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" class="custom-control-input" id="color-1" name="color">
@@ -128,10 +128,10 @@ include 'includes/header.php';
                         </button>
                     </div>
                 </div>
-                <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> <?= t('detail.product.add_to_cart') ?></button>
             </div>
             <div class="d-flex pt-2">
-                <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
+                <p class="text-dark font-weight-medium mb-0 mr-2"><?= t('detail.product.share_on') ?></p>
                 <div class="d-inline-flex">
                     <a class="text-dark px-2" href="">
                         <i class="fab fa-facebook-f"></i>
@@ -152,13 +152,13 @@ include 'includes/header.php';
     <div class="row px-xl-5">
         <div class="col">
             <div class="nav nav-tabs justify-content-center border-secondary mb-4">
-                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Information</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
+                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1"><?= t('detail.tabs.description') ?></a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2"><?= t('detail.tabs.information') ?></a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3"><?= t('detail.tabs.reviews') ?> (0)</a>
             </div>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="tab-pane-1">
-                    <h4 class="mb-3">Product Description</h4>
+                    <h4 class="mb-3"><?= t('detail.tabs.product_description_title') ?></h4>
                     <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam
                         invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod
                         consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam.
@@ -172,7 +172,7 @@ include 'includes/header.php';
                         Ea erat sed et diam takimata sed justo. Magna takimata justo et amet magna et.</p>
                 </div>
                 <div class="tab-pane fade" id="tab-pane-2">
-                    <h4 class="mb-3">Additional Information</h4>
+                    <h4 class="mb-3"><?= t('detail.tabs.additional_information_title') ?></h4>
                     <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam
                         invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod
                         consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam.
@@ -237,10 +237,10 @@ include 'includes/header.php';
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <h4 class="mb-4">Leave a review</h4>
-                            <small>Your email address will not be published. Required fields are marked *</small>
+                            <h4 class="mb-4"><?= t('detail.reviews.leave_review_title') ?></h4>
+                            <small><?= t('detail.reviews.email_notice') ?></small>
                             <div class="d-flex my-3">
-                                <p class="mb-0 mr-2">Your Rating * :</p>
+                                <p class="mb-0 mr-2"><?= t('detail.reviews.your_rating_label') ?></p>
                                 <div class="text-primary">
                                     <i class="far fa-star"></i>
                                     <i class="far fa-star"></i>
@@ -251,19 +251,19 @@ include 'includes/header.php';
                             </div>
                             <form>
                                 <div class="form-group">
-                                    <label for="message">Your Review *</label>
+                                    <label for="message"><?= t('detail.reviews.your_review_label') ?></label>
                                     <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Your Name *</label>
+                                    <label for="name"><?= t('detail.reviews.your_name_label') ?></label>
                                     <input type="text" class="form-control" id="name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Your Email *</label>
+                                    <label for="email"><?= t('detail.reviews.your_email_label') ?></label>
                                     <input type="email" class="form-control" id="email">
                                 </div>
                                 <div class="form-group mb-0">
-                                    <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
+                                    <input type="submit" value="<?= t('detail.reviews.submit_button') ?>" class="btn btn-primary px-3">
                                 </div>
                             </form>
                         </div>
@@ -279,7 +279,7 @@ include 'includes/header.php';
 <!-- Products Start -->
 <div class="container-fluid py-5">
     <div class="text-center mb-4">
-        <h2 class="section-title px-5"><span class="px-2">You May Also Like</span></h2>
+        <h2 class="section-title px-5"><span class="px-2"><?= t('detail.related_products.title') ?></span></h2>
     </div>
     <div class="row px-xl-5">
         <div class="col">

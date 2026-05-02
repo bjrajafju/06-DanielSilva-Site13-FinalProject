@@ -161,12 +161,12 @@ $categories = get_categories();
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="<?= $SETTINGS['url_site'] ?>/screens/cart.php" class="dropdown-item">Shopping Cart</a>
-                                    <a href="<?= $SETTINGS['url_site'] ?>/screens/checkout.php" class="dropdown-item">Checkout</a>
+                                    <a href="<?= $SETTINGS['url_site'] ?>/cart.php" class="dropdown-item">Shopping Cart</a>
+                                    <a href="<?= $SETTINGS['url_site'] ?>/checkout.php" class="dropdown-item">Checkout</a>
                                 </div>
                             </div>
 
-                            <a href="<?= $SETTINGS['url_site'] ?>/screens/contact.php"
+                            <a href="<?= $SETTINGS['url_site'] ?>/contact.php"
                                 class="nav-item nav-link"><?php echo t('header.nav.contact'); ?></a>
                         </div>
 

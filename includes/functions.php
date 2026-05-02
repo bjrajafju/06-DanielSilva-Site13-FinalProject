@@ -23,27 +23,49 @@ function db_count($table, $where = "1")
     return $res[0]['total'] ?? 0;
 }
 
-function db_get_translated(
+// select generico
+function db_select($select, $from, $joins = "", $where = "1", $order = "", $limit = "")
+{
+    $sql = "SELECT $select FROM $from";
+
+    if ($joins) {
+        $sql .= " $joins";
+    }
+
+    $sql .= " WHERE $where";
+
+    if ($order) {
+        $sql .= " ORDER BY $order";
+    }
+
+    if ($limit) {
+        $sql .= " LIMIT $limit";
+    }
+
+    return my_query($sql);
+}
+
+// com tradução
+function db_get_with_translation(
     $table,
     $translation_table,
     $fk,
-    $where = "",
+    $where = "1",
     $order = "",
     $limit = ""
 ) {
-    global $LANG_ID;
+    global $LANG_CODE;
+
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
 
     $sql = "
-        SELECT *
+        SELECT t.*, tt.*
         FROM $table t
-        JOIN $translation_table tt 
+        LEFT JOIN $translation_table tt 
             ON tt.$fk = t.id
-            AND tt.lang_id = $LANG_ID
+            AND tt.lang_code = '$LANG_CODE'
+        WHERE $where
     ";
-
-    if ($where) {
-        $sql .= " WHERE $where";
-    }
 
     if ($order) {
         $sql .= " ORDER BY $order";
@@ -57,6 +79,7 @@ function db_get_translated(
 }
 
 // especificos
+// texto mais estatico
 function t($code, $lang_code = null)
 {
     static $translations = [];
@@ -76,4 +99,210 @@ function t($code, $lang_code = null)
         }
     }
     return $translations[$lang_code][$code] ?? $code;
+}
+
+function get_products($limit = 8)
+{
+    global $LANG_CODE;
+
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    return db_select(
+        "p.*, pt.title, pt.slug, pt.short_description",
+        "products p",
+        "
+        LEFT JOIN product_translations pt 
+            ON pt.product_id = p.id 
+            AND pt.lang_code = '$LANG_CODE'
+        ",
+        "p.is_active = 1",
+        "p.id DESC",
+        $limit
+    );
+}
+
+function get_product_by_slug($slug)
+{
+    global $LANG_CODE;
+
+    $slug = addslashes($slug);
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    $res = db_select(
+        "p.*, pt.*",
+        "products p",
+        "
+        LEFT JOIN product_translations pt 
+            ON pt.product_id = p.id 
+            AND pt.lang_code = '$LANG_CODE'
+        ",
+        "pt.slug = '$slug' AND p.is_active = 1",
+        "",
+        "1"
+    );
+
+    return $res[0] ?? null;
+}
+
+function get_product_by_id($id)
+{
+    global $LANG_CODE;
+
+    $id = (int)$id;
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    $res = db_select(
+        "p.*, pt.*",
+        "products p",
+        "
+        LEFT JOIN product_translations pt 
+            ON pt.product_id = p.id 
+            AND pt.lang_code = '$LANG_CODE'
+        ",
+        "p.id = $id AND p.is_active = 1",
+        "",
+        "1"
+    );
+
+    return $res[0] ?? null;
+}
+
+function get_product_by_slug_any_lang($slug)
+{
+    $slug = addslashes($slug);
+
+    // Encontrar o product_id que tem este slug em QUALQUER língua
+    $res = db_select(
+        "pt.product_id",
+        "product_translations pt",
+        "",
+        "pt.slug = '$slug'",
+        "",
+        "1"
+    );
+
+    if (!$res) {
+        return null;
+    }
+
+    $product_id = $res[0]['product_id'];
+
+    // Agora buscar o produto com a tradução da língua ATUAL
+    return get_product_by_id($product_id);
+}
+
+function get_product_variants($product_id)
+{
+    global $LANG_CODE;
+
+    $product_id = (int)$product_id;
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    return db_select(
+        "
+        pv.id,
+        s.name as size,
+        c.hex,
+        ct.name as color,
+        pv.is_available
+        ",
+        "product_variants pv",
+        "
+        LEFT JOIN sizes s ON s.id = pv.size_id
+        LEFT JOIN colors c ON c.id = pv.color_id
+        LEFT JOIN color_translations ct 
+            ON ct.color_id = c.id 
+            AND ct.lang_code = '$LANG_CODE'
+        ",
+        "pv.product_id = $product_id AND pv.is_available = 1"
+    );
+}
+
+function get_product_count_by_category($category_id)
+{
+    $category_id = (int)$category_id;
+    return db_count("products", "category_id = $category_id AND is_active = 1");
+}
+
+function get_product_sizes($product_id)
+{
+    global $LANG_CODE;
+
+    $product_id = (int)$product_id;
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    return db_select(
+        "DISTINCT s.id, s.name",
+        "product_variants pv",
+        "
+        LEFT JOIN sizes s ON s.id = pv.size_id
+        ",
+        "pv.product_id = $product_id AND pv.is_available = 1",
+        "s.id ASC"
+    );
+}
+
+function get_product_colors($product_id)
+{
+    global $LANG_CODE;
+
+    $product_id = (int)$product_id;
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    return db_select(
+        "DISTINCT c.id, c.hex, ct.name",
+        "product_variants pv",
+        "
+        LEFT JOIN colors c ON c.id = pv.color_id
+        LEFT JOIN color_translations ct 
+            ON ct.color_id = c.id 
+            AND ct.lang_code = '$LANG_CODE'
+        ",
+        "pv.product_id = $product_id AND pv.is_available = 1",
+        "c.id ASC"
+    );
+}
+
+function get_categories()
+{
+    global $LANG_CODE;
+
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    return db_select(
+        "
+        c.id,
+        c.image,
+        ct.name
+        ",
+        "categories c",
+        "
+        LEFT JOIN category_translations ct
+            ON ct.category_id = c.id
+            AND ct.lang_code = '$LANG_CODE'
+        ",
+        "1",
+        "c.id ASC"
+    );
+}
+
+function get_countries()
+{
+    return db_get_with_translation(
+        "countries",
+        "country_translations",
+        "country_id",
+        "1",
+        "tt.name ASC"
+    );
+}
+
+function get_payment_methods()
+{
+    return db_get_with_translation(
+        "payment_methods",
+        "payment_method_translations",
+        "payment_method_id",
+        "t.is_active = 1"
+    );
 }

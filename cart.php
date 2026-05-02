@@ -10,7 +10,7 @@ include 'includes/header.php';
     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
         <h1 class="font-weight-semi-bold text-uppercase mb-3"><?= t('cart.header.title') ?></h1>
         <div class="d-inline-flex">
-            <p class="m-0"><a href=""><?= t('cart.header.breadcrumb_home') ?></a></p>
+            <p class="m-0"><a href="<?= $SETTINGS['url_site'] ?>/index.php"><?= t('cart.header.breadcrumb_home') ?></a></p>
             <p class="m-0 px-2">-</p>
             <p class="m-0"><?= t('cart.header.breadcrumb_cart') ?></p>
         </div>

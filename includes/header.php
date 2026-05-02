@@ -1,5 +1,7 @@
 <?php
 include_once 'config.php';
+
+$categories = get_categories();
 ?>
 
 <head>
@@ -50,7 +52,7 @@ include_once 'config.php';
                             </a>
                         </li>
                         <li class="d-inline-block">
-                            <a href="<?= $SETTINGS['url_site'] ?>/trocaLingua.php?id=en"
+                            <a href="<?= $SETTINGS['url_site'] ?>/trocaLingua.php?id=gb"
                                 class="lang-btn text-dark px-2 <?= $_SESSION['lingua'] === 'gb' ? 'active' : '' ?>">
                                 🇬🇧 <?php echo t('header.lang.en'); ?>
                             </a>
@@ -117,27 +119,18 @@ include_once 'config.php';
 
                 <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
                     id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
-                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                    <div class="navbar-nav w-100">
 
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link" data-toggle="dropdown">Dresses <i
-                                    class="fa fa-angle-down float-right mt-1"></i></a>
-                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                <a href="" class="dropdown-item">Men's Dresses</a>
-                                <a href="" class="dropdown-item">Women's Dresses</a>
-                                <a href="" class="dropdown-item">Baby's Dresses</a>
-                            </div>
-                        </div>
+                        <?php
+                        foreach ($categories as $cat):
+                        ?>
 
-                        <a href="" class="nav-item nav-link">Shirts</a>
-                        <a href="" class="nav-item nav-link">Jeans</a>
-                        <a href="" class="nav-item nav-link">Swimwear</a>
-                        <a href="" class="nav-item nav-link">Sleepwear</a>
-                        <a href="" class="nav-item nav-link">Sportswear</a>
-                        <a href="" class="nav-item nav-link">Jumpsuits</a>
-                        <a href="" class="nav-item nav-link">Blazers</a>
-                        <a href="" class="nav-item nav-link">Jackets</a>
-                        <a href="" class="nav-item nav-link">Shoes</a>
+                            <a href="<?= $SETTINGS['url_site'] ?>/shop.php"
+                                class="nav-item nav-link">
+                                <?= $cat['name'] ?>
+                            </a>
+
+                        <?php endforeach; ?>
 
                     </div>
                 </nav>

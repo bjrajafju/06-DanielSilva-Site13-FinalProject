@@ -11,7 +11,7 @@ include 'includes/header.php';
     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
         <h1 class="font-weight-semi-bold text-uppercase mb-3"><?= t('shop.header.title') ?></h1>
         <div class="d-inline-flex">
-            <p class="m-0"><a href=""><?= t('shop.header.breadcrumb_home') ?></a></p>
+            <p class="m-0"><a href="<?= $SETTINGS['url_site'] ?>/index.php"><?= t('shop.header.breadcrumb_home') ?></a></p>
             <p class="m-0 px-2">-</p>
             <p class="m-0"><?= t('shop.header.breadcrumb_shop') ?></p>
         </div>
@@ -177,7 +177,7 @@ include 'includes/header.php';
                             <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
                             <div class="d-flex justify-content-center">
                                 <h6>$123.00</h6>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
@@ -198,7 +198,7 @@ include 'includes/header.php';
                             <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
                             <div class="d-flex justify-content-center">
                                 <h6>$123.00</h6>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
@@ -219,7 +219,7 @@ include 'includes/header.php';
                             <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
                             <div class="d-flex justify-content-center">
                                 <h6>$123.00</h6>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
@@ -240,7 +240,7 @@ include 'includes/header.php';
                             <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
                             <div class="d-flex justify-content-center">
                                 <h6>$123.00</h6>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
@@ -261,7 +261,7 @@ include 'includes/header.php';
                             <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
                             <div class="d-flex justify-content-center">
                                 <h6>$123.00</h6>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
@@ -282,7 +282,7 @@ include 'includes/header.php';
                             <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
                             <div class="d-flex justify-content-center">
                                 <h6>$123.00</h6>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
@@ -303,7 +303,7 @@ include 'includes/header.php';
                             <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
                             <div class="d-flex justify-content-center">
                                 <h6>$123.00</h6>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
@@ -324,7 +324,7 @@ include 'includes/header.php';
                             <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
                             <div class="d-flex justify-content-center">
                                 <h6>$123.00</h6>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">
@@ -345,7 +345,7 @@ include 'includes/header.php';
                             <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
                             <div class="d-flex justify-content-center">
                                 <h6>$123.00</h6>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-between bg-light border">

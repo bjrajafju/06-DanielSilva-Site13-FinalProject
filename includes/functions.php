@@ -45,6 +45,20 @@ function db_select($select, $from, $joins = "", $where = "1", $order = "", $limi
     return my_query($sql);
 }
 
+// insert generico
+function db_insert($table, $data)
+{
+    global $SETTINGS;
+    $fields = array_keys($data);
+    $values = array_map(function ($v) use ($SETTINGS) {
+        if ($v === null) return "NULL";
+        return "'" . $SETTINGS['conn']->real_escape_string($v) . "'";
+    }, array_values($data));
+
+    $sql = "INSERT INTO $table (" . implode(', ', $fields) . ") VALUES (" . implode(', ', $values) . ")";
+    return my_query($sql);
+}
+
 // com tradução
 function db_get_with_translation(
     $table,
@@ -89,7 +103,6 @@ function t($code, $lang_code = null)
         $lang_code = $LANG_CODE ?? 'pt';
     }
 
-    // Carregar tudo só uma vez
     if (!isset($translations[$lang_code])) {
         $rows = db_get_all("traduz", "lang_code = '" . addslashes($lang_code) . "'");
 
@@ -171,7 +184,6 @@ function get_product_by_slug_any_lang($slug)
 {
     $slug = addslashes($slug);
 
-    // Encontrar o product_id que tem este slug em QUALQUER língua
     $res = db_select(
         "pt.product_id",
         "product_translations pt",
@@ -187,7 +199,6 @@ function get_product_by_slug_any_lang($slug)
 
     $product_id = $res[0]['product_id'];
 
-    // Agora buscar o produto com a tradução da língua ATUAL
     return get_product_by_id($product_id);
 }
 
@@ -305,4 +316,114 @@ function get_payment_methods()
         "payment_method_id",
         "t.is_active = 1"
     );
+}
+
+function get_cart_items($cart_id)
+{
+    global $LANG_CODE;
+
+    $cart_id = (int)$cart_id;
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    return db_select(
+        "
+        ci.id as cart_item_id,
+        ci.quantity,
+
+        pv.id as variant_id,
+
+        p.id as product_id,
+        p.image,
+        p.price,
+
+        pt.title,
+
+        s.name as size,
+        ct.name as color
+        ",
+        "cart_items ci",
+        "
+        LEFT JOIN product_variants pv ON pv.id = ci.variant_id
+        LEFT JOIN products p ON p.id = pv.product_id
+
+        LEFT JOIN product_translations pt 
+            ON pt.product_id = p.id 
+            AND pt.lang_code = '$LANG_CODE'
+
+        LEFT JOIN sizes s ON s.id = pv.size_id
+
+        LEFT JOIN colors c ON c.id = pv.color_id
+        LEFT JOIN color_translations ct 
+            ON ct.color_id = c.id 
+            AND ct.lang_code = '$LANG_CODE'
+        ",
+        "ci.cart_id = $cart_id"
+    );
+}
+
+function get_current_cart()
+{
+    $session_id = session_id();
+    $user_id = $_SESSION['user_id'] ?? null;
+
+    if ($user_id) {
+        return db_get_one("carts", "user_id = $user_id");
+    }
+
+    return db_get_one("carts", "session_id = '" . addslashes($session_id) . "'");
+}
+
+function get_or_create_cart()
+{
+    $session_id = session_id();
+    $user_id = $_SESSION['user_id'] ?? null;
+
+    if ($user_id) {
+        $cart = db_get_one("carts", "user_id = $user_id");
+
+        if ($cart) return $cart;
+
+        $cart_id = db_insert("carts", [
+            'user_id' => $user_id,
+            'session_id' => null
+        ]);
+
+        return db_get_one("carts", "id = $cart_id");
+    }
+
+    $cart = db_get_one("carts", "session_id = '" . addslashes($session_id) . "'");
+
+    if ($cart) return $cart;
+
+    $cart_id = db_insert("carts", [
+        'user_id' => null,
+        'session_id' => $session_id
+    ]);
+
+    return db_get_one("carts", "id = $cart_id");
+}
+
+function add_to_cart($variant_id, $quantity = 1)
+{
+    $cart = get_or_create_cart();
+    $cart_id = $cart['id'];
+
+    $existing = db_get_one(
+        "cart_items",
+        "cart_id = $cart_id AND variant_id = $variant_id"
+    );
+
+    if ($existing) {
+        return my_query("
+            UPDATE cart_items
+            SET quantity = quantity + $quantity
+            WHERE id = {$existing['id']}
+        ");
+    }
+
+    return db_insert("cart_items", [
+        'cart_id' => $cart_id,
+        'variant_id' => $variant_id,
+        'quantity' => $quantity
+    ]);
 }

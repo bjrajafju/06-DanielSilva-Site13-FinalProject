@@ -22,8 +22,8 @@ include_once 'config.php';
                     <div class="d-flex flex-column justify-content-start">
                         <a class="text-dark mb-2" href="<?= $SETTINGS['url_site'] ?>/index.php"><i class="fa fa-angle-right mr-2"></i><?= t('footer.quick_links.home') ?></a>
                         <a class="text-dark mb-2" href="<?= $SETTINGS['url_site'] ?>/shop.php"><i class="fa fa-angle-right mr-2"></i><?= t('footer.quick_links.shop') ?></a>
-                        <a class="text-dark mb-2" href="<?= $SETTINGS['url_site'] ?>/cart.php"><i class="fa fa-angle-right mr-2"></i><?= t('footer.quick_links.cart') ?></a>
-                        <a class="text-dark" href="<?= $SETTINGS['url_site'] ?>/contact.php"><i class="fa fa-angle-right mr-2"></i><?= t('footer.quick_links.contact') ?></a>
+                        <a class="text-dark mb-2" href="<?= $SETTINGS['url_site'] ?>/screens/cart.php"><i class="fa fa-angle-right mr-2"></i><?= t('footer.quick_links.cart') ?></a>
+                        <a class="text-dark" href="<?= $SETTINGS['url_site'] ?>/screens/contact.php"><i class="fa fa-angle-right mr-2"></i><?= t('footer.quick_links.contact') ?></a>
                     </div>
                 </div>
                 <div class="col-md-4 mb-5">
@@ -31,8 +31,8 @@ include_once 'config.php';
                     <div class="d-flex flex-column justify-content-start">
                         <a class="text-dark mb-2" href="<?= $SETTINGS['url_site'] ?>/index.php"><i class="fa fa-angle-right mr-2"></i><?= t('footer.quick_links.home') ?></a>
                         <a class="text-dark mb-2" href="<?= $SETTINGS['url_site'] ?>/shop.php"><i class="fa fa-angle-right mr-2"></i><?= t('footer.quick_links.shop') ?></a>
-                        <a class="text-dark mb-2" href="<?= $SETTINGS['url_site'] ?>/cart.php"><i class="fa fa-angle-right mr-2"></i><?= t('footer.quick_links.cart') ?></a>
-                        <a class="text-dark" href="<?= $SETTINGS['url_site'] ?>/contact.php"><i class="fa fa-angle-right mr-2"></i><?= t('footer.quick_links.contact') ?></a>
+                        <a class="text-dark mb-2" href="<?= $SETTINGS['url_site'] ?>/screens/cart.php"><i class="fa fa-angle-right mr-2"></i><?= t('footer.quick_links.cart') ?></a>
+                        <a class="text-dark" href="<?= $SETTINGS['url_site'] ?>/screens/contact.php"><i class="fa fa-angle-right mr-2"></i><?= t('footer.quick_links.contact') ?></a>
                     </div>
                 </div>
                 <div class="col-md-4 mb-5">

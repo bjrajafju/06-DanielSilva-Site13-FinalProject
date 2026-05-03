@@ -428,6 +428,61 @@ function add_to_cart($variant_id, $quantity = 1)
     ]);
 }
 
+function get_session_cart()
+{
+    $session_id = session_id();
+    return db_get_one("carts", "session_id = '" . addslashes($session_id) . "'");
+}
+
+function get_user_cart($user_id)
+{
+    $user_id = (int)$user_id;
+    return db_get_one("carts", "user_id = $user_id");
+}
+
+function attach_cart_to_user($cart_id, $user_id)
+{
+    $cart_id = (int)$cart_id;
+    $user_id = (int)$user_id;
+    return my_query("UPDATE carts SET user_id = $user_id, session_id = NULL WHERE id = $cart_id");
+}
+
+function delete_cart($cart_id)
+{
+    $cart_id = (int)$cart_id;
+    my_query("DELETE FROM cart_items WHERE cart_id = $cart_id");
+    return my_query("DELETE FROM carts WHERE id = $cart_id");
+}
+
+function merge_carts($session_cart_id, $user_cart_id)
+{
+    $session_cart_id = (int)$session_cart_id;
+    $user_cart_id = (int)$user_cart_id;
+
+    $session_items = db_get_all("cart_items", "cart_id = $session_cart_id");
+
+    foreach ($session_items as $item) {
+        $variant_id = $item['variant_id'];
+        $quantity = $item['quantity'];
+
+        // Verificar se já existe no carrinho do user
+        $existing = db_get_one("cart_items", "cart_id = $user_cart_id AND variant_id = $variant_id");
+
+        if ($existing) {
+            my_query("UPDATE cart_items SET quantity = quantity + $quantity WHERE id = {$existing['id']}");
+        } else {
+            db_insert("cart_items", [
+                'cart_id' => $user_cart_id,
+                'variant_id' => $variant_id,
+                'quantity' => $quantity
+            ]);
+        }
+    }
+
+    // Apagar o carrinho antigo da sessão
+    return delete_cart($session_cart_id);
+}
+
 function get_variant_id($product_id, $size_id, $color_id)
 {
     $product_id = (int)$product_id;

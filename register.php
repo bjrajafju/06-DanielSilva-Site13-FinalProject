@@ -38,6 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_first_name'] = $first_name;
                 $_SESSION['user_email'] = $email;
 
+                // Verificar se existe carrinho de sessão para sugerir merge
+                $session_cart = get_session_cart();
+                if ($session_cart) {
+                    $_SESSION['show_cart_merge_popup'] = true;
+                }
+
                 header("Location: " . $SETTINGS['url_site'] . "/index.php");
                 exit;
             } else {

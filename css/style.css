@@ -10059,9 +10059,19 @@ a.text-dark:focus {
     .lang-switcher {
         margin-right: 0.5rem !important;
     }
-    
+
     .lang-btn {
         font-size: 0.8rem;
         padding: 0.2rem 0.4rem;
     }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
 }

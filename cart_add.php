@@ -1,14 +1,23 @@
 <?php
 include_once 'includes/config.php';
 
-$variant_id = $_POST['variant_id'] ?? null;
-$quantity = $_POST['quantity'] ?? 1;
+$product_id = $_POST['product_id'] ?? null;
+$size_id    = $_POST['size'] ?? null;
+$color_id   = $_POST['color'] ?? null;
+$quantity   = $_POST['quantity'] ?? 1;
 
-if (!$variant_id) {
-    http_response_code(400);
-    exit;
+if (!$product_id || !$size_id || !$color_id) {
+    die("Missing data");
 }
 
-add_to_cart((int)$variant_id, (int)$quantity);
+$variant_id = get_variant_id($product_id, $size_id, $color_id);
 
-echo json_encode(['success' => true]);
+if (!$variant_id) {
+    die("Invalid variant");
+}
+
+add_to_cart($variant_id, (int)$quantity);
+
+$referer = $_SERVER['HTTP_REFERER'] ?? $SETTINGS['url_site'];
+header("Location: $referer");
+exit;

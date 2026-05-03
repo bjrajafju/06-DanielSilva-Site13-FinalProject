@@ -4,14 +4,17 @@ include_once 'includes/config.php';
 $cart = get_current_cart();
 
 $items = [];
+$totals = ['subtotal' => 0, 'shipping' => 0, 'total' => 0];
+
 if ($cart) {
     $items = get_cart_items($cart['id']);
+    $totals = get_cart_totals($cart['id']);
 }
 
 include 'includes/header.php';
 ?>
 <!DOCTYPE html>
-<html lang="gb">
+<html lang="<?= $_SESSION['lingua'] ?? 'pt' ?>">
 <!-- Page Header Start -->
 <div class="container-fluid bg-secondary mb-5">
     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
@@ -52,7 +55,7 @@ include 'includes/header.php';
 
                     <?php foreach ($items as $item): ?>
 
-                        <tr>
+                        <tr data-cart-item-id="<?= $item['cart_item_id'] ?>">
                             <td class="align-middle text-left">
                                 <img src="<?= $SETTINGS['url_site'] ?>/<?= $item['image'] ?>" style="width:50px;">
                                 <?= $item['title'] ?>
@@ -67,18 +70,19 @@ include 'includes/header.php';
 
                             <td class="align-middle">
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <input type="text"
-                                        class="form-control form-control-sm bg-secondary text-center"
+                                    <input type="number"
+                                        class="form-control form-control-sm bg-secondary text-center cart-qty"
+                                        min="1"
                                         value="<?= $item['quantity'] ?>">
                                 </div>
                             </td>
 
                             <td class="align-middle">
-                                <?= number_format($item['price'] * $item['quantity'], 2) ?> €
+                                <span class="item-total"><?= number_format($item['price'] * $item['quantity'], 2) ?></span> €
                             </td>
 
                             <td class="align-middle">
-                                <button class="btn btn-sm btn-primary">
+                                <button class="btn btn-sm btn-primary cart-remove">
                                     <i class="fa fa-times"></i>
                                 </button>
                             </td>
@@ -90,14 +94,6 @@ include 'includes/header.php';
             </table>
         </div>
         <div class="col-lg-4">
-            <form class="mb-5" action="">
-                <div class="input-group">
-                    <input type="text" class="form-control p-4" placeholder="<?= t('cart.coupon.placeholder') ?>">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary"><?= t('cart.coupon.button') ?></button>
-                    </div>
-                </div>
-            </form>
             <div class="card border-secondary mb-5">
                 <div class="card-header bg-secondary border-0">
                     <h4 class="font-weight-semi-bold m-0"><?= t('cart.summary.title') ?></h4>
@@ -105,19 +101,19 @@ include 'includes/header.php';
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-3 pt-1">
                         <h6 class="font-weight-medium"><?= t('cart.summary.subtotal') ?></h6>
-                        <h6 class="font-weight-medium">$150</h6>
+                        <h6 class="font-weight-medium"><span class="cart-subtotal"><?= number_format($totals['subtotal'], 2) ?></span> €</h6>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium"><?= t('cart.summary.shipping') ?></h6>
-                        <h6 class="font-weight-medium">$10</h6>
+                        <h6 class="font-weight-medium"><span class="cart-shipping"><?= number_format($totals['shipping'], 2) ?></span> €</h6>
                     </div>
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold"><?= t('cart.summary.total') ?></h5>
-                        <h5 class="font-weight-bold">$160</h5>
+                        <h5 class="font-weight-bold"><span class="cart-total"><?= number_format($totals['total'], 2) ?></span> €</h5>
                     </div>
-                    <button class="btn btn-block btn-primary my-3 py-3"><?= t('cart.checkout.button') ?></button>
+                    <a href="<?= $SETTINGS['url_site'] ?>/checkout.php" class="btn btn-block btn-primary my-3 py-3 text-white"><?= t('cart.checkout.button') ?></a>
                 </div>
             </div>
         </div>
@@ -126,6 +122,8 @@ include 'includes/header.php';
 <!-- Cart End -->
 
 <?php include 'includes/footer.php'; ?>
+
+<script src="<?= $SETTINGS['url_site'] ?>/js/cart.js"></script>
 
 </body>
 

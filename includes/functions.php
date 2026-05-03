@@ -427,3 +427,46 @@ function add_to_cart($variant_id, $quantity = 1)
         'quantity' => $quantity
     ]);
 }
+
+function get_variant_id($product_id, $size_id, $color_id)
+{
+    $product_id = (int)$product_id;
+    $size_id = (int)$size_id;
+    $color_id = (int)$color_id;
+
+    $variant = db_get_one(
+        "product_variants",
+        "product_id = $product_id 
+            AND size_id = $size_id 
+            AND color_id = $color_id 
+            AND is_available = 1"
+    );
+
+    return $variant['id'] ?? null;
+}
+
+function get_cart_totals($cart_id)
+{
+    $cart_id = (int)$cart_id;
+
+    // Subtotal: sum of (price * quantity)
+    $sql = "
+        SELECT SUM(p.price * ci.quantity) as subtotal
+        FROM cart_items ci
+        JOIN product_variants pv ON pv.id = ci.variant_id
+        JOIN products p ON p.id = pv.product_id
+        WHERE ci.cart_id = $cart_id
+    ";
+
+    $res = my_query($sql);
+    $subtotal = (float)($res[0]['subtotal'] ?? 0);
+
+    $shipping = $subtotal > 0 ? 10.0 : 0.0;
+    $total = $subtotal + $shipping;
+
+    return [
+        'subtotal' => $subtotal,
+        'shipping' => $shipping,
+        'total' => $total
+    ];
+}

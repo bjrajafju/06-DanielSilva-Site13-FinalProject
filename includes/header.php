@@ -96,7 +96,7 @@ $categories = get_categories();
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
-                <a href="" class="btn border">
+                <a href="<?= $SETTINGS['url_site'] ?>/cart.php" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
@@ -161,7 +161,6 @@ $categories = get_categories();
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="<?= $SETTINGS['url_site'] ?>/cart.php" class="dropdown-item">Shopping Cart</a>
                                     <a href="<?= $SETTINGS['url_site'] ?>/checkout.php" class="dropdown-item">Checkout</a>
                                 </div>
                             </div>

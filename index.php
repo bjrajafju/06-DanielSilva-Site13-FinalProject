@@ -99,16 +99,11 @@ $products = get_products(8);
                         </div>
                     </div>
 
-                    <div class="card-footer d-flex justify-content-between bg-light border">
+                    <div class="card-footer d-flex justify-content-center bg-light border">
                         <a href="<?= $SETTINGS['url_site'] ?>/detail.php?slug=<?= $p['slug'] ?>"
                             class="btn btn-sm text-dark p-0">
                             <i class="fas fa-eye text-primary mr-1"></i>
                             <?= t('products.buttons.detail') ?>
-                        </a>
-
-                        <a href="" class="btn btn-sm text-dark p-0">
-                            <i class="fas fa-shopping-cart text-primary mr-1"></i>
-                            <?= t('products.buttons.add_to_cart') ?>
                         </a>
                     </div>
 
@@ -178,16 +173,11 @@ $products = get_products(8);
                         </div>
                     </div>
 
-                    <div class="card-footer d-flex justify-content-between bg-light border">
+                    <div class="card-footer d-flex justify-content-center bg-light border">
                         <a href="<?= $SETTINGS['url_site'] ?>/detail.php?slug=<?= $p['slug'] ?>"
                             class="btn btn-sm text-dark p-0">
                             <i class="fas fa-eye text-primary mr-1"></i>
                             <?= t('products.buttons.detail') ?>
-                        </a>
-
-                        <a href="" class="btn btn-sm text-dark p-0">
-                            <i class="fas fa-shopping-cart text-primary mr-1"></i>
-                            <?= t('products.buttons.add_to_cart') ?>
                         </a>
                     </div>
 

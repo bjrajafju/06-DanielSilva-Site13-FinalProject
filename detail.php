@@ -72,56 +72,68 @@ $colors = get_product_colors($product['product_id']);
             </p>
             <div class="d-flex mb-3">
                 <p class="text-dark font-weight-medium mb-0 mr-3"><?= t('detail.product.sizes_label') ?></p>
-                <form>
+                <form action="<?= $SETTINGS['url_site'] ?>/cart_add.php" method="POST">
+                    <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
                     <?php foreach ($sizes as $size): ?>
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio"
                                 class="custom-control-input"
                                 id="size-<?= $size['id'] ?>"
                                 name="size"
-                                value="<?= $size['id'] ?>">
+                                value="<?= $size['id'] ?>"
+                                required>
 
                             <label class="custom-control-label" for="size-<?= $size['id'] ?>">
                                 <?= $size['name'] ?>
                             </label>
                         </div>
                     <?php endforeach; ?>
-                </form>
+
             </div>
             <div class="d-flex mb-4">
                 <p class="text-dark font-weight-medium mb-0 mr-3"><?= t('detail.product.colors_label') ?></p>
-                <form>
-                    <?php foreach ($colors as $color): ?>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio"
-                                class="custom-control-input"
-                                id="color-<?= $color['id'] ?>"
-                                name="color"
-                                value="<?= $color['id'] ?>">
 
-                            <label class="custom-control-label" for="color-<?= $color['id'] ?>">
-                                <?= $color['name'] ?>
-                            </label>
-                        </div>
-                    <?php endforeach; ?>
-                </form>
+                <?php foreach ($colors as $color): ?>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio"
+                            class="custom-control-input"
+                            id="color-<?= $color['id'] ?>"
+                            name="color"
+                            value="<?= $color['id'] ?>"
+                            required>
+
+                        <label class="custom-control-label" for="color-<?= $color['id'] ?>">
+                            <?= $color['name'] ?>
+                        </label>
+                    </div>
+                <?php endforeach; ?>
             </div>
             <div class="d-flex align-items-center mb-4 pt-2">
                 <div class="input-group quantity mr-3" style="width: 130px;">
                     <div class="input-group-btn">
-                        <button class="btn btn-primary btn-minus">
+                        <button type="button" class="btn btn-primary btn-minus">
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
-                    <input type="text" class="form-control bg-secondary text-center" value="1">
+
+                    <input type="number"
+                        name="quantity"
+                        value="1"
+                        min="1"
+                        class="form-control bg-secondary text-center">
+
                     <div class="input-group-btn">
-                        <button class="btn btn-primary btn-plus">
+                        <button type="button" class="btn btn-primary btn-plus">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
-                <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> <?= t('detail.product.add_to_cart') ?></button>
+                <button type="submit" class="btn btn-primary px-3">
+                    <i class="fa fa-shopping-cart mr-1"></i>
+                    <?= t('detail.product.add_to_cart') ?>
+                </button>
             </div>
+            </form>
             <div class="d-flex pt-2">
                 <p class="text-dark font-weight-medium mb-0 mr-2"><?= t('detail.product.share_on') ?></p>
                 <div class="d-inline-flex">
@@ -254,17 +266,11 @@ $colors = get_product_colors($product['product_id']);
                             </div>
                         </div>
 
-                        <div class="card-footer d-flex justify-content-between bg-light border">
+                        <div class="card-footer d-flex justify-content-center bg-light border">
                             <a href="<?= $SETTINGS['url_site'] ?>/detail.php?slug=<?= $related_product['slug'] ?>"
                                 class="btn btn-sm text-dark p-0">
                                 <i class="fas fa-eye text-primary mr-1"></i>
                                 <?= t('products.buttons.detail') ?>
-                            </a>
-
-                            <a href="#"
-                                class="btn btn-sm text-dark p-0">
-                                <i class="fas fa-shopping-cart text-primary mr-1"></i>
-                                <?= t('products.buttons.add_to_cart') ?>
                             </a>
                         </div>
                     </div>

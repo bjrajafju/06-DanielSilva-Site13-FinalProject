@@ -73,7 +73,7 @@ function db_get_with_translation(
     $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
 
     $sql = "
-        SELECT t.*, tt.*
+        SELECT tt.*, t.*
         FROM $table t
         LEFT JOIN $translation_table tt 
             ON tt.$fk = t.id
@@ -314,8 +314,37 @@ function get_payment_methods()
         "payment_methods",
         "payment_method_translations",
         "payment_method_id",
-        "t.is_active = 1"
+        "1"
     );
+}
+
+function get_last_user_address($user_id, $type)
+{
+    $user_id = (int)$user_id;
+    $type = addslashes($type);
+    return db_get_one("addresses", "user_id = $user_id AND type = '$type'");
+}
+
+function get_country_by_id($country_id)
+{
+    global $LANG_CODE;
+    $country_id = (int)$country_id;
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    $res = db_select(
+        "tt.name",
+        "countries c",
+        "JOIN country_translations tt ON tt.country_id = c.id AND tt.lang_code = '$LANG_CODE'",
+        "c.id = $country_id"
+    );
+
+    return $res[0]['name'] ?? '';
+}
+
+function clear_cart($cart_id)
+{
+    $cart_id = (int)$cart_id;
+    return my_query("DELETE FROM cart_items WHERE cart_id = $cart_id");
 }
 
 function get_cart_items($cart_id)

@@ -64,10 +64,11 @@ if (empty($billing['first_name']) || empty($billing['address_line1']) || !$billi
 // 1. Save addresses to `addresses` table if logged in
 if ($user_id) {
     // Helper to process address save/update
-    function save_user_address($user_id, $type, $data) {
+    function save_user_address($user_id, $type, $data)
+    {
         global $SETTINGS;
         $existing = get_last_user_address($user_id, $type);
-        
+
         $db_data = [
             'user_id' => $user_id,
             'first_name' => $data['first_name'],
@@ -139,7 +140,7 @@ db_insert("order_addresses", [
     'last_name' => $billing['last_name'],
     'mobile' => $billing['mobile'],
     'address_line1' => $billing['address_line1'],
-    'address_line2' => $billing['address_line2'], 
+    'address_line2' => $billing['address_line2'],
     'city' => $billing['city'],
     'state' => $billing['state'],
     'postal_code' => $billing['postal_code'],
@@ -154,7 +155,7 @@ db_insert("order_addresses", [
     'last_name' => $shipping['last_name'],
     'mobile' => $shipping['mobile'],
     'address_line1' => $shipping['address_line1'],
-    'address_line2' => $shipping['address_line2'], 
+    'address_line2' => $shipping['address_line2'],
     'city' => $shipping['city'],
     'state' => $shipping['state'],
     'postal_code' => $shipping['postal_code'],

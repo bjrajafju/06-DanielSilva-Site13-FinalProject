@@ -26,7 +26,7 @@ include 'includes/header.php';
                 <i class="fa fa-check-circle text-primary mb-4" style="font-size: 100px;"></i>
                 <h2 class="font-weight-semi-bold mb-3"><?= t('order_success.thank_you') ?></h2>
                 <p class="lead mb-4"><?= t('order_success.confirmation_message') ?></p>
-                
+
                 <?php if ($order_id): ?>
                     <div class="alert alert-info py-4">
                         <h4 class="m-0"><?= t('order_success.order_number') ?>: #<?= $order_id ?></h4>
@@ -44,4 +44,5 @@ include 'includes/header.php';
 <?php include 'includes/footer.php'; ?>
 
 </body>
+
 </html>

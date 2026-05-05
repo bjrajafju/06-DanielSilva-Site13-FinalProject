@@ -6,7 +6,7 @@ $categories = get_categories();
 
 <head>
     <meta charset="utf-8">
-    <title>EShopper - Bootstrap Shop Template</title>
+    <title>DaniShopper</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -92,10 +92,6 @@ $categories = get_categories();
             </div>
 
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
                 <a href="<?= $SETTINGS['url_site'] ?>/cart.php" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span class="badge">0</span>
@@ -157,13 +153,6 @@ $categories = get_categories();
 
                             <a href="<?= $SETTINGS['url_site'] ?>/shop.php"
                                 class="nav-item nav-link"><?php echo t('header.nav.shop'); ?></a>
-
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="<?= $SETTINGS['url_site'] ?>/checkout.php" class="dropdown-item">Checkout</a>
-                                </div>
-                            </div>
 
                             <a href="<?= $SETTINGS['url_site'] ?>/contact.php"
                                 class="nav-item nav-link"><?php echo t('header.nav.contact'); ?></a>

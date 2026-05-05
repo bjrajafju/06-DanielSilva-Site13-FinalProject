@@ -45,6 +45,24 @@ function db_select($select, $from, $joins = "", $where = "1", $order = "", $limi
     return my_query($sql);
 }
 
+// select com grouped
+function db_select_grouped($select, $from, $joins = "", $where = "1", $group = "", $order = "", $limit = "")
+{
+    $sql = "SELECT $select FROM $from";
+
+    if ($joins) $sql .= " $joins";
+
+    $sql .= " WHERE $where";
+
+    if ($group) $sql .= " GROUP BY $group";
+
+    if ($order) $sql .= " ORDER BY $order";
+
+    if ($limit) $sql .= " LIMIT $limit";
+
+    return my_query($sql);
+}
+
 // insert generico
 function db_insert($table, $data)
 {
@@ -131,6 +149,60 @@ function get_products($limit = 8)
         "p.is_active = 1",
         "p.id DESC",
         $limit
+    );
+}
+
+function get_products_filtered($filters = [], $limit = 12, $offset = 0)
+{
+    global $LANG_CODE;
+
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    $joins = "
+        JOIN product_variants pv ON pv.product_id = p.id
+        LEFT JOIN product_translations pt 
+            ON pt.product_id = p.id 
+            AND pt.lang_code = '$LANG_CODE'
+    ";
+
+    $where = ["p.is_active = 1", "pv.is_available = 1"];
+
+    if (!empty($filters['colors'])) {
+        $colors = array_map('intval', $filters['colors']);
+        $where[] = "pv.color_id IN (" . implode(',', $colors) . ")";
+    }
+
+    if (!empty($filters['sizes'])) {
+        $sizes = array_map('intval', $filters['sizes']);
+        $where[] = "pv.size_id IN (" . implode(',', $sizes) . ")";
+    }
+
+    if (!empty($filters['search'])) {
+        $search = addslashes($filters['search']);
+        $where[] = "pt.title LIKE '%$search%'";
+    }
+
+    if (!empty($filters['price'])) {
+        $price_conditions = [];
+
+        foreach ($filters['price'] as $range) {
+            [$min, $max] = explode('-', $range);
+            $price_conditions[] = "(p.price BETWEEN $min AND $max)";
+        }
+
+        $where[] = "(" . implode(" OR ", $price_conditions) . ")";
+    }
+
+    $where_sql = implode(" AND ", $where);
+
+    return db_select_grouped(
+        "p.*, pt.title, pt.slug, pt.short_description",
+        "products p",
+        $joins,
+        $where_sql,
+        "p.id",
+        "p.id DESC",
+        "$offset, $limit"
     );
 }
 
@@ -563,4 +635,152 @@ function get_cart_totals($cart_id)
         'shipping' => $shipping,
         'total' => $total
     ];
+}
+
+function get_filter_colors()
+{
+    global $LANG_CODE;
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    return db_select_grouped(
+        "
+        c.id,
+        c.hex,
+        ct.name,
+        COUNT(DISTINCT pv.product_id) as total
+        ",
+        "product_variants pv",
+        "
+        JOIN colors c ON c.id = pv.color_id
+        LEFT JOIN color_translations ct 
+            ON ct.color_id = c.id 
+            AND ct.lang_code = '$LANG_CODE'
+        ",
+        "pv.is_available = 1",
+        "c.id",
+        "ct.name ASC"
+    );
+}
+
+function get_filter_sizes()
+{
+    return db_select_grouped(
+        "
+        s.id,
+        s.name,
+        COUNT(DISTINCT pv.product_id) as total
+        ",
+        "product_variants pv",
+        "
+        JOIN sizes s ON s.id = pv.size_id
+        ",
+        "pv.is_available = 1",
+        "s.id",
+        "s.name ASC"
+    );
+}
+
+function get_filter_prices()
+{
+    return db_select(
+        "
+        SUM(CASE WHEN p.price BETWEEN 0 AND 100 THEN 1 ELSE 0 END) as p1,
+        SUM(CASE WHEN p.price BETWEEN 100 AND 200 THEN 1 ELSE 0 END) as p2,
+        SUM(CASE WHEN p.price BETWEEN 200 AND 300 THEN 1 ELSE 0 END) as p3,
+        SUM(CASE WHEN p.price BETWEEN 300 AND 400 THEN 1 ELSE 0 END) as p4,
+        SUM(CASE WHEN p.price BETWEEN 400 AND 500 THEN 1 ELSE 0 END) as p5
+        ",
+        "products p",
+        "",
+        "p.is_active = 1"
+    )[0];
+}
+
+function get_products_filtered_count($filters = [])
+{
+    global $LANG_CODE;
+
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    $joins = "
+        JOIN product_variants pv ON pv.product_id = p.id
+        LEFT JOIN product_translations pt 
+            ON pt.product_id = p.id 
+            AND pt.lang_code = '$LANG_CODE'
+    ";
+
+    $where = ["p.is_active = 1", "pv.is_available = 1"];
+
+    if (!empty($filters['colors'])) {
+        $colors = array_map('intval', $filters['colors']);
+        $where[] = "pv.color_id IN (" . implode(',', $colors) . ")";
+    }
+
+    if (!empty($filters['sizes'])) {
+        $sizes = array_map('intval', $filters['sizes']);
+        $where[] = "pv.size_id IN (" . implode(',', $sizes) . ")";
+    }
+
+    if (!empty($filters['search'])) {
+        $search = addslashes($filters['search']);
+        $where[] = "pt.title LIKE '%$search%'";
+    }
+
+    if (!empty($filters['price'])) {
+        $price_conditions = [];
+
+        foreach ($filters['price'] as $range) {
+            [$min, $max] = explode('-', $range);
+            $price_conditions[] = "(p.price BETWEEN $min AND $max)";
+        }
+
+        $where[] = "(" . implode(" OR ", $price_conditions) . ")";
+    }
+
+    $where_sql = implode(" AND ", $where);
+
+    $res = db_select(
+        "COUNT(DISTINCT p.id) as total",
+        "products p",
+        $joins,
+        $where_sql
+    );
+
+    return $res[0]['total'] ?? 0;
+}
+
+function build_query($overrides = [])
+{
+    $query = $_GET;
+
+    foreach ($overrides as $key => $value) {
+        $query[$key] = $value;
+    }
+
+    return '?' . http_build_query($query);
+}
+
+function get_stores()
+{
+    global $LANG_CODE;
+
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    return db_select(
+        "
+        s.id,
+        s.email,
+        s.phone,
+        st.name,
+        st.address
+        ",
+        "stores s",
+        "
+        LEFT JOIN store_translations st
+            ON st.store_id = s.id
+            AND st.lang_code = '$LANG_CODE'
+        ",
+        "s.is_active = 1",
+        "s.id ASC"
+    );
 }

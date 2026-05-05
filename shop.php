@@ -4,6 +4,34 @@
 <?php
 include_once 'includes/config.php';
 include 'includes/header.php';
+
+$selected_colors = $_GET['colors'] ?? [];
+$selected_sizes  = $_GET['sizes'] ?? [];
+$selected_prices = $_GET['price'] ?? [];
+$search          = $_GET['search'] ?? '';
+if (!is_array($selected_colors)) $selected_colors = [$selected_colors];
+if (!is_array($selected_sizes)) $selected_sizes = [$selected_sizes];
+if (!is_array($selected_prices)) $selected_prices = [$selected_prices];
+
+$per_page = 12;
+$page = max(1, (int)($_GET['page'] ?? 1));
+$offset = ($page - 1) * $per_page;
+
+$filters = [
+    'colors' => $selected_colors,
+    'sizes'  => $selected_sizes,
+    'search' => $search,
+    'price'  => $selected_prices
+];
+
+$total_products = get_products_filtered_count($filters);
+$total_pages = ceil($total_products / $per_page);
+
+$products = get_products_filtered($filters, $per_page, $offset);
+
+$colors = get_filter_colors();
+$sizes = get_filter_sizes();
+$price_counts = get_filter_prices();
 ?>
 
 <!-- Page Header Start -->
@@ -22,355 +50,176 @@ include 'includes/header.php';
 
 <!-- Shop Start -->
 <div class="container-fluid pt-5">
-    <div class="row px-xl-5">
-        <!-- Shop Sidebar Start -->
-        <div class="col-lg-3 col-md-12">
-            <!-- Price Start -->
-            <div class="border-bottom mb-4 pb-4">
-                <h5 class="font-weight-semi-bold mb-4"><?= t('shop.sidebar.filter_price_title') ?></h5>
-                <form>
+    <form method="GET">
+        <div class="row px-xl-5">
+            <!-- Shop Sidebar Start -->
+            <div class="col-lg-3 col-md-12">
+                <!-- Price Start -->
+                <div class="border-bottom mb-4 pb-4">
+                    <h5 class="font-weight-semi-bold mb-4"><?= t('shop.sidebar.filter_price_title') ?></h5>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" checked id="price-all">
-                        <label class="custom-control-label" for="price-all"><?= t('shop.sidebar.filter_price_all') ?></label>
-                        <span class="badge border font-weight-normal">1000</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-1">
+                        <input type="checkbox" name="price[]" value="0-100"
+                            class="custom-control-input" id="price-1"
+                            <?= in_array('0-100', $selected_prices) ? 'checked' : '' ?>>
                         <label class="custom-control-label" for="price-1">$0 - $100</label>
-                        <span class="badge border font-weight-normal">150</span>
+                        <span class="badge border font-weight-normal"><?= $price_counts['p1'] ?></span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-2">
+                        <input type="checkbox" name="price[]" value="100-200"
+                            class="custom-control-input" id="price-2"
+                            <?= in_array('100-200', $selected_prices) ? 'checked' : '' ?>>
                         <label class="custom-control-label" for="price-2">$100 - $200</label>
-                        <span class="badge border font-weight-normal">295</span>
+                        <span class="badge border font-weight-normal"><?= $price_counts['p2'] ?></span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-3">
+                        <input type="checkbox" name="price[]" value="200-300"
+                            class="custom-control-input" id="price-3"
+                            <?= in_array('200-300', $selected_prices) ? 'checked' : '' ?>>
                         <label class="custom-control-label" for="price-3">$200 - $300</label>
-                        <span class="badge border font-weight-normal">246</span>
+                        <span class="badge border font-weight-normal"><?= $price_counts['p3'] ?></span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-4">
+                        <input type="checkbox" name="price[]" value="300-400"
+                            class="custom-control-input" id="price-4"
+                            <?= in_array('300-400', $selected_prices) ? 'checked' : '' ?>>
                         <label class="custom-control-label" for="price-4">$300 - $400</label>
-                        <span class="badge border font-weight-normal">145</span>
+                        <span class="badge border font-weight-normal"><?= $price_counts['p4'] ?></span>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                        <input type="checkbox" class="custom-control-input" id="price-5">
+                        <input type="checkbox" name="price[]" value="400-500"
+                            class="custom-control-input" id="price-5"
+                            <?= in_array('400-500', $selected_prices) ? 'checked' : '' ?>>
                         <label class="custom-control-label" for="price-5">$400 - $500</label>
-                        <span class="badge border font-weight-normal">168</span>
+                        <span class="badge border font-weight-normal"><?= $price_counts['p5'] ?></span>
                     </div>
-                </form>
-            </div>
-            <!-- Price End -->
+                </div>
+                <!-- Price End -->
 
-            <!-- Color Start -->
-            <div class="border-bottom mb-4 pb-4">
-                <h5 class="font-weight-semi-bold mb-4"><?= t('shop.sidebar.filter_color_title') ?></h5>
-                <form>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" checked id="color-all">
-                        <label class="custom-control-label" for="color-all"><?= t('shop.sidebar.filter_color_all') ?></label>
-                        <span class="badge border font-weight-normal">1000</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="color-1">
-                        <label class="custom-control-label" for="color-1">Black</label>
-                        <span class="badge border font-weight-normal">150</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="color-2">
-                        <label class="custom-control-label" for="color-2">White</label>
-                        <span class="badge border font-weight-normal">295</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="color-3">
-                        <label class="custom-control-label" for="color-3">Red</label>
-                        <span class="badge border font-weight-normal">246</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="color-4">
-                        <label class="custom-control-label" for="color-4">Blue</label>
-                        <span class="badge border font-weight-normal">145</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                        <input type="checkbox" class="custom-control-input" id="color-5">
-                        <label class="custom-control-label" for="color-5">Green</label>
-                        <span class="badge border font-weight-normal">168</span>
-                    </div>
-                </form>
-            </div>
-            <!-- Color End -->
+                <!-- Color Start -->
+                <div class="border-bottom mb-4 pb-4">
+                    <h5 class="font-weight-semi-bold mb-4"><?= t('shop.sidebar.filter_color_title') ?></h5>
+                    <?php foreach ($colors as $color): ?>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input
+                                type="checkbox"
+                                name="colors[]"
+                                value="<?= $color['id'] ?>"
+                                class="custom-control-input"
+                                id="color-<?= $color['id'] ?>"
+                                <?= in_array($color['id'], $selected_colors) ? 'checked' : '' ?>>
+                            <label class="custom-control-label" for="color-<?= $color['id'] ?>">
+                                <?= $color['name'] ?>
+                            </label>
+                            <span class="badge border font-weight-normal"><?= $color['total'] ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <!-- Color End -->
 
-            <!-- Size Start -->
-            <div class="mb-5">
-                <h5 class="font-weight-semi-bold mb-4"><?= t('shop.sidebar.filter_size_title') ?></h5>
-                <form>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" checked id="size-all">
-                        <label class="custom-control-label" for="size-all"><?= t('shop.sidebar.filter_size_all') ?></label>
-                        <span class="badge border font-weight-normal">1000</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="size-1">
-                        <label class="custom-control-label" for="size-1">XS</label>
-                        <span class="badge border font-weight-normal">150</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="size-2">
-                        <label class="custom-control-label" for="size-2">S</label>
-                        <span class="badge border font-weight-normal">295</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="size-3">
-                        <label class="custom-control-label" for="size-3">M</label>
-                        <span class="badge border font-weight-normal">246</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="size-4">
-                        <label class="custom-control-label" for="size-4">L</label>
-                        <span class="badge border font-weight-normal">145</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                        <input type="checkbox" class="custom-control-input" id="size-5">
-                        <label class="custom-control-label" for="size-5">XL</label>
-                        <span class="badge border font-weight-normal">168</span>
-                    </div>
-                </form>
+                <!-- Size Start -->
+                <div class="mb-5">
+                    <h5 class="font-weight-semi-bold mb-4"><?= t('shop.sidebar.filter_size_title') ?></h5>
+                    <?php foreach ($sizes as $size): ?>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input
+                                type="checkbox"
+                                name="sizes[]"
+                                value="<?= $size['id'] ?>"
+                                class="custom-control-input"
+                                id="size-<?= $size['id'] ?>"
+                                <?= in_array($size['id'], $selected_sizes) ? 'checked' : '' ?>>
+                            <label class="custom-control-label" for="size-<?= $size['id'] ?>">
+                                <?= $size['name'] ?>
+                            </label>
+                            <span class="badge border font-weight-normal"><?= $size['total'] ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <!-- Size End -->
+                <div class="mt-4">
+                    <button class="btn btn-primary w-100">
+                        <?= t('shop.filters.apply') ?>
+                    </button>
+                </div>
             </div>
-            <!-- Size End -->
-        </div>
+            <!-- Shop Sidebar End -->
 
-        <!-- Shop Product Start -->
-        <div class="col-lg-9 col-md-12">
-            <div class="row pb-3">
-                <div class="col-12 pb-1">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <form action="">
+            <!-- Shop Product Start -->
+            <div class="col-lg-9 col-md-12">
+                <div class="row pb-3">
+                    <div class="col-12 pb-1">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="<?= t('shop.products.search_placeholder') ?>">
+                                <input
+                                    type="text"
+                                    name="search"
+                                    value="<?= htmlspecialchars($search) ?>"
+                                    class="form-control"
+                                    placeholder="<?= t('shop.products.search_placeholder') ?>">
                                 <div class="input-group-append">
                                     <span class="input-group-text bg-transparent text-primary">
                                         <i class="fa fa-search"></i>
                                     </span>
                                 </div>
                             </div>
-                        </form>
-                        <div class="dropdown ml-4">
-                            <button class="btn border dropdown-toggle" type="button" data-toggle="dropdown">
-                                <?= t('shop.products.sort_button') ?>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#"><?= t('shop.products.sort_latest') ?></a>
-                                <a class="dropdown-item" href="#"><?= t('shop.products.sort_popularity') ?></a>
-                                <a class="dropdown-item" href="#"><?= t('shop.products.sort_best_rating') ?></a>
-                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
-                        <div
-                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                            <div class="d-flex justify-content-center">
-                                <h6>$123.00</h6>
-
+                    <?php foreach ($products as $product): ?>
+                        <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                            <div class="card product-item border-0 mb-4">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="<?= $product['image'] ?>" alt="">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3"><?= $product['title'] ?></h6>
+                                    <div class="d-flex justify-content-center">
+                                        <h6><?= $product['price'] ?>€</h6>
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-center bg-light border">
+                                    <a href="<?= $SETTINGS['url_site'] ?>/detail.php?slug=<?= $product['slug'] ?>"
+                                        class="btn btn-sm text-dark p-0">
+                                        <i class="fas fa-eye text-primary mr-1"></i>View Detail
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-center bg-light border">
-                            <a href="<?= $SETTINGS['url_site'] ?>/detail.php" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
-                        <div
-                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="img/product-2.jpg" alt="">
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                            <div class="d-flex justify-content-center">
-                                <h6>$123.00</h6>
-
-                            </div>
-                        </div>
-                        <div class="card-footer d-flex justify-content-center bg-light border">
-                            <a href="<?= $SETTINGS['url_site'] ?>/detail.php" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
-                        <div
-                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="img/product-3.jpg" alt="">
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                            <div class="d-flex justify-content-center">
-                                <h6>$123.00</h6>
-
-                            </div>
-                        </div>
-                        <div class="card-footer d-flex justify-content-center bg-light border">
-                            <a href="<?= $SETTINGS['url_site'] ?>/detail.php" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
-                        <div
-                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="img/product-4.jpg" alt="">
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                            <div class="d-flex justify-content-center">
-                                <h6>$123.00</h6>
-
-                            </div>
-                        </div>
-                        <div class="card-footer d-flex justify-content-center bg-light border">
-                            <a href="<?= $SETTINGS['url_site'] ?>/detail.php" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
-                        <div
-                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="img/product-5.jpg" alt="">
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                            <div class="d-flex justify-content-center">
-                                <h6>$123.00</h6>
-
-                            </div>
-                        </div>
-                        <div class="card-footer d-flex justify-content-center bg-light border">
-                            <a href="<?= $SETTINGS['url_site'] ?>/detail.php" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
-                        <div
-                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="img/product-6.jpg" alt="">
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                            <div class="d-flex justify-content-center">
-                                <h6>$123.00</h6>
-
-                            </div>
-                        </div>
-                        <div class="card-footer d-flex justify-content-center bg-light border">
-                            <a href="<?= $SETTINGS['url_site'] ?>/detail.php" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
-                        <div
-                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="img/product-7.jpg" alt="">
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                            <div class="d-flex justify-content-center">
-                                <h6>$123.00</h6>
-
-                            </div>
-                        </div>
-                        <div class="card-footer d-flex justify-content-center bg-light border">
-                            <a href="<?= $SETTINGS['url_site'] ?>/detail.php" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
-                        <div
-                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="img/product-8.jpg" alt="">
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                            <div class="d-flex justify-content-center">
-                                <h6>$123.00</h6>
-
-                            </div>
-                        </div>
-                        <div class="card-footer d-flex justify-content-center bg-light border">
-                            <a href="<?= $SETTINGS['url_site'] ?>/detail.php" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
-                        <div
-                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                            <div class="d-flex justify-content-center">
-                                <h6>$123.00</h6>
-
-                            </div>
-                        </div>
-                        <div class="card-footer d-flex justify-content-center bg-light border">
-                            <a href="<?= $SETTINGS['url_site'] ?>/detail.php" class="btn btn-sm text-dark p-0"><i
-                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
                 <div class="col-12 pb-1">
                     <nav>
-                        <ul class="pagination justify-content-center mb-3">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#">
-                                    <span>&laquo;</span>
-                                    <span class="sr-only"><?= t('shop.pagination.previous') ?></span>
-                                </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    <span>&raquo;</span>
-                                    <span class="sr-only"><?= t('shop.pagination.next') ?></span>
-                                </a>
-                            </li>
-                        </ul>
+                        <?php if ($total_pages > 1): ?>
+                            <ul class="pagination justify-content-center mb-3">
+
+                                <!-- Previous -->
+                                <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="<?= build_query(['page' => $page - 1]) ?>">
+                                        &laquo;
+                                    </a>
+                                </li>
+
+                                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                    <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                        <a class="page-link" href="<?= build_query(['page' => $i]) ?>">
+                                            <?= $i ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?>
+
+                                <!-- Next -->
+                                <li class="page-item <?= $page >= $total_pages ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="<?= build_query(['page' => $page + 1]) ?>">
+                                        &raquo;
+                                    </a>
+                                </li>
+
+                            </ul>
+                        <?php endif; ?>
                     </nav>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <!-- Shop End -->
 

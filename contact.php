@@ -4,6 +4,8 @@
 <?php
 include_once 'includes/config.php';
 include 'includes/header.php';
+
+$stores = get_stores();
 ?>
 <!-- Page Header Start -->
 <div class="container-fluid bg-secondary mb-5">

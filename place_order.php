@@ -21,7 +21,6 @@ if (!$cart_items) {
 $totals = get_cart_totals($cart['id']);
 $user_id = $_SESSION['user_id'] ?? null;
 
-// Billing Address Data
 $billing = [
     'first_name' => $_POST['billing_first_name'] ?? '',
     'last_name' => $_POST['billing_last_name'] ?? '',
@@ -35,7 +34,6 @@ $billing = [
     'postal_code' => $_POST['billing_postal_code'] ?? '',
 ];
 
-// Shipping Address Data
 $use_billing_as_shipping = !isset($_POST['shipto']);
 if ($use_billing_as_shipping) {
     $shipping = $billing;
@@ -56,20 +54,14 @@ if ($use_billing_as_shipping) {
 
 $payment_method_id = (int)($_POST['payment_method_id'] ?? 0);
 
-// Simple Validation
 if (empty($billing['first_name']) || empty($billing['address_line1']) || !$billing['country_id'] || !$payment_method_id) {
     die("Error: Missing required fields.");
 }
 
-// 1. Save addresses to `addresses` table if logged in
 if ($user_id) {
-    // Helper to process address save/update
     function save_user_address($user_id, $type, $data)
     {
-        global $SETTINGS;
-        $existing = get_last_user_address($user_id, $type);
-
-        $db_data = [
+        return db_insert("addresses", [
             'user_id' => $user_id,
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -81,28 +73,13 @@ if ($user_id) {
             'postal_code' => $data['postal_code'],
             'country_id' => $data['country_id'],
             'type' => $type
-        ];
-
-        if ($existing) {
-            $fields = [];
-            foreach ($db_data as $k => $v) {
-                if ($v === null) {
-                    $fields[] = "$k = NULL";
-                } else {
-                    $fields[] = "$k = '" . $SETTINGS['conn']->real_escape_string($v) . "'";
-                }
-            }
-            return my_query("UPDATE addresses SET " . implode(', ', $fields) . " WHERE id = {$existing['id']}");
-        } else {
-            return db_insert("addresses", $db_data);
-        }
+        ]);
     }
 
     save_user_address($user_id, 'billing', $billing);
     save_user_address($user_id, 'shipping', $shipping);
 }
 
-// 2. Create Order
 $order_id = db_insert("orders", [
     'user_id' => $user_id,
     'payment_method_id' => $payment_method_id,
@@ -116,7 +93,6 @@ if (!$order_id) {
     die("Error: Could not create order.");
 }
 
-// 3. Create Order Items (Snapshot)
 foreach ($cart_items as $item) {
     db_insert("order_items", [
         'order_id' => $order_id,
@@ -128,11 +104,9 @@ foreach ($cart_items as $item) {
     ]);
 }
 
-// 4. Save Address Snapshots
 $billing_country_name = get_country_by_id($billing['country_id']);
 $shipping_country_name = get_country_by_id($shipping['country_id']);
 
-// Billing Snapshot
 db_insert("order_addresses", [
     'order_id' => $order_id,
     'type' => 'billing',
@@ -147,7 +121,7 @@ db_insert("order_addresses", [
     'country_name' => $billing_country_name
 ]);
 
-// Shipping Snapshot
+// aqui faço snapshot para se o user mudar dados eles ficam iguais na address
 db_insert("order_addresses", [
     'order_id' => $order_id,
     'type' => 'shipping',
@@ -162,7 +136,6 @@ db_insert("order_addresses", [
     'country_name' => $shipping_country_name
 ]);
 
-// 5. Clear Cart
 clear_cart($cart['id']);
 
 header("Location: order_success.php?order_id=" . $order_id);

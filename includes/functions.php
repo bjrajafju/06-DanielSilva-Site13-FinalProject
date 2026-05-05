@@ -322,7 +322,17 @@ function get_last_user_address($user_id, $type)
 {
     $user_id = (int)$user_id;
     $type = addslashes($type);
-    return db_get_one("addresses", "user_id = $user_id AND type = '$type'");
+
+    $res = db_select(
+        "*",
+        "addresses",
+        "",
+        "user_id = $user_id AND type = '$type'",
+        "created_at DESC",
+        "1"
+    );
+
+    return $res[0] ?? null;
 }
 
 function get_country_by_id($country_id)

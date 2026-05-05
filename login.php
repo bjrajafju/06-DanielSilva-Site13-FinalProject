@@ -15,9 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_first_name'] = $user['first_name'];
+            $_SESSION['user_last_name'] = $user['last_name'];
             $_SESSION['user_email'] = $user['email'];
 
-            // Verificar se existe carrinho de sessão para sugerir merge
             $session_cart = get_session_cart();
             if ($session_cart) {
                 $_SESSION['show_cart_merge_popup'] = true;

@@ -20,12 +20,15 @@ $payment_methods = get_payment_methods();
 $user_id = $_SESSION['user_id'] ?? null;
 $user_billing = $user_id ? get_last_user_address($user_id, 'billing') : null;
 $user_shipping = $user_id ? get_last_user_address($user_id, 'shipping') : null;
+if (!$user_shipping && $user_billing) {
+    $user_shipping = $user_billing;
+}
 
 // Pre-fill fields logic
 $billing_data = [
     'first_name' => $user_billing['first_name'] ?? $_SESSION['user_first_name'] ?? '',
-    'last_name' => $user_billing['last_name'] ?? '',
-    'email' => $user_billing['email'] ?? $_SESSION['user_email'] ?? '',
+    'last_name' => $user_billing['last_name'] ?? $_SESSION['user_last_name'] ?? '',
+    'email' => $_SESSION['user_email'] ?? '',
     'mobile' => $user_billing['mobile'] ?? '',
     'address_line1' => $user_billing['address_line1'] ?? '',
     'address_line2' => $user_billing['address_line2'] ?? '',
@@ -38,7 +41,7 @@ $billing_data = [
 $shipping_data = [
     'first_name' => $user_shipping['first_name'] ?? '',
     'last_name' => $user_shipping['last_name'] ?? '',
-    'email' => $user_shipping['email'] ?? '',
+    'email' => $_SESSION['user_email'] ?? '',
     'mobile' => $user_shipping['mobile'] ?? '',
     'address_line1' => $user_shipping['address_line1'] ?? '',
     'address_line2' => $user_shipping['address_line2'] ?? '',
@@ -276,11 +279,11 @@ include 'includes/header.php';
 <!-- Checkout End -->
 
 <script>
-document.getElementById('checkout-form').addEventListener('submit', function() {
-    const btn = document.getElementById('place-order-btn');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
-});
+    document.getElementById('checkout-form').addEventListener('submit', function() {
+        const btn = document.getElementById('place-order-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+    });
 </script>
 <!-- Checkout End -->
 

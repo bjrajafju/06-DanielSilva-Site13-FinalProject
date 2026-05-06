@@ -784,3 +784,13 @@ function get_stores()
         "s.id ASC"
     );
 }
+
+function create_message($data)
+{
+    return db_insert("messages", [
+        'name'    => $data['name'],
+        'email'   => $data['email'],
+        'subject' => $data['subject'],
+        'message' => $data['message']
+    ]);
+}

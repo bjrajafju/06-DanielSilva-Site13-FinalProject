@@ -81,7 +81,6 @@ include_once 'config.php';
 
 <!-- Contact Javascript File -->
 <script src="<?= $SETTINGS['url_site'] ?>/mail/jqBootstrapValidation.min.js"></script>
-<script src="<?= $SETTINGS['url_site'] ?>/mail/contact.js"></script>
 
 <!-- Template Javascript -->
 <script src="<?= $SETTINGS['url_site'] ?>/js/main.js"></script>

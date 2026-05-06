@@ -6,6 +6,40 @@ include_once 'includes/config.php';
 include 'includes/header.php';
 
 $stores = get_stores();
+
+$success = false;
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $name = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $subject = trim($_POST['subject'] ?? '');
+    $message = trim($_POST['message'] ?? '');
+
+    // Validação básica
+    if (!$name || !$email || !$subject || !$message) {
+        $error = 'All fields are required';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = 'Invalid email';
+    } else {
+
+        create_message([
+            'name' => $name,
+            'email' => $email,
+            'subject' => $subject,
+            'message' => $message
+        ]);
+
+        $success = true;
+
+        $_POST = [];
+    }
+}
+
+if (!empty($_POST['website'])) {
+    exit;
+}
 ?>
 <!-- Page Header Start -->
 <div class="container-fluid bg-secondary mb-5">
@@ -30,24 +64,35 @@ $stores = get_stores();
         <div class="col-lg-7 mb-5">
             <div class="contact-form">
                 <div id="success"></div>
-                <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                <?php if ($success): ?>
+                    <div class="alert alert-success">
+                        <?= t('contact.form.success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if ($error): ?>
+                    <div class="alert alert-danger">
+                        <?= htmlspecialchars($error) ?>
+                    </div>
+                <?php endif; ?>
+                <form method="POST">
                     <div class="control-group">
-                        <input type="text" class="form-control" id="name" placeholder="<?= t('contact.form.name_placeholder') ?>"
+                        <input value="<?= htmlspecialchars($_POST['name'] ?? '') ?>" name="name" type="text" class="form-control" id="name" placeholder="<?= t('contact.form.name_placeholder') ?>"
                             required="required" data-validation-required-message="Please enter your name" />
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="control-group">
-                        <input type="email" class="form-control" id="email" placeholder="<?= t('contact.form.email_placeholder') ?>"
+                        <input value="<?= htmlspecialchars($_POST['name'] ?? '') ?>" name="email" type="email" class="form-control" id="email" placeholder="<?= t('contact.form.email_placeholder') ?>"
                             required="required" data-validation-required-message="Please enter your email" />
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="control-group">
-                        <input type="text" class="form-control" id="subject" placeholder="<?= t('contact.form.subject_placeholder') ?>"
+                        <input value="<?= htmlspecialchars($_POST['name'] ?? '') ?>" name="subject" type="text" class="form-control" id="subject" placeholder="<?= t('contact.form.subject_placeholder') ?>"
                             required="required" data-validation-required-message="Please enter a subject" />
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="control-group">
-                        <textarea class="form-control" rows="6" id="message" placeholder="<?= t('contact.form.message_placeholder') ?>"
+                        <textarea value="<?= htmlspecialchars($_POST['name'] ?? '') ?>" name="message" class="form-control" rows="6" id="message" placeholder="<?= t('contact.form.message_placeholder') ?>"
                             required="required"
                             data-validation-required-message="Please enter your message"></textarea>
                         <p class="help-block text-danger"></p>
@@ -61,18 +106,31 @@ $stores = get_stores();
         <div class="col-lg-5 mb-5">
             <h5 class="font-weight-semi-bold mb-3"><?= t('contact.info.title') ?></h5>
             <p><?= t('contact.info.description') ?></p>
-            <div class="d-flex flex-column mb-3">
-                <h5 class="font-weight-semi-bold mb-3">Store 1</h5>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-                <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
-            </div>
-            <div class="d-flex flex-column">
-                <h5 class="font-weight-semi-bold mb-3">Store 2</h5>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
-            </div>
+            <?php foreach ($stores as $index => $store): ?>
+                <div class="d-flex flex-column <?= $index > 0 ? 'mt-4' : '' ?>">
+                    <h5 class="font-weight-semi-bold mb-3">
+                        <?= htmlspecialchars($store['name']) ?>
+                    </h5>
+
+                    <p class="mb-2">
+                        <i class="fa fa-map-marker-alt text-primary mr-3"></i>
+                        <?= htmlspecialchars($store['address']) ?>
+                    </p>
+
+                    <p class="mb-2">
+                        <i class="fa fa-envelope text-primary mr-3"></i>
+                        <?= htmlspecialchars($store['email']) ?>
+                    </p>
+
+                    <p class="mb-2">
+                        <i class="fa fa-phone-alt text-primary mr-3"></i>
+                        <?= htmlspecialchars($store['phone']) ?>
+                    </p>
+                </div>
+            <?php endforeach; ?>
+            <?php if (empty($stores)): ?>
+                <p><b><?= t('contact.info.no_stores') ?></b></p>
+            <?php endif; ?>
         </div>
     </div>
 </div>

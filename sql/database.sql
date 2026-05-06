@@ -1825,24 +1825,29 @@ VALUES
     'shop.products.sort_button',
     'Ordenar por'
   ),
-  (145, 'gb', 'shop.products.sort_latest', 'Latest'),
+  (
+    145,
+    'gb',
+    'shop.products.sort_nameAZ',
+    'Name (A-Z)'
+  ),
   (
     146,
     'pt',
-    'shop.products.sort_latest',
-    'Mais Recentes'
+    'shop.products.sort_nameAZ',
+    'Nome (A-Z)'
   ),
   (
     147,
     'gb',
-    'shop.products.sort_popularity',
-    'Popularity'
+    'shop.products.sort_nameZA',
+    'Name (Z-A)'
   ),
   (
     148,
     'pt',
-    'shop.products.sort_popularity',
-    'Popularidade'
+    'shop.products.sort_nameZA',
+    'Nome (Z-A)'
   ),
   (
     149,
@@ -3406,6 +3411,26 @@ CREATE TABLE
     KEY `news_id` (`news_id`),
     CONSTRAINT `news_translations_ibfk_1` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`) ON DELETE CASCADE
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+
+--
+-- Table structure for table `reviews`
+--
+CREATE TABLE `reviews` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `product_id` INT(11) NOT NULL,
+    `user_id` INT(11) DEFAULT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `rating` INT(1) NOT NULL,
+    `comment` TEXT NOT NULL,
+    `is_approved` TINYINT(1) DEFAULT 0,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    PRIMARY KEY (`id`),
+    KEY `product_id` (`product_id`),
+    KEY `user_id` (`user_id`),
+    CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Update traduz table with new keys

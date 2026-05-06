@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html lang="<?= $_SESSION['lingua'] ?? 'pt' ?>">
-
 <?php
 include_once 'includes/config.php';
-include 'includes/header.php';
 
 $slug = $_GET['slug'] ?? null;
 
@@ -15,10 +11,22 @@ if (!$slug) {
 $news = get_news_by_slug($slug);
 
 if (!$news) {
-    header("Location: " . $SETTINGS['url_site'] . "/news.php");
-    exit;
+    $any_news = get_news_by_slug_any_lang($slug);
+
+    if ($any_news && !empty($any_news['slug'])) {
+        header("Location: {$SETTINGS['url_site']}/news-detail.php?slug={$any_news['slug']}");
+        exit;
+    } else {
+        header("Location: {$SETTINGS['url_site']}/news.php");
+        exit;
+    }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="<?= $_SESSION['lingua'] ?? 'pt' ?>">
+
+<?php include 'includes/header.php'; ?>
 
 <!-- Page Header Start -->
 <div class="container-fluid bg-secondary mb-5">
@@ -26,8 +34,6 @@ if (!$news) {
         <h1 class="font-weight-semi-bold text-uppercase mb-3"><?= htmlspecialchars($news['title']) ?></h1>
         <div class="d-inline-flex">
             <p class="m-0"><a href="<?= $SETTINGS['url_site'] ?>/index.php"><?= t('header.nav.home') ?></a></p>
-            <p class="m-0 px-2">-</p>
-            <p class="m-0"><a href="<?= $SETTINGS['url_site'] ?>/news.php"><?= t('menu.news') ?></a></p>
             <p class="m-0 px-2">-</p>
             <p class="m-0"><?= htmlspecialchars($news['title']) ?></p>
         </div>

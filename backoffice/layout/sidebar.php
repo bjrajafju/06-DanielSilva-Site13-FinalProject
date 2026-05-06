@@ -48,6 +48,9 @@
         <li class="<?= (basename($_SERVER['PHP_SELF']) == 'news.php' || basename($_SERVER['PHP_SELF']) == 'news_form.php') ? 'active' : '' ?>">
             <a href="news.php"><i class="bi bi-newspaper"></i> News</a>
         </li>
+        <li class="<?= basename($_SERVER['PHP_SELF']) == 'reviews.php' ? 'active' : '' ?>">
+            <a href="reviews.php"><i class="bi bi-star"></i> Reviews</a>
+        </li>
 
         <div class="sidebar-heading">System</div>
         <li class="<?= basename($_SERVER['PHP_SELF']) == 'messages.php' ? 'active' : '' ?>">

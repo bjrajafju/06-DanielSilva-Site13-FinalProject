@@ -1,79 +1,32 @@
--- 1. DROP PAGES TABLES
-DROP TABLE IF EXISTS `page_translations`;
-
-DROP TABLE IF EXISTS `pages`;
-
--- 2. Create News Table (KEEP)
-CREATE TABLE
-  IF NOT EXISTS `news` (
-    `id` int (11) NOT NULL AUTO_INCREMENT,
-    `image` varchar(255) DEFAULT NULL,
-    `is_active` tinyint (1) DEFAULT 1,
-    `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`)
-  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
-
--- 3. Create News Translations Table (KEEP)
-CREATE TABLE
-  IF NOT EXISTS `news_translations` (
-    `id` int (11) NOT NULL AUTO_INCREMENT,
-    `news_id` int (11) NOT NULL,
-    `lang_code` varchar(5) NOT NULL,
-    `title` varchar(255) NOT NULL,
-    `slug` varchar(255) NOT NULL,
-    `short_description` text NOT NULL,
-    `content` text NOT NULL,
+CREATE TABLE `reviews` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `product_id` INT(11) NOT NULL,
+    `user_id` INT(11) DEFAULT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `rating` INT(1) NOT NULL,
+    `comment` TEXT NOT NULL,
+    `is_approved` TINYINT(1) DEFAULT 0,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     PRIMARY KEY (`id`),
-    KEY `news_id` (`news_id`),
-    CONSTRAINT `news_translations_ibfk_1` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`) ON DELETE CASCADE
-  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+    KEY `product_id` (`product_id`),
+    KEY `user_id` (`user_id`),
+    CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 4. Add Translation Keys to traduz
--- News Keys
-INSERT IGNORE INTO `traduz` (`lang_code`, `code`, `text`)
-VALUES
-  ('pt', 'menu.news', 'Notícias'),
-  ('gb', 'menu.news', 'News'),
-  ('pt', 'news.read_more', 'Ler Mais'),
-  ('gb', 'news.read_more', 'Read More'),
-  ('pt', 'news.latest', 'Últimas Notícias'),
-  ('gb', 'news.latest', 'Latest News'),
-  ('pt', 'news.back_to_list', 'Voltar à lista'),
-  ('gb', 'news.back_to_list', 'Back to list'),
-  (
-    'pt',
-    'news.empty_list',
-    'Nenhuma notícia encontrada.'
-  ),
-  ('gb', 'news.empty_list', 'No news found.');
-
--- About Page Keys
-INSERT IGNORE INTO `traduz` (`lang_code`, `code`, `text`)
-VALUES
-  ('pt', 'menu.about', 'Sobre Nós'),
-  ('gb', 'menu.about', 'About Us'),
-  ('pt', 'about.title', 'Sobre Nós'),
-  ('gb', 'about.title', 'About Us'),
-  ('pt', 'about.subtitle', 'A Nossa História'),
-  ('gb', 'about.subtitle', 'Our Story'),
-  (
-    'pt',
-    'about.text_1',
-    'Bem-vindo à Danishopper. Começámos com uma pequena ideia e crescemos para nos tornarmos uma referência no mercado e-commerce.'
-  ),
-  (
-    'gb',
-    'about.text_1',
-    'Welcome to Danishopper. We started with a small idea and grew to become a reference in the e-commerce market.'
-  ),
-  (
-    'pt',
-    'about.text_2',
-    'O nosso compromisso é com a qualidade e a satisfação do cliente. Trabalhamos todos os dias para lhe trazer as últimas tendências.'
-  ),
-  (
-    'gb',
-    'about.text_2',
-    'Our commitment is to quality and customer satisfaction. We work every day to bring you the latest trends.'
-  );
+INSERT INTO `traduz` (`lang_code`, `code`, `text`) VALUES
+('gb', 'detail.product.reviews_count_label', 'Reviews'),
+('pt', 'detail.product.reviews_count_label', 'Avaliações'),
+('gb', 'detail.reviews.reviews_for_title', 'reviews for'),
+('pt', 'detail.reviews.reviews_for_title', 'avaliações para'),
+('gb', 'detail.reviews.no_reviews', 'No reviews yet. Be the first to review this product!'),
+('pt', 'detail.reviews.no_reviews', 'Ainda não há avaliações. Seja o primeiro a avaliar este produto!'),
+('gb', 'detail.reviews.success_message', 'Your review has been submitted and is awaiting approval.'),
+('pt', 'detail.reviews.success_message', 'A sua avaliação foi submetida e aguarda aprovação.'),
+('gb', 'detail.reviews.error_missing_fields', 'Please fill all required fields and select a rating.'),
+('pt', 'detail.reviews.error_missing_fields', 'Por favor, preencha todos os campos obrigatórios e selecione uma classificação.'),
+('gb', 'detail.reviews.error_db_error', 'An error occurred while saving your review. Please try again.'),
+('pt', 'detail.reviews.error_db_error', 'Ocorreu um erro ao guardar a sua avaliação. Por favor, tente novamente.'),
+('gb', 'detail.reviews.logged_as', 'Logged in as'),
+('pt', 'detail.reviews.logged_as', 'Sessão iniciada como');

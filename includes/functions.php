@@ -864,3 +864,84 @@ function get_news_count()
 {
     return db_count("news", "is_active = 1");
 }
+
+function get_news_by_slug_any_lang($slug)
+{
+    $slug = addslashes($slug);
+
+    $res = db_select(
+        "nt.news_id",
+        "news_translations nt",
+        "",
+        "nt.slug = '$slug'",
+        "",
+        "1"
+    );
+
+    if (!$res) {
+        return null;
+    }
+
+    $news_id = $res[0]['news_id'];
+
+    return db_select(
+        "n.*, nt.*",
+        "news n",
+        "LEFT JOIN news_translations nt ON nt.news_id = n.id AND nt.lang_code = '" . addslashes($_SESSION['lingua'] ?? 'pt') . "'",
+        "n.id = $news_id AND n.is_active = 1",
+        "",
+        "1"
+    )[0] ?? null;
+}
+
+/**
+ * Review Functions
+ */
+function get_product_reviews($product_id)
+{
+    $product_id = (int)$product_id;
+    return db_get_all("reviews", "product_id = $product_id AND is_approved = 1", "created_at DESC");
+}
+
+function get_product_review_count($product_id)
+{
+    $product_id = (int)$product_id;
+    return db_count("reviews", "product_id = $product_id AND is_approved = 1");
+}
+
+function get_product_average_rating($product_id)
+{
+    $product_id = (int)$product_id;
+    $sql = "SELECT AVG(rating) as average FROM reviews WHERE product_id = $product_id AND is_approved = 1";
+    $res = my_query($sql);
+    return (float)($res[0]['average'] ?? 0);
+}
+
+function insert_review($data)
+{
+    return db_insert("reviews", [
+        'product_id' => (int)$data['product_id'],
+        'user_id'    => $data['user_id'] ? (int)$data['user_id'] : null,
+        'name'       => $data['name'],
+        'email'      => $data['email'],
+        'rating'     => (int)$data['rating'],
+        'comment'    => $data['comment'],
+        'is_approved' => 0
+    ]);
+}
+
+function toggle_review_approval($id)
+{
+    $id = (int)$id;
+    $review = db_get_one("reviews", "id = $id");
+    if (!$review) return false;
+
+    $new_status = $review['is_approved'] ? 0 : 1;
+    return db_update("reviews", ['is_approved' => $new_status], "id = $id");
+}
+
+function delete_review($id)
+{
+    $id = (int)$id;
+    return db_delete("reviews", "id = $id");
+}

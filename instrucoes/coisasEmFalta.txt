@@ -5,15 +5,8 @@
 - [ ] **Ficheiro sitemap.xml**: As instruções pedem a criação automática deste ficheiro com todos os links do projeto.
 - [ ] **Ficheiro robots.txt**: Não foi encontrado na raiz do projeto.
 
-## 2. Frontoffice - Páginas (Mínimos Obrigatórios)
-- [ ] **Página "Sobre Nós"**: Falta a página de apresentação da empresa/projeto.
-- [ ] **Módulo de Notícias**:
-    - [ ] Página de listagem geral de notícias.
-    - [ ] Páginas de detalhe para cada notícia.
-
 ## 3. Backoffice - Gestão e Segurança (Mínimos Obrigatórios)
 - [ ] **Recuperação de Acesso**: No formulário de Login, falta a funcionalidade de "Recuperar Palavra-passe" (via e-mail ou link de redefinição).
-- [ ] **Gestão de Conteúdos (CMS)**: Falta a capacidade de gerir (CRUD) os conteúdos de Notícias e da página Sobre Nós através do painel de administração.
 - [ ] **Estatísticas do Dashboard**: O dashboard atual é simples; as instruções sugerem uma apresentação mais completa de dados e estatísticas do sistema.
 
 ## 4. Funcionalidades de Valorização (Extras / Opcionais)

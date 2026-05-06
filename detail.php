@@ -25,6 +25,10 @@ if (!$product) {
 $related_products = get_products(8);
 $sizes = get_product_sizes($product['product_id']);
 $colors = get_product_colors($product['product_id']);
+
+$reviews = get_product_reviews($product['product_id']);
+$review_count = get_product_review_count($product['product_id']);
+$average_rating = get_product_average_rating($product['product_id']);
 ?>
 <!DOCTYPE html>
 <html lang="<?= $_SESSION['lingua'] ?? 'pt' ?>">
@@ -56,13 +60,19 @@ $colors = get_product_colors($product['product_id']);
             <h3 class="font-weight-semi-bold"><?= $product['title'] ?></h3>
             <div class="d-flex mb-3">
                 <div class="text-primary mr-2">
-                    <small class="fas fa-star"></small>
-                    <small class="fas fa-star"></small>
-                    <small class="fas fa-star"></small>
-                    <small class="fas fa-star-half-alt"></small>
-                    <small class="far fa-star"></small>
+                    <?php
+                    for ($i = 1; $i <= 5; $i++) {
+                        if ($average_rating >= $i) {
+                            echo '<small class="fas fa-star"></small>';
+                        } elseif ($average_rating >= $i - 0.5) {
+                            echo '<small class="fas fa-star-half-alt"></small>';
+                        } else {
+                            echo '<small class="far fa-star"></small>';
+                        }
+                    }
+                    ?>
                 </div>
-                <small class="pt-1">(50 Reviews)</small>
+                <small class="pt-1">(<?= $review_count ?> <?= t('detail.product.reviews_count_label') ?>)</small>
             </div>
             <h3 class="font-weight-semi-bold mb-4">
                 <?= number_format($product['price'], 2) ?> €
@@ -158,7 +168,7 @@ $colors = get_product_colors($product['product_id']);
             <div class="nav nav-tabs justify-content-center border-secondary mb-4">
                 <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1"><?= t('detail.tabs.description') ?></a>
                 <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2"><?= t('detail.tabs.information') ?></a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3"><?= t('detail.tabs.reviews') ?> (0)</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3"><?= t('detail.tabs.reviews') ?> (<?= $review_count ?>)</a>
             </div>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="tab-pane-1">
@@ -173,54 +183,122 @@ $colors = get_product_colors($product['product_id']);
                 <div class="tab-pane fade" id="tab-pane-3">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
-                            <div class="media mb-4">
-                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
-                                    style="width: 45px;">
-                                <div class="media-body">
-                                    <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
-                                    <div class="text-primary mb-2">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <i class="far fa-star"></i>
+                            <h4 class="mb-4"><?= $review_count ?> <?= t('detail.reviews.reviews_for_title') ?> "<?= $product['title'] ?>"</h4>
+                            <?php foreach ($reviews as $review): ?>
+                                <div class="media mb-4">
+                                    <div class="media-body">
+                                        <h6><?= htmlspecialchars($review['name']) ?><small> - <i><?= date('d M Y', strtotime($review['created_at'])) ?></i></small></h6>
+                                        <div class="text-primary mb-2">
+                                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                <i class="<?= $i <= $review['rating'] ? 'fas' : 'far' ?> fa-star"></i>
+                                            <?php endfor; ?>
+                                        </div>
+                                        <p><?= nl2br(htmlspecialchars($review['comment'])) ?></p>
                                     </div>
-                                    <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum
-                                        et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
                                 </div>
-                            </div>
+                            <?php endforeach; ?>
+
+                            <?php if (empty($reviews)): ?>
+                                <p><?= t('detail.reviews.no_reviews') ?></p>
+                            <?php endif; ?>
                         </div>
                         <div class="col-md-6">
-                            <h4 class="mb-4"><?= t('detail.reviews.leave_review_title') ?></h4>
-                            <small><?= t('detail.reviews.email_notice') ?></small>
-                            <div class="d-flex my-3">
-                                <p class="mb-0 mr-2"><?= t('detail.reviews.your_rating_label') ?></p>
-                                <div class="text-primary">
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
+                            <form action="submit_review.php" method="POST">
+                                <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
+                                <input type="hidden" name="slug" value="<?= $product['slug'] ?>">
+                                <input type="hidden" name="rating" id="rating-input" value="0" required>
+
+                                <?php if (isset($_GET['review_success'])): ?>
+                                    <div class="alert alert-success">
+                                        <?= t('detail.reviews.success_message') ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if (isset($_GET['review_error'])): ?>
+                                    <div class="alert alert-danger">
+                                        <?= t('detail.reviews.error_' . $_GET['review_error']) ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <div class="d-flex my-3">
+                                    <p class="mb-0 mr-2"><?= t('detail.reviews.your_rating_label') ?></p>
+                                    <div class="text-primary star-rating">
+                                        <i class="far fa-star" data-rating="1" style="cursor: pointer;"></i>
+                                        <i class="far fa-star" data-rating="2" style="cursor: pointer;"></i>
+                                        <i class="far fa-star" data-rating="3" style="cursor: pointer;"></i>
+                                        <i class="far fa-star" data-rating="4" style="cursor: pointer;"></i>
+                                        <i class="far fa-star" data-rating="5" style="cursor: pointer;"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <form>
+
                                 <div class="form-group">
                                     <label for="message"><?= t('detail.reviews.your_review_label') ?></label>
-                                    <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                    <textarea id="message" name="comment" cols="30" rows="5" class="form-control" required></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label for="name"><?= t('detail.reviews.your_name_label') ?></label>
-                                    <input type="text" class="form-control" id="name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="email"><?= t('detail.reviews.your_email_label') ?></label>
-                                    <input type="email" class="form-control" id="email">
-                                </div>
+
+                                <?php if (!isset($_SESSION['user_id'])): ?>
+                                    <div class="form-group">
+                                        <label for="name"><?= t('detail.reviews.your_name_label') ?></label>
+                                        <input type="text" name="name" class="form-control" id="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email"><?= t('detail.reviews.your_email_label') ?></label>
+                                        <input type="email" name="email" class="form-control" id="email" required>
+                                    </div>
+                                <?php else: ?>
+                                    <p><strong><?= t('detail.reviews.logged_as') ?>:</strong> <?= $_SESSION['user_first_name'] ?> <?= $_SESSION['user_last_name'] ?></p>
+                                <?php endif; ?>
+
                                 <div class="form-group mb-0">
                                     <input type="submit" value="<?= t('detail.reviews.submit_button') ?>" class="btn btn-primary px-3">
                                 </div>
                             </form>
+
+                            <script>
+                                document.querySelectorAll('.star-rating i').forEach(star => {
+                                    star.addEventListener('click', function() {
+                                        const rating = this.getAttribute('data-rating');
+                                        document.getElementById('rating-input').value = rating;
+
+                                        // Update visual stars
+                                        document.querySelectorAll('.star-rating i').forEach(s => {
+                                            if (s.getAttribute('data-rating') <= rating) {
+                                                s.classList.remove('far');
+                                                s.classList.add('fas');
+                                            } else {
+                                                s.classList.remove('fas');
+                                                s.classList.add('far');
+                                            }
+                                        });
+                                    });
+
+                                    star.addEventListener('mouseover', function() {
+                                        const rating = this.getAttribute('data-rating');
+                                        document.querySelectorAll('.star-rating i').forEach(s => {
+                                            if (s.getAttribute('data-rating') <= rating) {
+                                                s.classList.remove('far');
+                                                s.classList.add('fas');
+                                            } else {
+                                                s.classList.remove('fas');
+                                                s.classList.add('far');
+                                            }
+                                        });
+                                    });
+
+                                    star.addEventListener('mouseout', function() {
+                                        const currentRating = document.getElementById('rating-input').value;
+                                        document.querySelectorAll('.star-rating i').forEach(s => {
+                                            if (s.getAttribute('data-rating') <= currentRating) {
+                                                s.classList.remove('far');
+                                                s.classList.add('fas');
+                                            } else {
+                                                s.classList.remove('fas');
+                                                s.classList.add('far');
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>

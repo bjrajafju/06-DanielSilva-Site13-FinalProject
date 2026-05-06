@@ -77,6 +77,30 @@ function db_insert($table, $data)
     return my_query($sql);
 }
 
+// update generico
+function db_update($table, $data, $where)
+{
+    global $SETTINGS;
+    $set = [];
+    foreach ($data as $field => $value) {
+        if ($value === null) {
+            $set[] = "$field = NULL";
+        } else {
+            $set[] = "$field = '" . $SETTINGS['conn']->real_escape_string($value) . "'";
+        }
+    }
+
+    $sql = "UPDATE $table SET " . implode(', ', $set) . " WHERE $where";
+    return my_query($sql);
+}
+
+// delete generico
+function db_delete($table, $where)
+{
+    $sql = "DELETE FROM $table WHERE $where";
+    return my_query($sql);
+}
+
 // com tradução
 function db_get_with_translation(
     $table,

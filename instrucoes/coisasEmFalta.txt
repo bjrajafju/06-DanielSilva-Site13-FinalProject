@@ -1,0 +1,32 @@
+# LISTA DE COISAS EM FALTA NO PROJETO
+
+## 1. Estrutura Geral e Configuração (Mínimos Obrigatórios)
+- [ ] **Ficheiro .htaccess**: Não foi encontrado na raiz do projeto. Necessário para configurações específicas do servidor.
+- [ ] **Ficheiro sitemap.xml**: As instruções pedem a criação automática deste ficheiro com todos os links do projeto.
+- [ ] **Ficheiro robots.txt**: Não foi encontrado na raiz do projeto.
+
+## 2. Frontoffice - Páginas (Mínimos Obrigatórios)
+- [ ] **Página "Sobre Nós"**: Falta a página de apresentação da empresa/projeto.
+- [ ] **Módulo de Notícias**:
+    - [ ] Página de listagem geral de notícias.
+    - [ ] Páginas de detalhe para cada notícia.
+
+## 3. Backoffice - Gestão e Segurança (Mínimos Obrigatórios)
+- [ ] **Recuperação de Acesso**: No formulário de Login, falta a funcionalidade de "Recuperar Palavra-passe" (via e-mail ou link de redefinição).
+- [ ] **Gestão de Conteúdos (CMS)**: Falta a capacidade de gerir (CRUD) os conteúdos de Notícias e da página Sobre Nós através do painel de administração.
+- [ ] **Estatísticas do Dashboard**: O dashboard atual é simples; as instruções sugerem uma apresentação mais completa de dados e estatísticas do sistema.
+
+## 4. Funcionalidades de Valorização (Extras / Opcionais)
+- [ ] **Ordenação de Catálogo**: Falta o dropdown/opções para ordenar produtos (por nome, preço, mais recentes, etc.).
+- [ ] **Troca de Visualização**: Falta o botão para alternar a listagem de produtos entre "Mosaico/Grelha" e "Linhas/Lista".
+- [ ] **SEO Dinâmico**: Atualmente os meta tags no `header.php` são estáticos. Falta a implementação de SEO dinâmico para cada página (títulos e descrições específicas).
+- [ ] **Funcionalidades de Utilizador (Logins Frontoffice)**:
+    - [ ] Adição de artigos a uma lista de favoritos.
+    - [ ] Submissão de avaliações/comentários em produtos.
+    - [ ] Espaço para testemunhos de clientes.
+- [ ] **Módulo de Loja (Melhorias)**:
+    - [ ] **Gestão de Stock**: Implementar a atualização automática (decremento) do stock disponível quando uma compra é finalizada.
+    - [ ] **Histórico do Cliente**: Área no frontoffice (Perfil) onde o utilizador logado possa consultar o seu histórico de compras anteriores.
+
+## 5. Formalização da Entrega
+- [ ] **Credenciais no README**: O ficheiro `READ-ME.txt` atual não contém as credenciais de acesso ao Backoffice (utilizador e password) nem os detalhes da base de dados, conforme exigido.

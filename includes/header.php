@@ -154,6 +154,12 @@ $categories = get_categories();
                             <a href="<?= $SETTINGS['url_site'] ?>/shop.php"
                                 class="nav-item nav-link"><?php echo t('header.nav.shop'); ?></a>
 
+                            <a href="<?= $SETTINGS['url_site'] ?>/news.php"
+                                class="nav-item nav-link"><?php echo t('menu.news'); ?></a>
+
+                            <a href="<?= $SETTINGS['url_site'] ?>/about.php"
+                                class="nav-item nav-link"><?php echo t('menu.about'); ?></a>
+
                             <a href="<?= $SETTINGS['url_site'] ?>/contact.php"
                                 class="nav-item nav-link"><?php echo t('header.nav.contact'); ?></a>
                         </div>

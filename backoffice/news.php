@@ -1,21 +1,33 @@
 <?php
 include_once 'includes/helpers.php';
 
-$limit = 20;
+// Pagination
+$limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
+// Search
 $search = isset($_GET['search']) ? addslashes($_GET['search']) : '';
 $where = "1";
 if ($search) {
-    $where = "code LIKE '%$search%' OR text LIKE '%$search%'";
+    $news_ids = db_select(
+        "DISTINCT news_id",
+        "news_translations",
+        "",
+        "title LIKE '%$search%'"
+    );
+    $ids = array_column($news_ids, 'news_id');
+    if (!empty($ids)) {
+        $where = "id IN (" . implode(',', $ids) . ")";
+    } else {
+        $where = "0";
+    }
 }
 
-$total_items = db_count('traduz', $where);
+$total_items = db_count('news', $where);
 $total_pages = ceil($total_items / $limit);
 
-// Group by code to show translations together
-$codes = db_select("DISTINCT code", "traduz", "", $where, "code ASC", "$offset, $limit");
+$news_list = db_get_all('news', $where, "created_at DESC", "$offset, $limit");
 
 include 'layout/header.php';
 include 'layout/sidebar.php';
@@ -23,8 +35,8 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Interface Translations</h2>
-        <a href="traduz_form.php" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Add New Translation</a>
+        <h2 class="h4 mb-0">News</h2>
+        <a href="news_form.php" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Add New Post</a>
     </div>
 
     <div class="container-fluid">
@@ -32,9 +44,9 @@ include 'layout/sidebar.php';
 
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span>Translation List (traduz)</span>
+                <span>News List</span>
                 <form class="d-flex" method="GET">
-                    <input class="form-control form-control-sm me-2" type="search" name="search" placeholder="Search key or text..." value="<?= htmlspecialchars($search) ?>">
+                    <input class="form-control form-control-sm me-2" type="search" name="search" placeholder="Search title..." value="<?= htmlspecialchars($search) ?>">
                     <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
                 </form>
             </div>
@@ -43,32 +55,32 @@ include 'layout/sidebar.php';
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
-                                <th>Code Key</th>
-                                <th>Module</th>
-                                <th>Translations</th>
+                                <th>Image</th>
+                                <th>Title (Default)</th>
+                                <th>Date</th>
+                                <th>Status</th>
                                 <th class="text-end">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($codes as $c):
-                                $code = $c['code'];
-                                $module = explode('.', $code)[0];
-                                $trans = db_get_all("traduz", "code = '" . addslashes($code) . "'");
+                            <?php foreach ($news_list as $n):
+                                $trans = db_get_one("news_translations", "news_id = {$n['id']} AND lang_code = 'gb'");
+                                if (!$trans) $trans = db_get_one("news_translations", "news_id = {$n['id']}");
                             ?>
                                 <tr>
-                                    <td><code><?= $code ?></code></td>
-                                    <td><span class="badge bg-secondary"><?= strtoupper($module) ?></span></td>
                                     <td>
-                                        <?php foreach ($trans as $t): ?>
-                                            <div class="mb-1">
-                                                <small class="text-uppercase fw-bold text-muted"><?= $t['lang_code'] ?>:</small>
-                                                <span><?= htmlspecialchars(substr($t['text'], 0, 100)) ?><?= strlen($t['text']) > 100 ? '...' : '' ?></span>
-                                            </div>
-                                        <?php endforeach; ?>
+                                        <img src="../<?= $n['image'] ?>" class="img-preview" onerror="this.src='https://via.placeholder.com/50'">
+                                    </td>
+                                    <td><?= $trans['title'] ?? 'N/A' ?></td>
+                                    <td><?= date('d/m/Y', strtotime($n['created_at'])) ?></td>
+                                    <td>
+                                        <span class="badge bg-<?= $n['is_active'] ? 'success' : 'danger' ?>">
+                                            <?= $n['is_active'] ? 'Active' : 'Inactive' ?>
+                                        </span>
                                     </td>
                                     <td class="text-end">
-                                        <a href="traduz_form.php?code=<?= urlencode($code) ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
-                                        <a href="traduz_delete.php?code=<?= urlencode($code) ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
+                                        <a href="news_form.php?id=<?= $n['id'] ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
+                                        <a href="news_delete.php?id=<?= $n['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -76,6 +88,7 @@ include 'layout/sidebar.php';
                     </table>
                 </div>
 
+                <!-- Pagination -->
                 <?php if ($total_pages > 1): ?>
                     <nav aria-label="Page navigation" class="mt-4">
                         <ul class="pagination justify-content-center">

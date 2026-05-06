@@ -44,6 +44,11 @@
             <a href="countries.php"><i class="bi bi-globe"></i> Countries</a>
         </li>
 
+        <div class="sidebar-heading">Content</div>
+        <li class="<?= (basename($_SERVER['PHP_SELF']) == 'news.php' || basename($_SERVER['PHP_SELF']) == 'news_form.php') ? 'active' : '' ?>">
+            <a href="news.php"><i class="bi bi-newspaper"></i> News</a>
+        </li>
+
         <div class="sidebar-heading">System</div>
         <li class="<?= basename($_SERVER['PHP_SELF']) == 'messages.php' ? 'active' : '' ?>">
             <a href="messages.php"><i class="bi bi-envelope"></i> Messages</a>

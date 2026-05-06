@@ -3,7 +3,12 @@
 // todos
 function db_get_all($table, $where = "1", $order = "id DESC", $limit = "")
 {
-    $sql = "SELECT * FROM $table WHERE $where ORDER BY $order $limit";
+    $sql = "SELECT * FROM $table WHERE $where ORDER BY $order";
+
+    if ($limit) {
+        $sql .= " LIMIT $limit";
+    }
+
     return my_query($sql);
 }
 
@@ -817,4 +822,45 @@ function create_message($data)
         'subject' => $data['subject'],
         'message' => $data['message']
     ]);
+}
+
+/**
+ * News Functions
+ */
+function get_news_list($limit = 6, $offset = 0)
+{
+    global $LANG_CODE;
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    return db_select(
+        "n.*, nt.title, nt.slug, nt.short_description",
+        "news n",
+        "LEFT JOIN news_translations nt ON nt.news_id = n.id AND nt.lang_code = '$LANG_CODE'",
+        "n.is_active = 1",
+        "n.created_at DESC",
+        "$offset, $limit"
+    );
+}
+
+function get_news_by_slug($slug)
+{
+    global $LANG_CODE;
+    $slug = addslashes($slug);
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    $res = db_select(
+        "n.*, nt.*",
+        "news n",
+        "LEFT JOIN news_translations nt ON nt.news_id = n.id AND nt.lang_code = '$LANG_CODE'",
+        "nt.slug = '$slug' AND n.is_active = 1",
+        "",
+        "1"
+    );
+
+    return $res[0] ?? null;
+}
+
+function get_news_count()
+{
+    return db_count("news", "is_active = 1");
 }

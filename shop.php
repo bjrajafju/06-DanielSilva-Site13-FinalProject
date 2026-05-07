@@ -11,6 +11,7 @@ $selected_prices     = $_GET['price'] ?? [];
 $selected_categories = $_GET['categories'] ?? [];
 $selected_sort       = $_GET['sort'] ?? '';
 $search              = $_GET['search'] ?? '';
+$view                = $_GET['view'] ?? 'grid';
 
 if (!is_array($selected_colors)) $selected_colors = [$selected_colors];
 if (!is_array($selected_sizes)) $selected_sizes = [$selected_sizes];
@@ -59,6 +60,7 @@ $price_counts = get_filter_prices();
 <div class="container-fluid pt-5">
     <form method="GET">
         <input type="hidden" name="sort" value="<?= htmlspecialchars($selected_sort) ?>">
+        <input type="hidden" name="view" value="<?= htmlspecialchars($view) ?>">
         <div class="row px-xl-5">
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-12">
@@ -175,7 +177,7 @@ $price_counts = get_filter_prices();
 
             <!-- Shop Product Start -->
             <div class="col-lg-9 col-md-12">
-                <div class="row pb-3">
+                <div class="row pb-3 <?= $view === 'list' ? 'view-list' : 'view-grid' ?>">
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <div class="input-group">
@@ -190,6 +192,14 @@ $price_counts = get_filter_prices();
                                         <i class="fa fa-search"></i>
                                     </span>
                                 </div>
+                            </div>
+                            <div class="d-flex ml-4">
+                                <a href="<?= build_query(['view' => 'grid']) ?>" class="btn border <?= $view === 'grid' ? 'btn-primary text-white' : '' ?>" title="Grid View">
+                                    <i class="fa fa-th"></i>
+                                </a>
+                                <a href="<?= build_query(['view' => 'list']) ?>" class="btn border ml-2 <?= $view === 'list' ? 'btn-primary text-white' : '' ?>" title="List View">
+                                    <i class="fa fa-bars"></i>
+                                </a>
                             </div>
                             <div class="dropdown ml-4">
                                 <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -222,24 +232,49 @@ $price_counts = get_filter_prices();
                         </div>
                     </div>
                     <?php foreach ($products as $product): ?>
-                        <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                            <div class="card product-item border-0 mb-4">
-                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                    <img class="img-fluid w-100" src="<?= $product['image'] ?>" alt="">
-                                </div>
-                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                    <h6 class="text-truncate mb-3"><?= $product['title'] ?></h6>
-                                    <div class="d-flex justify-content-center">
-                                        <h6><?= $product['price'] ?>€</h6>
+                        <div class="<?= $view === 'list' ? 'col-12 mb-3' : 'col-lg-4 col-md-6 col-sm-12 pb-1' ?>">
+                            <?php if ($view === 'list'): ?>
+                                <!-- List View Layout -->
+                                <div class="product-list-item d-flex align-items-center p-3">
+                                    <div class="product-list-img flex-shrink-0 mr-4">
+                                        <a href="<?= $SETTINGS['url_site'] ?>/detail.php?slug=<?= $product['slug'] ?>">
+                                            <img src="<?= $product['image'] ?>" alt="<?= $product['title'] ?>" class="img-fluid">
+                                        </a>
+                                    </div>
+                                    <div class="product-list-info flex-grow-1">
+                                        <h5 class="mb-2">
+                                            <a href="<?= $SETTINGS['url_site'] ?>/detail.php?slug=<?= $product['slug'] ?>" class="text-dark font-weight-semi-bold">
+                                                <?= $product['title'] ?>
+                                            </a>
+                                        </h5>
+                                        <h4 class="text-primary font-weight-bold mb-0"><?= $product['price'] ?>€</h4>
+                                    </div>
+                                    <div class="product-list-action ml-4">
+                                        <a href="<?= $SETTINGS['url_site'] ?>/detail.php?slug=<?= $product['slug'] ?>" class="btn btn-primary btn-sm px-4">
+                                            <i class="fas fa-eye mr-1"></i> View Detail
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="card-footer d-flex justify-content-center bg-light border">
-                                    <a href="<?= $SETTINGS['url_site'] ?>/detail.php?slug=<?= $product['slug'] ?>"
-                                        class="btn btn-sm text-dark p-0">
-                                        <i class="fas fa-eye text-primary mr-1"></i>View Detail
-                                    </a>
+                            <?php else: ?>
+                                <!-- Grid View Layout -->
+                                <div class="card product-item border-0 mb-4">
+                                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                        <img class="img-fluid w-100" src="<?= $product['image'] ?>" alt="">
+                                    </div>
+                                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                        <h6 class="text-truncate mb-3"><?= $product['title'] ?></h6>
+                                        <div class="d-flex justify-content-center">
+                                            <h6><?= $product['price'] ?>€</h6>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer d-flex justify-content-center bg-light border">
+                                        <a href="<?= $SETTINGS['url_site'] ?>/detail.php?slug=<?= $product['slug'] ?>"
+                                            class="btn btn-sm text-dark p-0">
+                                            <i class="fas fa-eye text-primary mr-1"></i>View Detail
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 </div>

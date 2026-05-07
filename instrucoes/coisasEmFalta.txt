@@ -10,11 +10,9 @@
 - [ ] **Estatísticas do Dashboard**: O dashboard atual é simples; as instruções sugerem uma apresentação mais completa de dados e estatísticas do sistema.
 
 ## 4. Funcionalidades de Valorização (Extras / Opcionais)
-- [ ] **Troca de Visualização**: Falta o botão para alternar a listagem de produtos entre "Mosaico/Grelha" e "Linhas/Lista".
 - [ ] **SEO Dinâmico**: Atualmente os meta tags no `header.php` são estáticos. Falta a implementação de SEO dinâmico para cada página (títulos e descrições específicas).
 - [ ] **Funcionalidades de Utilizador (Logins Frontoffice)**:
     - [ ] Adição de artigos a uma lista de favoritos.
-    - [ ] Espaço para testemunhos de clientes.
 - [ ] **Módulo de Loja (Melhorias)**:
     - [ ] **Gestão de Stock**: Implementar a atualização automática (decremento) do stock disponível quando uma compra é finalizada.
     - [ ] **Histórico do Cliente**: Área no frontoffice (Perfil) onde o utilizador logado possa consultar o seu histórico de compras anteriores.

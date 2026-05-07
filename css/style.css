@@ -10075,3 +10075,65 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
+
+
+/* Professional Shop List View Styles */
+.product-list-item {
+    background: #fff;
+    border: 1px solid #edf1ff !important;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.product-list-item:hover {
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+}
+
+.product-list-img img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.product-list-info h5 a {
+    transition: color 0.3s;
+}
+
+.product-list-info h5 a:hover {
+    color: #d19c97 !important;
+    text-decoration: none;
+}
+
+.product-list-action .btn {
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .product-list-item {
+        flex-direction: column !important;
+        text-align: center !important;
+        padding: 1.5rem !important;
+    }
+    .product-list-img {
+        margin-right: 0 !important;
+        margin-bottom: 1rem;
+    }
+    .product-list-img img {
+        width: 100% !important;
+        max-width: 180px;
+        height: auto;
+    }
+    .product-list-info {
+        width: 100%;
+    }
+    .product-list-action {
+        margin-left: 0 !important;
+        margin-top: 1rem;
+        width: 100%;
+    }
+    .product-list-action .btn {
+        width: 100%;
+    }
+}

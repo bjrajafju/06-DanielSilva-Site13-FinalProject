@@ -14,10 +14,10 @@
     <style>
         :root {
             --sidebar-width: 260px;
-            --primary-color: #4e73df;
+            --primary-color: #ff9800;
             --secondary-color: #858796;
-            --dark-bg: #1a1c23;
-            --sidebar-bg: #24262d;
+            --dark-bg: #000000;
+            --sidebar-bg: #111111;
             --card-bg: #ffffff;
         }
 
@@ -32,7 +32,6 @@
             width: 100%;
         }
 
-        /* Sidebar */
         #sidebar {
             width: var(--sidebar-width);
             min-height: 100vh;
@@ -91,7 +90,6 @@
             margin-top: 15px;
         }
 
-        /* Content */
         #content {
             width: 100%;
             padding: 20px;
@@ -129,6 +127,23 @@
             background-color: var(--primary-color);
             border-color: var(--primary-color);
         }
+        
+        .btn-primary:hover {
+            background-color: #e68a00;
+            border-color: #e68a00;
+        }
+
+        .bg-primary {
+            background-color: var(--primary-color) !important;
+        }
+
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+
+        .border-left-primary {
+            border-left: 0.25rem solid var(--primary-color) !important;
+        }
 
         .table thead th {
             background-color: #f8f9fc;
@@ -147,7 +162,6 @@
             border-radius: 5px;
         }
 
-        /* Animations */
         .fade-in {
             animation: fadeIn 0.5s ease-in;
         }

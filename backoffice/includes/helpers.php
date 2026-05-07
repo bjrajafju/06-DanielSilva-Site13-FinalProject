@@ -1,12 +1,8 @@
 <?php
 include_once __DIR__ . '/../../includes/config.php';
 
-// Protect all backoffice pages
 require_admin();
 
-/**
- * Handle image upload
- */
 function handle_image_upload($file_input_name, $existing_path = '')
 {
     global $SETTINGS;
@@ -33,17 +29,11 @@ function handle_image_upload($file_input_name, $existing_path = '')
     return $existing_path;
 }
 
-/**
- * Get active languages
- */
 function get_active_languages()
 {
     return db_get_all('lang', '1', 'id ASC');
 }
 
-/**
- * Alert helper
- */
 function show_alert()
 {
     if (isset($_SESSION['alert'])) {
@@ -62,18 +52,12 @@ function set_alert($msg, $type = 'success')
     $_SESSION['alert'] = ['msg' => $msg, 'type' => $type];
 }
 
-/**
- * Redirect helper
- */
 function redirect($url)
 {
     header("Location: $url");
     exit;
 }
 
-/**
- * Get translation for an entity
- */
 function get_entity_translations($table, $fk_field, $fk_value)
 {
     $rows = db_get_all($table, "$fk_field = " . (int)$fk_value);

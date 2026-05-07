@@ -32,6 +32,7 @@ include 'layout/sidebar.php';
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>Role</th>
                                 <th>Mobile</th>
                                 <th>Joined</th>
                                 <th class="text-end">Actions</th>
@@ -42,6 +43,13 @@ include 'layout/sidebar.php';
                                 <tr>
                                     <td><strong><?= $u['first_name'] . ' ' . $u['last_name'] ?></strong></td>
                                     <td><?= $u['email'] ?></td>
+                                    <td>
+                                        <?php if ($u['is_admin']): ?>
+                                            <span class="badge bg-primary">Admin</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-secondary">User</span>
+                                        <?php endif; ?>
+                                    </td>
                                     <td><?= $u['mobile'] ?: 'N/A' ?></td>
                                     <td><?= date('d/m/Y', strtotime($u['created_at'])) ?></td>
                                     <td class="text-end">

@@ -4,6 +4,16 @@ include_once 'includes/helpers.php';
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if ($id) {
+    $user_to_delete = db_get_one('users', "id = $id");
+    
+    if ($user_to_delete['is_admin']) {
+        $admin_count = db_count('users', "is_admin = 1");
+        if ($admin_count <= 1) {
+            set_alert("Cannot delete the only administrator.", "danger");
+            redirect("users.php");
+        }
+    }
+
     // Check for dependencies (orders, addresses, carts)
     $orders = db_get_all('orders', "user_id = $id");
     $addresses = db_get_all('addresses', "user_id = $id");

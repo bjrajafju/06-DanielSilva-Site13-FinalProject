@@ -10,11 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $mobile = $_POST['mobile'];
 
+    $is_admin = isset($_POST['is_admin']) ? 1 : 0;
+    
     $data = [
         'first_name' => $first_name,
         'last_name' => $last_name,
         'email' => $email,
-        'mobile' => $mobile
+        'mobile' => $mobile,
+        'is_admin' => $is_admin
     ];
 
     if (!empty($_POST['password'])) {
@@ -22,8 +25,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($id) {
+        // If removing admin status, check if this is the last admin
+        if ($user['is_admin'] && !$is_admin) {
+            $admin_count = db_count('users', "is_admin = 1");
+            if ($admin_count <= 1) {
+                set_alert("Cannot remove admin status from the only administrator.", "danger");
+                redirect("user_form.php?id=$id");
+            }
+        }
+        
         db_update('users', $data, "id = $id");
         set_alert("User updated successfully!");
+        redirect("users.php");
     } else {
         if (empty($_POST['password'])) {
             set_alert("Password is required for new users.", "danger");
@@ -47,6 +60,7 @@ include 'layout/sidebar.php';
     </div>
 
     <div class="container-fluid">
+        <?php show_alert(); ?>
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <div class="card">
@@ -71,9 +85,14 @@ include 'layout/sidebar.php';
                                 <label class="form-label">Mobile</label>
                                 <input type="text" name="mobile" class="form-control" value="<?= $user['mobile'] ?? '' ?>">
                             </div>
-                            <div class="mb-4">
+                            <div class="mb-3">
                                 <label class="form-label">Password <?= $id ? '(Leave empty to keep current)' : '' ?></label>
                                 <input type="password" name="password" class="form-control" <?= $id ? '' : 'required' ?>>
+                            </div>
+                            
+                            <div class="mb-4 form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="is_admin" id="isAdmin" <?= isset($user['is_admin']) && $user['is_admin'] ? 'checked' : '' ?>>
+                                <label class="form-check-label" for="isAdmin">Admin Permissions</label>
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100">

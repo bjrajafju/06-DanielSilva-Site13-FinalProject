@@ -877,9 +877,6 @@ function create_message($data)
     ]);
 }
 
-/**
- * News Functions
- */
 function get_news_list($limit = 6, $offset = 0)
 {
     global $LANG_CODE;
@@ -947,9 +944,6 @@ function get_news_by_slug_any_lang($slug)
     )[0] ?? null;
 }
 
-/**
- * Review Functions
- */
 function get_product_reviews($product_id)
 {
     $product_id = (int)$product_id;

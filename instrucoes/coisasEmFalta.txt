@@ -14,7 +14,6 @@
 - [ ] **SEO Dinâmico**: Atualmente os meta tags no `header.php` são estáticos. Falta a implementação de SEO dinâmico para cada página (títulos e descrições específicas).
 - [ ] **Funcionalidades de Utilizador (Logins Frontoffice)**:
     - [ ] Adição de artigos a uma lista de favoritos.
-    - [ ] Submissão de avaliações/comentários em produtos.
     - [ ] Espaço para testemunhos de clientes.
 - [ ] **Módulo de Loja (Melhorias)**:
     - [ ] **Gestão de Stock**: Implementar a atualização automática (decremento) do stock disponível quando uma compra é finalizada.

@@ -101,6 +101,21 @@ $categories = get_categories();
     </div>
     <!-- Topbar End -->
 
+    <!-- Alerts Start -->
+    <div class="container-fluid pt-3">
+        <div class="px-xl-5">
+            <?php if (isset($_GET['error']) && $_GET['error'] === 'access_denied'): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> <?= t('login.error.access_denied') ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <!-- Alerts End -->
+
 
     <!-- Navbar Start -->
     <div class="container-fluid">
@@ -162,6 +177,11 @@ $categories = get_categories();
 
                             <a href="<?= $SETTINGS['url_site'] ?>/contact.php"
                                 class="nav-item nav-link"><?php echo t('header.nav.contact'); ?></a>
+
+                            <?php if (is_admin()): ?>
+                                <a href="<?= $SETTINGS['url_site'] ?>/backoffice/index.php"
+                                    class="nav-item nav-link text-primary font-weight-bold"><i class="fas fa-user-shield"></i> Backoffice</a>
+                            <?php endif; ?>
                         </div>
 
                         <div class="navbar-nav ml-auto py-0">

@@ -1,6 +1,9 @@
 <?php
 include_once __DIR__ . '/../../includes/config.php';
 
+// Protect all backoffice pages
+require_admin();
+
 /**
  * Handle image upload
  */

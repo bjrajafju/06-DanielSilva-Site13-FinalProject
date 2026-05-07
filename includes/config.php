@@ -33,3 +33,6 @@ include_once 'db.php';
 
 // functions
 include_once 'functions.php';
+
+// auth
+include_once 'auth.php';

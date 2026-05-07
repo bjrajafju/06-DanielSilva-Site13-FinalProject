@@ -17,13 +17,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_first_name'] = $user['first_name'];
             $_SESSION['user_last_name'] = $user['last_name'];
             $_SESSION['user_email'] = $user['email'];
+            $_SESSION['is_admin'] = (bool)$user['is_admin'];
 
             $session_cart = get_session_cart();
             if ($session_cart) {
                 $_SESSION['show_cart_merge_popup'] = true;
             }
 
-            header("Location: " . $SETTINGS['url_site'] . "/index.php");
+            // Redirect logic
+            $redirect = $_GET['redirect'] ?? '';
+            if (!empty($redirect)) {
+                header("Location: " . $redirect);
+            } else {
+                header("Location: " . $SETTINGS['url_site'] . "/index.php");
+            }
             exit;
         } else {
             $error = t('login.error.invalid_credentials');
@@ -67,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     <?php endif; ?>
 
-                    <form action="login.php" method="POST">
+                    <form action="login.php<?= isset($_GET['redirect']) ? '?redirect=' . urlencode($_GET['redirect']) : '' ?>" method="POST">
                         <div class="form-group">
                             <label><?= t('login.form.email_label') ?></label>
                             <input class="form-control py-4" type="email" name="email" placeholder="<?= t('login.form.email_placeholder') ?>" required>

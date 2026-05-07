@@ -92,8 +92,9 @@ $categories = get_categories();
             </div>
 
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
+                <a href="<?= $SETTINGS['url_site'] ?>/wishlist.php" class="btn border">
                     <i class="fas fa-heart text-primary"></i>
+                    <span class="badge"><?= get_wishlist_count($_SESSION['user_id'] ?? null) ?></span>
                 </a>
                 <a href="<?= $SETTINGS['url_site'] ?>/cart.php" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>

@@ -992,3 +992,59 @@ function delete_review($id)
     $id = (int)$id;
     return db_delete("reviews", "id = $id");
 }
+
+/**
+ * Wishlist Functions
+ */
+function add_to_wishlist($user_id, $product_id)
+{
+    $user_id = (int)$user_id;
+    $product_id = (int)$product_id;
+
+    if (is_product_in_wishlist($user_id, $product_id)) {
+        return true;
+    }
+
+    return db_insert("wishlist", [
+        'user_id' => $user_id,
+        'product_id' => $product_id
+    ]);
+}
+
+function remove_from_wishlist($user_id, $product_id)
+{
+    $user_id = (int)$user_id;
+    $product_id = (int)$product_id;
+    return db_delete("wishlist", "user_id = $user_id AND product_id = $product_id");
+}
+
+function is_product_in_wishlist($user_id, $product_id)
+{
+    if (!$user_id) return false;
+    $user_id = (int)$user_id;
+    $product_id = (int)$product_id;
+    return db_count("wishlist", "user_id = $user_id AND product_id = $product_id") > 0;
+}
+
+function get_user_wishlist($user_id)
+{
+    global $LANG_CODE;
+    $user_id = (int)$user_id;
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    return db_select(
+        "p.*, pt.title, pt.slug",
+        "wishlist w",
+        "JOIN products p ON p.id = w.product_id
+         LEFT JOIN product_translations pt ON pt.product_id = p.id AND pt.lang_code = '$LANG_CODE'",
+        "w.user_id = $user_id",
+        "w.created_at DESC"
+    );
+}
+
+function get_wishlist_count($user_id)
+{
+    if (!$user_id) return 0;
+    $user_id = (int)$user_id;
+    return db_count("wishlist", "user_id = $user_id");
+}

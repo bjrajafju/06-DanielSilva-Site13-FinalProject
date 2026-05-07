@@ -142,6 +142,27 @@ $average_rating = get_product_average_rating($product['product_id']);
                     <i class="fa fa-shopping-cart mr-1"></i>
                     <?= t('detail.product.add_to_cart') ?>
                 </button>
+
+                <!-- Wishlist Button -->
+                <div class="ml-3">
+                    <?php
+                    $user_id = $_SESSION['user_id'] ?? null;
+                    $in_wishlist = is_product_in_wishlist($user_id, $product['product_id']);
+                    $wishlist_action = $in_wishlist ? 'remove' : 'add';
+                    $wishlist_icon = $in_wishlist ? 'fas' : 'far';
+                    ?>
+                    <?php if ($user_id): ?>
+                        <a href="wishlist_action.php?product_id=<?= $product['product_id'] ?>&action=<?= $wishlist_action ?>" class="btn btn-outline-primary px-3">
+                            <i class="<?= $wishlist_icon ?> fa-heart mr-1"></i>
+                            <?= $in_wishlist ? t('detail.product.remove_from_wishlist') : t('detail.product.add_to_wishlist') ?>
+                        </a>
+                    <?php else: ?>
+                        <a href="login.php?redirect=detail.php?slug=<?= $product['slug'] ?>" class="btn btn-outline-primary px-3">
+                            <i class="far fa-heart mr-1"></i>
+                            <?= t('detail.product.add_to_wishlist') ?>
+                        </a>
+                    <?php endif; ?>
+                </div>
             </div>
             </form>
         </div>

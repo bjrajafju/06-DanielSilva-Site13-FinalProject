@@ -197,26 +197,26 @@ $price_counts = get_filter_prices();
                                     $sort_label = t('shop.products.sort_button');
                                     switch ($selected_sort) {
                                         case 'name_asc':
-                                            $sort_label = 'Name A-Z';
+                                            $sort_label = t('shop.products.sort_nameAZ');
                                             break;
                                         case 'name_desc':
-                                            $sort_label = 'Name Z-A';
+                                            $sort_label = t('shop.products.sort_nameZA');
                                             break;
                                         case 'price_asc':
-                                            $sort_label = 'Price Low to High';
+                                            $sort_label = t('shop.products.sort_price_asc');
                                             break;
                                         case 'price_desc':
-                                            $sort_label = 'Price High to Low';
+                                            $sort_label = t('shop.products.sort_price_desc');
                                             break;
                                     }
                                     echo $sort_label;
                                     ?>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                    <a class="dropdown-item" href="<?= build_query(['sort' => 'name_asc', 'page' => 1]) ?>">Name A-Z</a>
-                                    <a class="dropdown-item" href="<?= build_query(['sort' => 'name_desc', 'page' => 1]) ?>">Name Z-A</a>
-                                    <a class="dropdown-item" href="<?= build_query(['sort' => 'price_asc', 'page' => 1]) ?>">Price Low to High</a>
-                                    <a class="dropdown-item" href="<?= build_query(['sort' => 'price_desc', 'page' => 1]) ?>">Price High to Low</a>
+                                    <a class="dropdown-item" href="<?= build_query(['sort' => 'name_asc', 'page' => 1]) ?>"><?= t('shop.products.sort_nameAZ') ?></a>
+                                    <a class="dropdown-item" href="<?= build_query(['sort' => 'name_desc', 'page' => 1]) ?>"><?= t('shop.products.sort_nameZA') ?></a>
+                                    <a class="dropdown-item" href="<?= build_query(['sort' => 'price_asc', 'page' => 1]) ?>"><?= t('shop.products.sort_price_asc') ?></a>
+                                    <a class="dropdown-item" href="<?= build_query(['sort' => 'price_desc', 'page' => 1]) ?>"><?= t('shop.products.sort_price_desc') ?></a>
                                 </div>
                             </div>
                         </div>

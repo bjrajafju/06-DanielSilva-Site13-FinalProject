@@ -29,4 +29,12 @@ INSERT INTO `traduz` (`lang_code`, `code`, `text`) VALUES
 ('gb', 'detail.reviews.error_db_error', 'An error occurred while saving your review. Please try again.'),
 ('pt', 'detail.reviews.error_db_error', 'Ocorreu um erro ao guardar a sua avaliação. Por favor, tente novamente.'),
 ('gb', 'detail.reviews.logged_as', 'Logged in as'),
-('pt', 'detail.reviews.logged_as', 'Sessão iniciada como');
+('pt', 'detail.reviews.logged_as', 'Sessão iniciada como'),
+('gb', 'shop.sort.name_asc', 'Name A-Z'),
+('pt', 'shop.sort.name_asc', 'Nome A-Z'),
+('gb', 'shop.sort.name_desc', 'Name Z-A'),
+('pt', 'shop.sort.name_desc', 'Nome Z-A'),
+('gb', 'shop.sort.price_asc', 'Price Low to High'),
+('pt', 'shop.sort.price_asc', 'Preço Baixo para Alto'),
+('gb', 'shop.sort.price_desc', 'Price High to Low'),
+('pt', 'shop.sort.price_desc', 'Preço Alto para Baixo');

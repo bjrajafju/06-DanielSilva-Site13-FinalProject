@@ -121,7 +121,7 @@ $categories = get_categories();
                         foreach ($categories as $cat):
                         ?>
 
-                            <a href="<?= $SETTINGS['url_site'] ?>/shop.php"
+                            <a href="<?= $SETTINGS['url_site'] ?>/shop.php?categories[]=<?= $cat['id'] ?>"
                                 class="nav-item nav-link">
                                 <?= $cat['name'] ?>
                             </a>

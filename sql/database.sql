@@ -1932,13 +1932,6 @@ VALUES
     'detail.product.add_to_cart',
     'Adicionar ao Carrinho'
   ),
-  (167, 'gb', 'detail.product.share_on', 'Share on:'),
-  (
-    168,
-    'pt',
-    'detail.product.share_on',
-    'Partilhar em:'
-  ),
   (
     169,
     'gb',

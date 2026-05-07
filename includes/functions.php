@@ -206,6 +206,11 @@ function get_products_filtered($filters = [], $limit = 12, $offset = 0)
         $where[] = "pv.size_id IN (" . implode(',', $sizes) . ")";
     }
 
+    if (!empty($filters['categories'])) {
+        $categories = array_map('intval', $filters['categories']);
+        $where[] = "p.category_id IN (" . implode(',', $categories) . ")";
+    }
+
     if (!empty($filters['search'])) {
         $search = addslashes($filters['search']);
         $where[] = "pt.title LIKE '%$search%'";
@@ -224,13 +229,31 @@ function get_products_filtered($filters = [], $limit = 12, $offset = 0)
 
     $where_sql = implode(" AND ", $where);
 
+    $sort = $filters['sort'] ?? '';
+    $order_by = 'p.id DESC';
+
+    switch ($sort) {
+        case 'name_asc':
+            $order_by = 'pt.title ASC';
+            break;
+        case 'name_desc':
+            $order_by = 'pt.title DESC';
+            break;
+        case 'price_asc':
+            $order_by = 'p.price ASC';
+            break;
+        case 'price_desc':
+            $order_by = 'p.price DESC';
+            break;
+    }
+
     return db_select_grouped(
         "p.*, pt.title, pt.slug, pt.short_description",
         "products p",
         $joins,
         $where_sql,
         "p.id",
-        "p.id DESC",
+        $order_by,
         "$offset, $limit"
     );
 }
@@ -725,6 +748,31 @@ function get_filter_prices()
     )[0];
 }
 
+function get_filter_categories()
+{
+    global $LANG_CODE;
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    return db_select_grouped(
+        "
+        c.id,
+        ct.name,
+        COUNT(DISTINCT p.id) as total
+        ",
+        "products p",
+        "
+        JOIN product_variants pv ON pv.product_id = p.id
+        JOIN categories c ON c.id = p.category_id
+        LEFT JOIN category_translations ct 
+            ON ct.category_id = c.id 
+            AND ct.lang_code = '$LANG_CODE'
+        ",
+        "p.is_active = 1 AND pv.is_available = 1",
+        "c.id",
+        "ct.name ASC"
+    );
+}
+
 function get_products_filtered_count($filters = [])
 {
     global $LANG_CODE;
@@ -748,6 +796,11 @@ function get_products_filtered_count($filters = [])
     if (!empty($filters['sizes'])) {
         $sizes = array_map('intval', $filters['sizes']);
         $where[] = "pv.size_id IN (" . implode(',', $sizes) . ")";
+    }
+
+    if (!empty($filters['categories'])) {
+        $categories = array_map('intval', $filters['categories']);
+        $where[] = "p.category_id IN (" . implode(',', $categories) . ")";
     }
 
     if (!empty($filters['search'])) {

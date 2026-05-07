@@ -144,23 +144,6 @@ $average_rating = get_product_average_rating($product['product_id']);
                 </button>
             </div>
             </form>
-            <div class="d-flex pt-2">
-                <p class="text-dark font-weight-medium mb-0 mr-2"><?= t('detail.product.share_on') ?></p>
-                <div class="d-inline-flex">
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-pinterest"></i>
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
     <div class="row px-xl-5">

@@ -5,23 +5,29 @@
 include_once 'includes/config.php';
 include 'includes/header.php';
 
-$selected_colors = $_GET['colors'] ?? [];
-$selected_sizes  = $_GET['sizes'] ?? [];
-$selected_prices = $_GET['price'] ?? [];
-$search          = $_GET['search'] ?? '';
+$selected_colors     = $_GET['colors'] ?? [];
+$selected_sizes      = $_GET['sizes'] ?? [];
+$selected_prices     = $_GET['price'] ?? [];
+$selected_categories = $_GET['categories'] ?? [];
+$selected_sort       = $_GET['sort'] ?? '';
+$search              = $_GET['search'] ?? '';
+
 if (!is_array($selected_colors)) $selected_colors = [$selected_colors];
 if (!is_array($selected_sizes)) $selected_sizes = [$selected_sizes];
 if (!is_array($selected_prices)) $selected_prices = [$selected_prices];
+if (!is_array($selected_categories)) $selected_categories = [$selected_categories];
 
 $per_page = 12;
 $page = max(1, (int)($_GET['page'] ?? 1));
 $offset = ($page - 1) * $per_page;
 
 $filters = [
-    'colors' => $selected_colors,
-    'sizes'  => $selected_sizes,
-    'search' => $search,
-    'price'  => $selected_prices
+    'colors'     => $selected_colors,
+    'sizes'      => $selected_sizes,
+    'categories' => $selected_categories,
+    'search'     => $search,
+    'price'      => $selected_prices,
+    'sort'       => $selected_sort
 ];
 
 $total_products = get_products_filtered_count($filters);
@@ -31,6 +37,7 @@ $products = get_products_filtered($filters, $per_page, $offset);
 
 $colors = get_filter_colors();
 $sizes = get_filter_sizes();
+$categories = get_filter_categories();
 $price_counts = get_filter_prices();
 ?>
 
@@ -51,9 +58,31 @@ $price_counts = get_filter_prices();
 <!-- Shop Start -->
 <div class="container-fluid pt-5">
     <form method="GET">
+        <input type="hidden" name="sort" value="<?= htmlspecialchars($selected_sort) ?>">
         <div class="row px-xl-5">
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-12">
+                <!-- Categories Start -->
+                <div class="border-bottom mb-4 pb-4">
+                    <h5 class="font-weight-semi-bold mb-4"><?= t('shop.sidebar.filter_category_title') ?></h5>
+                    <?php foreach ($categories as $cat): ?>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input
+                                type="checkbox"
+                                name="categories[]"
+                                value="<?= $cat['id'] ?>"
+                                class="custom-control-input"
+                                id="cat-<?= $cat['id'] ?>"
+                                <?= in_array($cat['id'], $selected_categories) ? 'checked' : '' ?>>
+                            <label class="custom-control-label" for="cat-<?= $cat['id'] ?>">
+                                <?= $cat['name'] ?>
+                            </label>
+                            <span class="badge border font-weight-normal"><?= $cat['total'] ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <!-- Categories End -->
+
                 <!-- Price Start -->
                 <div class="border-bottom mb-4 pb-4">
                     <h5 class="font-weight-semi-bold mb-4"><?= t('shop.sidebar.filter_price_title') ?></h5>
@@ -164,12 +193,30 @@ $price_counts = get_filter_prices();
                             </div>
                             <div class="dropdown ml-4">
                                 <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <?= t('shop.products.sort_button') ?>
+                                    <?php
+                                    $sort_label = t('shop.products.sort_button');
+                                    switch ($selected_sort) {
+                                        case 'name_asc':
+                                            $sort_label = 'Name A-Z';
+                                            break;
+                                        case 'name_desc':
+                                            $sort_label = 'Name Z-A';
+                                            break;
+                                        case 'price_asc':
+                                            $sort_label = 'Price Low to High';
+                                            break;
+                                        case 'price_desc':
+                                            $sort_label = 'Price High to Low';
+                                            break;
+                                    }
+                                    echo $sort_label;
+                                    ?>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                    <a class="dropdown-item" href="#">Latest</a>
-                                    <a class="dropdown-item" href="#">Popularity</a>
-                                    <a class="dropdown-item" href="#">Best Rating</a>
+                                    <a class="dropdown-item" href="<?= build_query(['sort' => 'name_asc', 'page' => 1]) ?>">Name A-Z</a>
+                                    <a class="dropdown-item" href="<?= build_query(['sort' => 'name_desc', 'page' => 1]) ?>">Name Z-A</a>
+                                    <a class="dropdown-item" href="<?= build_query(['sort' => 'price_asc', 'page' => 1]) ?>">Price Low to High</a>
+                                    <a class="dropdown-item" href="<?= build_query(['sort' => 'price_desc', 'page' => 1]) ?>">Price High to Low</a>
                                 </div>
                             </div>
                         </div>

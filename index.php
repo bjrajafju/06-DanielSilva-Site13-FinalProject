@@ -53,7 +53,7 @@ $products = get_products(8);
                         <?= get_product_count_by_category($cat['id']) ?> <?= t('home.categories.products'); ?>
                     </p>
 
-                    <a href="<?= $SETTINGS['url_site'] ?>/shop.php" class="cat-img position-relative overflow-hidden mb-3">
+                    <a href="<?= $SETTINGS['url_site'] ?>/shop.php?categories[]=<?= $cat['id'] ?>" class="cat-img position-relative overflow-hidden mb-3">
                         <img class="img-fluid" src="<?= $cat['image'] ?>" alt="">
                     </a>
 

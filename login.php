@@ -82,6 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="form-group">
                             <label><?= t('login.form.password_label') ?></label>
                             <input class="form-control py-4" type="password" name="password" placeholder="<?= t('login.form.password_placeholder') ?>" required>
+                            <div class="text-right mt-1">
+                                <a href="forgot-password.php" class="small font-weight-bold text-primary"><?= t('forgot_password.link') ?></a>
+                            </div>
                         </div>
                         <div class="pt-2">
                             <button class="btn btn-block btn-primary font-weight-bold py-3" type="submit"><?= t('login.form.submit_button') ?></button>

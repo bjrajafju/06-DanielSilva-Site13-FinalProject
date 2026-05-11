@@ -68,6 +68,9 @@
         <li class="<?= basename($_SERVER['PHP_SELF']) == 'carts.php' ? 'active' : '' ?>">
             <a href="carts.php"><i class="bi bi-cart"></i> Active Carts</a>
         </li>
+        <li class="<?= basename($_SERVER['PHP_SELF']) == 'settings_email.php' ? 'active' : '' ?>">
+            <a href="settings_email.php"><i class="bi bi-envelope-at"></i> Email Settings</a>
+        </li>
     </ul>
 
     <div class="px-4 py-3 mt-auto">

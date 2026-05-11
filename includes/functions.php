@@ -1125,18 +1125,18 @@ function get_user_stats($user_id)
 {
     $user_id = (int)$user_id;
     $orders = db_get_all("orders", "user_id = $user_id");
-    
+
     $total_orders = count($orders);
     $total_spent = 0;
     $last_order_date = null;
-    
+
     if ($total_orders > 0) {
         foreach ($orders as $order) {
             $total_spent += $order['total'];
         }
         $last_order_date = $orders[0]['created_at']; // Since orders are DESC
     }
-    
+
     return [
         'total_orders' => $total_orders,
         'total_spent' => $total_spent,
@@ -1154,11 +1154,153 @@ function change_user_password($user_id, $current_password, $new_password)
 {
     $user_id = (int)$user_id;
     $user = db_get_one("users", "id = $user_id");
-    
+
     if (!$user || !password_verify($current_password, $user['password'])) {
         return false;
     }
-    
+
     $new_hash = password_hash($new_password, PASSWORD_DEFAULT);
     return db_update("users", ['password' => $new_hash], "id = $user_id");
+}
+
+// Settings Helpers
+function get_setting($key, $default = null)
+{
+    $key = addslashes($key);
+    $res = db_get_one("settings", "settings_key = '$key'");
+    return $res ? $res['settings_value'] : $default;
+}
+
+function set_setting($key, $value)
+{
+    $key = addslashes($key);
+    $value = addslashes($value);
+    $existing = db_get_one("settings", "settings_key = '$key'");
+    if ($existing) {
+        return db_update("settings", ['settings_value' => $value], "settings_key = '$key'");
+    } else {
+        return db_insert("settings", ['settings_key' => $key, 'settings_value' => $value]);
+    }
+}
+
+// Email System
+function send_email($to, $subject, $body, $isHtml = true)
+{
+    require_once 'vendor/PHPMailer/PHPMailer.php';
+    require_once 'vendor/PHPMailer/SMTP.php';
+    require_once 'vendor/PHPMailer/Exception.php';
+
+    $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+
+    try {
+        // Server settings
+        $mail->isSMTP();
+        $mail->Host       = get_setting('smtp_host');
+        $mail->SMTPAuth   = true;
+        $mail->Username   = get_setting('smtp_user');
+        $mail->Password   = get_setting('smtp_pass');
+        $mail->SMTPSecure = get_setting('smtp_encryption'); // tls or ssl
+        $mail->Port       = get_setting('smtp_port');
+        $mail->CharSet    = 'UTF-8';
+
+        // Recipients
+        $mail->setFrom(get_setting('smtp_from_email'), get_setting('smtp_from_name'));
+        $mail->addAddress($to);
+
+        // Content
+        $mail->isHTML($isHtml);
+        $mail->Subject = $subject;
+        $mail->Body    = $body;
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        error_log("Email sending failed: " . $mail->ErrorInfo);
+        return false;
+    }
+}
+
+// Password Reset Logic
+function create_password_reset($email)
+{
+    $email = addslashes($email);
+    $user = db_get_one("users", "email = '$email'");
+
+    // Generic success response logic: we always say "check your email" in the UI
+    if (!$user) return true;
+
+    // Rate Limiting: Max 3 requests per hour per email/IP
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $oneHourAgo = date('Y-m-d H:i:s', strtotime('-1 hour'));
+
+    $recentRequests = db_count("password_resets", "ip_address = '$ip' AND created_at > '$oneHourAgo'");
+    $recentEmailRequests = db_count("password_resets", "user_id = {$user['id']} AND created_at > '$oneHourAgo'");
+
+    if ($recentRequests >= 3 || $recentEmailRequests >= 3) {
+        return "rate_limited";
+    }
+
+    // Invalidate previous active tokens for this user
+    db_delete("password_resets", "user_id = {$user['id']}");
+
+    // Generate secure token
+    $token = bin2hex(random_bytes(32));
+    $token_hash = hash('sha256', $token);
+    $expires_at = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+    db_insert("password_resets", [
+        'user_id' => $user['id'],
+        'token_hash' => $token_hash,
+        'expires_at' => $expires_at,
+        'ip_address' => $ip
+    ]);
+
+    // Send Email
+    global $SETTINGS;
+    $reset_link = $SETTINGS['url_site'] . "/reset-password.php?token=" . $token;
+
+    $subject = "Reset Your Password - " . $SETTINGS['url_site'];
+    $body = "
+    <html>
+    <body style='font-family: Arial, sans-serif; color: #333;'>
+        <div style='max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;'>
+            <h2 style='color: #D19C97;'>Password Reset Request</h2>
+            <p>Hello,</p>
+            <p>We received a request to reset your password. If you didn't make this request, you can safely ignore this email.</p>
+            <p>To reset your password, click the button below. This link will expire in 1 hour.</p>
+            <div style='text-align: center; margin: 30px 0;'>
+                <a href='$reset_link' style='background-color: #D19C97; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;'>Reset Password</a>
+            </div>
+            <p>Or copy and paste this link into your browser:</p>
+            <p style='word-break: break-all; color: #666;'>$reset_link</p>
+            <hr style='border: 0; border-top: 1px solid #eee; margin: 20px 0;'>
+            <p style='font-size: 12px; color: #999;'>This is an automated message, please do not reply.</p>
+        </div>
+    </body>
+    </html>";
+
+    return send_email($email, $subject, $body);
+}
+
+function validate_reset_token($token)
+{
+    $token_hash = hash('sha256', $token);
+    $now = date('Y-m-d H:i:s');
+
+    $reset = db_get_one("password_resets", "token_hash = '$token_hash' AND expires_at > '$now'");
+    return $reset ? $reset['user_id'] : false;
+}
+
+function reset_user_password($user_id, $new_password, $token)
+{
+    $user_id = (int)$user_id;
+    $hashed = password_hash($new_password, PASSWORD_DEFAULT);
+
+    if (db_update("users", ['password' => $hashed], "id = $user_id")) {
+        // Delete token after successful reset
+        $token_hash = hash('sha256', $token);
+        db_delete("password_resets", "token_hash = '$token_hash'");
+        return true;
+    }
+    return false;
 }

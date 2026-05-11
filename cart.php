@@ -32,6 +32,18 @@ include 'includes/header.php';
 <!-- Cart Start -->
 <div class="container-fluid pt-5">
     <div class="row px-xl-5">
+        <div class="col-12">
+            <?php if (isset($_GET['error']) && $_GET['error'] === 'out_of_stock'): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> <?= t('error.out_of_stock') ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="row px-xl-5">
         <div class="col-lg-8 table-responsive mb-5">
             <table class="table table-bordered text-center mb-0">
                 <thead class="bg-secondary text-dark">
@@ -123,6 +135,9 @@ include 'includes/header.php';
 
 <?php include 'includes/footer.php'; ?>
 
+<script>
+    const TXT_OUT_OF_STOCK = "<?= t('error.out_of_stock_max') ?>";
+</script>
 <script src="<?= $SETTINGS['url_site'] ?>/js/cart.js"></script>
 
 </body>

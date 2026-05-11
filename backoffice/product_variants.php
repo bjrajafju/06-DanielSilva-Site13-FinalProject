@@ -43,6 +43,7 @@ include 'layout/sidebar.php';
                                 <th>Product Title</th>
                                 <th>Size</th>
                                 <th>Color</th>
+                                <th>Stock</th>
                                 <th>Available</th>
                                 <th class="text-end">Actions</th>
                             </tr>
@@ -63,6 +64,14 @@ include 'layout/sidebar.php';
                                             <div style="width: 20px; height: 20px; background: <?= $v['hex'] ?>; border: 1px solid #ddd; margin-right: 10px;"></div>
                                             <?= $c_trans['name'] ?? 'N/A' ?>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        $stock_class = 'info';
+                                        if ($v['stock'] <= 0) $stock_class = 'danger';
+                                        elseif ($v['stock'] <= 5) $stock_class = 'warning';
+                                        ?>
+                                        <span class="badge bg-<?= $stock_class ?>"><?= $v['stock'] ?></span>
                                     </td>
                                     <td>
                                         <span class="badge bg-<?= $v['is_available'] ? 'success' : 'danger' ?>">

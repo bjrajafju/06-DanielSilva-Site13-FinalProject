@@ -58,6 +58,14 @@ if (empty($billing['first_name']) || empty($billing['address_line1']) || !$billi
     die("Error: Missing required fields.");
 }
 
+// Stock validation
+foreach ($cart_items as $item) {
+    if (!variant_has_stock($item['variant_id'], $item['quantity'])) {
+        header("Location: cart.php?error=out_of_stock&variant_id=" . $item['variant_id']);
+        exit;
+    }
+}
+
 if ($user_id) {
     function save_user_address($user_id, $type, $data)
     {
@@ -102,6 +110,9 @@ foreach ($cart_items as $item) {
         'price' => $item['price'],
         'quantity' => $item['quantity']
     ]);
+
+    // Reduce stock
+    reduce_variant_stock($item['variant_id'], $item['quantity']);
 }
 
 $billing_country_name = get_country_by_id($billing['country_id']);

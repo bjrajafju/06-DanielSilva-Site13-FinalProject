@@ -167,15 +167,17 @@ function get_products($limit = 8)
 
     $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
 
-    return db_select(
+    return db_select_grouped(
         "p.*, pt.title, pt.slug, pt.short_description",
         "products p",
         "
+        JOIN product_variants pv ON pv.product_id = p.id
         LEFT JOIN product_translations pt 
             ON pt.product_id = p.id 
             AND pt.lang_code = '$LANG_CODE'
         ",
-        "p.is_active = 1",
+        "p.is_active = 1 AND pv.is_available = 1 AND pv.stock > 0",
+        "p.id",
         "p.id DESC",
         $limit
     );
@@ -194,7 +196,7 @@ function get_products_filtered($filters = [], $limit = 12, $offset = 0)
             AND pt.lang_code = '$LANG_CODE'
     ";
 
-    $where = ["p.is_active = 1", "pv.is_available = 1"];
+    $where = ["p.is_active = 1", "pv.is_available = 1", "pv.stock > 0"];
 
     if (!empty($filters['colors'])) {
         $colors = array_map('intval', $filters['colors']);
@@ -336,10 +338,13 @@ function get_product_variants($product_id)
     return db_select(
         "
         pv.id,
+        pv.size_id,
+        pv.color_id,
         s.name as size,
         c.hex,
         ct.name as color,
-        pv.is_available
+        pv.is_available,
+        pv.stock
         ",
         "product_variants pv",
         "
@@ -349,7 +354,7 @@ function get_product_variants($product_id)
             ON ct.color_id = c.id 
             AND ct.lang_code = '$LANG_CODE'
         ",
-        "pv.product_id = $product_id AND pv.is_available = 1"
+        "pv.product_id = $product_id AND pv.is_available = 1 AND pv.stock > 0"
     );
 }
 
@@ -372,7 +377,7 @@ function get_product_sizes($product_id)
         "
         LEFT JOIN sizes s ON s.id = pv.size_id
         ",
-        "pv.product_id = $product_id AND pv.is_available = 1",
+        "pv.product_id = $product_id AND pv.is_available = 1 AND pv.stock > 0",
         "s.id ASC"
     );
 }
@@ -393,7 +398,7 @@ function get_product_colors($product_id)
             ON ct.color_id = c.id 
             AND ct.lang_code = '$LANG_CODE'
         ",
-        "pv.product_id = $product_id AND pv.is_available = 1",
+        "pv.product_id = $product_id AND pv.is_available = 1 AND pv.stock > 0",
         "c.id ASC"
     );
 }
@@ -591,6 +596,14 @@ function add_to_cart($variant_id, $quantity = 1)
     ]);
 }
 
+function get_cart_item_quantity($cart_id, $variant_id)
+{
+    $cart_id = (int)$cart_id;
+    $variant_id = (int)$variant_id;
+    $res = db_get_one("cart_items", "cart_id = $cart_id AND variant_id = $variant_id");
+    return $res ? (int)$res['quantity'] : 0;
+}
+
 function get_session_cart()
 {
     $session_id = session_id();
@@ -628,17 +641,24 @@ function merge_carts($session_cart_id, $user_cart_id)
         $variant_id = $item['variant_id'];
         $quantity = $item['quantity'];
 
+        $variant = db_get_one("product_variants", "id = $variant_id");
+        $stock = $variant ? (int)$variant['stock'] : 0;
+
         // Verificar se já existe no carrinho do user
         $existing = db_get_one("cart_items", "cart_id = $user_cart_id AND variant_id = $variant_id");
 
         if ($existing) {
-            my_query("UPDATE cart_items SET quantity = quantity + $quantity WHERE id = {$existing['id']}");
+            $new_qty = min($existing['quantity'] + $quantity, $stock);
+            my_query("UPDATE cart_items SET quantity = $new_qty WHERE id = {$existing['id']}");
         } else {
-            db_insert("cart_items", [
-                'cart_id' => $user_cart_id,
-                'variant_id' => $variant_id,
-                'quantity' => $quantity
-            ]);
+            $new_qty = min($quantity, $stock);
+            if ($new_qty > 0) {
+                db_insert("cart_items", [
+                    'cart_id' => $user_cart_id,
+                    'variant_id' => $variant_id,
+                    'quantity' => $new_qty
+                ]);
+            }
         }
     }
 
@@ -708,7 +728,7 @@ function get_filter_colors()
             ON ct.color_id = c.id 
             AND ct.lang_code = '$LANG_CODE'
         ",
-        "pv.is_available = 1",
+        "pv.is_available = 1 AND pv.stock > 0",
         "c.id",
         "ct.name ASC"
     );
@@ -726,7 +746,7 @@ function get_filter_sizes()
         "
         JOIN sizes s ON s.id = pv.size_id
         ",
-        "pv.is_available = 1",
+        "pv.is_available = 1 AND pv.stock > 0",
         "s.id",
         "s.name ASC"
     );
@@ -767,7 +787,7 @@ function get_filter_categories()
             ON ct.category_id = c.id 
             AND ct.lang_code = '$LANG_CODE'
         ",
-        "p.is_active = 1 AND pv.is_available = 1",
+        "p.is_active = 1 AND pv.is_available = 1 AND pv.stock > 0",
         "c.id",
         "ct.name ASC"
     );
@@ -1047,4 +1067,98 @@ function get_wishlist_count($user_id)
     if (!$user_id) return 0;
     $user_id = (int)$user_id;
     return db_count("wishlist", "user_id = $user_id");
+}
+
+/**
+ * Stock Management Functions
+ */
+function variant_has_stock($variant_id, $quantity = 1)
+{
+    $variant_id = (int)$variant_id;
+    $quantity = (int)$quantity;
+    $variant = db_get_one("product_variants", "id = $variant_id");
+    return $variant && $variant['stock'] >= $quantity;
+}
+
+function reduce_variant_stock($variant_id, $quantity)
+{
+    $variant_id = (int)$variant_id;
+    $quantity = (int)$quantity;
+    return my_query("UPDATE product_variants SET stock = stock - $quantity WHERE id = $variant_id AND stock >= $quantity");
+}
+
+/**
+ * User Profile & Orders Functions
+ */
+function get_user_orders($user_id)
+{
+    $user_id = (int)$user_id;
+    return db_select("*", "orders", "", "user_id = $user_id", "created_at DESC");
+}
+
+function get_order_items_detailed($order_id)
+{
+    global $LANG_CODE;
+    $order_id = (int)$order_id;
+    $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
+
+    return db_select(
+        "oi.*, p.image, pt.slug, s.name as size_name, ct.name as color_name",
+        "order_items oi",
+        "LEFT JOIN products p ON p.id = oi.product_id
+         LEFT JOIN product_translations pt ON pt.product_id = p.id AND pt.lang_code = '$LANG_CODE'
+         LEFT JOIN product_variants pv ON pv.id = oi.variant_id
+         LEFT JOIN sizes s ON s.id = pv.size_id
+         LEFT JOIN color_translations ct ON ct.color_id = pv.color_id AND ct.lang_code = '$LANG_CODE'",
+        "oi.order_id = $order_id"
+    );
+}
+
+function get_order_address($order_id, $type = 'shipping')
+{
+    $order_id = (int)$order_id;
+    $type = addslashes($type);
+    return db_get_one("order_addresses", "order_id = $order_id AND type = '$type'");
+}
+
+function get_user_stats($user_id)
+{
+    $user_id = (int)$user_id;
+    $orders = db_get_all("orders", "user_id = $user_id");
+    
+    $total_orders = count($orders);
+    $total_spent = 0;
+    $last_order_date = null;
+    
+    if ($total_orders > 0) {
+        foreach ($orders as $order) {
+            $total_spent += $order['total'];
+        }
+        $last_order_date = $orders[0]['created_at']; // Since orders are DESC
+    }
+    
+    return [
+        'total_orders' => $total_orders,
+        'total_spent' => $total_spent,
+        'last_order_date' => $last_order_date
+    ];
+}
+
+function update_user_profile($user_id, $data)
+{
+    $user_id = (int)$user_id;
+    return db_update("users", $data, "id = $user_id");
+}
+
+function change_user_password($user_id, $current_password, $new_password)
+{
+    $user_id = (int)$user_id;
+    $user = db_get_one("users", "id = $user_id");
+    
+    if (!$user || !password_verify($current_password, $user['password'])) {
+        return false;
+    }
+    
+    $new_hash = password_hash($new_password, PASSWORD_DEFAULT);
+    return db_update("users", ['password' => $new_hash], "id = $user_id");
 }

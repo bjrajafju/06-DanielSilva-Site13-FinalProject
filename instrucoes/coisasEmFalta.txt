@@ -11,8 +11,6 @@
 
 ## 4. Funcionalidades de Valorização (Extras / Opcionais)
 - [ ] **SEO Dinâmico**: Atualmente os meta tags no `header.php` são estáticos. Falta a implementação de SEO dinâmico para cada página (títulos e descrições específicas).
-- [ ] **Funcionalidades de Utilizador (Logins Frontoffice)**:
-    - [ ] Adição de artigos a uma lista de favoritos.
 - [ ] **Módulo de Loja (Melhorias)**:
     - [ ] **Gestão de Stock**: Implementar a atualização automática (decremento) do stock disponível quando uma compra é finalizada.
     - [ ] **Histórico do Cliente**: Área no frontoffice (Perfil) onde o utilizador logado possa consultar o seu histórico de compras anteriores.

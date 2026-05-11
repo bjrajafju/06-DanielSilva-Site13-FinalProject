@@ -16,6 +16,16 @@ if (!$variant_id) {
     die("Invalid variant");
 }
 
+$cart = get_or_create_cart();
+$existing_qty = get_cart_item_quantity($cart['id'], $variant_id);
+
+if (!variant_has_stock($variant_id, $existing_qty + (int)$quantity)) {
+    $referer = $_SERVER['HTTP_REFERER'] ?? $SETTINGS['url_site'];
+    $sep = strpos($referer, '?') !== false ? '&' : '?';
+    header("Location: " . $referer . $sep . "error=out_of_stock");
+    exit;
+}
+
 add_to_cart($variant_id, (int)$quantity);
 
 $referer = $_SERVER['HTTP_REFERER'] ?? $SETTINGS['url_site'];

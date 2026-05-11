@@ -189,8 +189,18 @@ $categories = get_categories();
 
                         <div class="navbar-nav ml-auto py-0">
                             <?php if (isset($_SESSION['user_id'])): ?>
-                                <a href="#" class="nav-item nav-link"><i class="fas fa-user text-primary mr-1"></i> <?= $_SESSION['user_first_name'] ?></a>
-                                <a href="<?= $SETTINGS['url_site'] ?>/logout.php" class="nav-item nav-link"><?php echo t('header.nav.logout'); ?></a>
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fas fa-user text-primary mr-1"></i> <?= $_SESSION['user_first_name'] ?>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right rounded-0 m-0">
+                                        <a href="<?= $SETTINGS['url_site'] ?>/profile.php" class="dropdown-item"><i class="fas fa-id-card-alt mr-2 text-primary"></i> <?= t('header.nav.profile') ?></a>
+                                        <a href="<?= $SETTINGS['url_site'] ?>/profile.php?section=orders" class="dropdown-item"><i class="fas fa-box-open mr-2 text-primary"></i> <?= t('header.nav.orders') ?></a>
+                                        <a href="<?= $SETTINGS['url_site'] ?>/wishlist.php" class="dropdown-item"><i class="fas fa-heart mr-2 text-primary"></i> <?= t('header.nav.wishlist') ?></a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="<?= $SETTINGS['url_site'] ?>/logout.php" class="dropdown-item"><i class="fas fa-sign-out-alt mr-2 text-primary"></i> <?= t('header.nav.logout') ?></a>
+                                    </div>
+                                </div>
                             <?php else: ?>
                                 <a href="<?= $SETTINGS['url_site'] ?>/login.php" class="nav-item nav-link"><?php echo t('header.nav.login'); ?></a>
                                 <a href="<?= $SETTINGS['url_site'] ?>/register.php" class="nav-item nav-link"><?php echo t('header.nav.register'); ?></a>

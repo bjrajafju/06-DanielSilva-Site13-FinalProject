@@ -51,6 +51,18 @@ $average_rating = get_product_average_rating($product['product_id']);
 <!-- Shop Detail Start -->
 <div class="container-fluid py-5">
     <div class="row px-xl-5">
+        <div class="col-12">
+            <?php if (isset($_GET['error']) && $_GET['error'] === 'out_of_stock'): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> <?= t('error.out_of_stock') ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="row px-xl-5">
         <div class="col-lg-5 pb-5">
             <div class="border">
                 <img class="w-100 h-100" src="<?= $SETTINGS['url_site'] ?>/<?= $product['image'] ?>" alt="<?= $product['title'] ?>">
@@ -301,6 +313,66 @@ $average_rating = get_product_average_rating($product['product_id']);
                                             }
                                         });
                                     });
+                                });
+                            </script>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const variants = <?= json_encode(get_product_variants($product['product_id'])) ?>;
+
+                                    function updateAvailability() {
+                                        const selectedSize = document.querySelector('input[name="size"]:checked')?.value;
+                                        const selectedColor = document.querySelector('input[name="color"]:checked')?.value;
+
+                                        // Update Colors based on Size
+                                        if (selectedSize) {
+                                            document.querySelectorAll('input[name="color"]').forEach(colorInput => {
+                                                const hasStock = variants.some(v => v.size_id == selectedSize && v.color_id == colorInput.value && v.stock > 0);
+                                                colorInput.disabled = !hasStock;
+                                                const label = colorInput.nextElementSibling;
+                                                colorInput.parentElement.style.opacity = hasStock ? '1' : '0.4';
+                                                colorInput.parentElement.style.pointerEvents = hasStock ? 'auto' : 'none';
+                                                if (!hasStock && colorInput.checked) {
+                                                    colorInput.checked = false;
+                                                }
+                                            });
+                                        }
+
+                                        // Update Sizes based on Color
+                                        if (selectedColor) {
+                                            document.querySelectorAll('input[name="size"]').forEach(sizeInput => {
+                                                const hasStock = variants.some(v => v.color_id == selectedColor && v.size_id == sizeInput.value && v.stock > 0);
+                                                sizeInput.disabled = !hasStock;
+                                                const label = sizeInput.nextElementSibling;
+                                                sizeInput.parentElement.style.opacity = hasStock ? '1' : '0.4';
+                                                sizeInput.parentElement.style.pointerEvents = hasStock ? 'auto' : 'none';
+                                                if (!hasStock && sizeInput.checked) {
+                                                    sizeInput.checked = false;
+                                                }
+                                            });
+                                        }
+
+                                        // Final validation for the Add to Cart button
+                                        if (selectedSize && selectedColor) {
+                                            const variant = variants.find(v => v.size_id == selectedSize && v.color_id == selectedColor);
+                                            const isValid = variant && variant.stock > 0;
+                                            const addToCartBtn = document.querySelector('button[type="submit"]');
+                                            if (addToCartBtn) {
+                                                addToCartBtn.disabled = !isValid;
+                                                if (!isValid) {
+                                                    addToCartBtn.innerHTML = '<i class="fa fa-times mr-1"></i> Out of Stock';
+                                                } else {
+                                                    addToCartBtn.innerHTML = '<i class="fa fa-shopping-cart mr-1"></i> <?= t('detail.product.add_to_cart') ?>';
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    document.querySelectorAll('input[name="size"], input[name="color"]').forEach(input => {
+                                        input.addEventListener('change', updateAvailability);
+                                    });
+
+                                    updateAvailability();
                                 });
                             </script>
                         </div>

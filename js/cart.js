@@ -24,7 +24,14 @@ $(document).ready(function () {
                     $(".cart-subtotal").text(response.cart_subtotal);
                     $(".cart-total").text(response.cart_total);
                 } else {
-                    alert("Erro ao atualizar quantidade.");
+                    if (response.error === "out_of_stock") {
+                        alert(TXT_OUT_OF_STOCK + response.max_stock);
+                        $(this).val(response.max_stock);
+                        // Trigger recalculation with max stock
+                        $(this).trigger("input");
+                    } else {
+                        alert("Erro ao atualizar quantidade.");
+                    }
                 }
             },
             error: function () {

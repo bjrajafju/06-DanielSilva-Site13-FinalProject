@@ -12,12 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product_id = (int)$_POST['product_id'];
     $size_id = (int)$_POST['size_id'];
     $color_id = (int)$_POST['color_id'];
+    $stock = (int)$_POST['stock'];
     $is_available = isset($_POST['is_available']) ? 1 : 0;
 
     $data = [
         'product_id' => $product_id,
         'size_id' => $size_id,
         'color_id' => $color_id,
+        'stock' => $stock,
         'is_available' => $is_available
     ];
 
@@ -91,10 +93,16 @@ include 'layout/sidebar.php';
                                 </div>
                             </div>
 
-                            <div class="mb-4">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="is_available" id="isAvailable" <?= ($variant['is_available'] ?? 1) ? 'checked' : '' ?>>
-                                    <label class="form-check-label" for="isAvailable">Variant is Available</label>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Stock Quantity</label>
+                                    <input type="number" name="stock" class="form-control" value="<?= $variant['stock'] ?? 0 ?>" min="0" required>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-check form-switch mt-4 pt-2">
+                                        <input class="form-check-input" type="checkbox" name="is_available" id="isAvailable" <?= ($variant['is_available'] ?? 1) ? 'checked' : '' ?>>
+                                        <label class="form-check-label" for="isAvailable">Variant is Available</label>
+                                    </div>
                                 </div>
                             </div>
 

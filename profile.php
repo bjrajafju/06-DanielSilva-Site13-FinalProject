@@ -180,7 +180,7 @@ include 'includes/header.php';
                                                 <td class="align-middle"><?= date('d/m/Y', strtotime($o['created_at'])) ?></td>
                                                 <td class="align-middle"><?= number_format($o['total'], 2) ?> €</td>
                                                 <td class="align-middle">
-                                                    <?php 
+                                                    <?php
                                                     $status_class = 'badge-primary';
                                                     if ($o['status'] == 'completed') $status_class = 'badge-success';
                                                     if ($o['status'] == 'pending') $status_class = 'badge-warning';
@@ -219,7 +219,7 @@ include 'includes/header.php';
                                                     <small class="text-muted"><?= date('d/m/Y H:i', strtotime($o['created_at'])) ?></small>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <?php 
+                                                    <?php
                                                     $status_class = 'badge-primary';
                                                     if ($o['status'] == 'completed') $status_class = 'badge-success';
                                                     if ($o['status'] == 'pending') $status_class = 'badge-warning';
@@ -249,7 +249,7 @@ include 'includes/header.php';
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php 
+                                                        <?php
                                                         $items = get_order_items_detailed($o['id']);
                                                         foreach ($items as $item): ?>
                                                             <tr class="border-bottom-dashed">
@@ -388,13 +388,16 @@ include 'includes/header.php';
     .border-bottom-dashed {
         border-bottom: 1px dashed #dee2e6;
     }
+
     .border-bottom-dashed:last-child {
         border-bottom: none;
     }
+
     .list-group-item.active {
         background-color: #D19C97;
         border-color: #D19C97;
     }
+
     .badge-primary {
         background-color: #D19C97;
     }

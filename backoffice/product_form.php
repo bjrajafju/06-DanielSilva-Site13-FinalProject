@@ -73,7 +73,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0"><?= $id ? 'Edit Product' : 'Create Product' ?></h2>
-        <a href="products.php" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Back to List</a>
+        <a href="products.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to List</a>
     </div>
 
     <div class="container-fluid">
@@ -179,7 +179,7 @@ include 'layout/sidebar.php';
                     <div class="card">
                         <div class="card-body">
                             <button type="submit" class="btn btn-primary w-100 mb-2">
-                                <i class="bi bi-save"></i> Save Product
+                                <i class="fas fa-save"></i> Save Product
                             </button>
                             <a href="products.php" class="btn btn-outline-secondary w-100">Cancel</a>
                         </div>
@@ -191,3 +191,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

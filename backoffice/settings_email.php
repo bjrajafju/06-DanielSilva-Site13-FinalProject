@@ -52,14 +52,18 @@ include 'layout/sidebar.php';
         <?php if ($success_msg): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <?= $success_msg ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         <?php endif; ?>
 
         <?php if ($error_msg): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <?= $error_msg ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         <?php endif; ?>
 
@@ -96,7 +100,7 @@ include 'layout/sidebar.php';
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Encryption</label>
-                                    <select name="smtp_encryption" class="form-select">
+                                    <select name="smtp_encryption" class="form-control">
                                         <option value="tls" <?= $settings['smtp_encryption'] == 'tls' ? 'selected' : '' ?>>TLS</option>
                                         <option value="ssl" <?= $settings['smtp_encryption'] == 'ssl' ? 'selected' : '' ?>>SSL</option>
                                         <option value="" <?= $settings['smtp_encryption'] == '' ? 'selected' : '' ?>>None</option>
@@ -117,9 +121,9 @@ include 'layout/sidebar.php';
                                 </div>
                             </div>
 
-                            <div class="text-end">
+                            <div class="text-right">
                                 <button type="submit" name="save_settings" class="btn btn-primary px-4">
-                                    <i class="bi bi-save me-1"></i> Save Settings
+                                    <i class="fas fa-save mr-1"></i> Save Settings
                                 </button>
                             </div>
                         </form>
@@ -140,7 +144,7 @@ include 'layout/sidebar.php';
                                 <input type="email" name="test_email" class="form-control" placeholder="test@example.com" required>
                             </div>
                             <button type="submit" name="send_test" class="btn btn-outline-info w-100">
-                                <i class="bi bi-send me-1"></i> Send Test Email
+                                <i class="fas fa-paper-plane mr-1"></i> Send Test Email
                             </button>
                         </form>
                     </div>
@@ -151,3 +155,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

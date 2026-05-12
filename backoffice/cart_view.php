@@ -22,7 +22,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0">Cart Details #<?= $id ?></h2>
-        <a href="carts.php" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Back to List</a>
+        <a href="carts.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to List</a>
     </div>
 
     <div class="container-fluid">
@@ -63,3 +63,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

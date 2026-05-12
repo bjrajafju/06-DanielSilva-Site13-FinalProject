@@ -24,7 +24,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0">Order Details #<?= $id ?></h2>
-        <a href="orders.php" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Back to List</a>
+        <a href="orders.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to List</a>
     </div>
 
     <div class="container-fluid">
@@ -44,7 +44,7 @@ include 'layout/sidebar.php';
                                         <th>Variant</th>
                                         <th>Price</th>
                                         <th>Qty</th>
-                                        <th class="text-end">Total</th>
+                                        <th class="text-right">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -54,22 +54,22 @@ include 'layout/sidebar.php';
                                             <td>ID: <?= $item['variant_id'] ?></td>
                                             <td><?= number_format($item['price'], 2) ?>€</td>
                                             <td><?= $item['quantity'] ?></td>
-                                            <td class="text-end"><?= number_format($item['price'] * $item['quantity'], 2) ?>€</td>
+                                            <td class="text-right"><?= number_format($item['price'] * $item['quantity'], 2) ?>€</td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="4" class="text-end">Subtotal</th>
-                                        <th class="text-end"><?= number_format($order['subtotal'], 2) ?>€</th>
+                                        <th colspan="4" class="text-right">Subtotal</th>
+                                        <th class="text-right"><?= number_format($order['subtotal'], 2) ?>€</th>
                                     </tr>
                                     <tr>
-                                        <th colspan="4" class="text-end">Shipping</th>
-                                        <th class="text-end"><?= number_format($order['shipping'], 2) ?>€</th>
+                                        <th colspan="4" class="text-right">Shipping</th>
+                                        <th class="text-right"><?= number_format($order['shipping'], 2) ?>€</th>
                                     </tr>
                                     <tr class="table-light">
-                                        <th colspan="4" class="text-end h5">Total</th>
-                                        <th class="text-end h5"><?= number_format($order['total'], 2) ?>€</th>
+                                        <th colspan="4" class="text-right h5">Total</th>
+                                        <th class="text-right h5"><?= number_format($order['total'], 2) ?>€</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -89,7 +89,7 @@ include 'layout/sidebar.php';
                                     <?= $addr['address_line2'] ? $addr['address_line2'] . '<br>' : '' ?>
                                     <?= $addr['postal_code'] . ' ' . $addr['city'] ?><br>
                                     <?= $addr['state'] . ', ' . $addr['country_name'] ?><br>
-                                    <i class="bi bi-telephone"></i> <?= $addr['mobile'] ?>
+                                    <i class="fas fa-phone"></i> <?= $addr['mobile'] ?>
                                 </div>
                             </div>
                         </div>
@@ -104,7 +104,7 @@ include 'layout/sidebar.php';
                     <div class="card-body">
                         <form action="" method="POST">
                             <div class="mb-3">
-                                <select name="status" class="form-select mb-3">
+                                <select name="status" class="form-control mb-3">
                                     <option value="pending" <?= $order['status'] == 'pending' ? 'selected' : '' ?>>Pending</option>
                                     <option value="paid" <?= $order['status'] == 'paid' ? 'selected' : '' ?>>Paid</option>
                                     <option value="shipped" <?= $order['status'] == 'shipped' ? 'selected' : '' ?>>Shipped</option>
@@ -133,3 +133,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

@@ -56,14 +56,14 @@ include 'layout/sidebar.php';
                                 <th>Rating</th>
                                 <th>Comment</th>
                                 <th>Date</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($reviews as $r): ?>
                                 <tr>
                                     <td>
-                                        <span class="badge bg-<?= $r['is_approved'] ? 'success' : 'warning' ?>">
+                                        <span class="badge badge-<?= $r['is_approved'] ? 'success' : 'warning' ?>">
                                             <?= $r['is_approved'] ? 'Approved' : 'Pending' ?>
                                         </span>
                                     </td>
@@ -75,18 +75,18 @@ include 'layout/sidebar.php';
                                     <td>
                                         <div class="text-warning">
                                             <?php for ($i = 1; $i <= 5; $i++): ?>
-                                                <i class="bi bi-star<?= $i <= $r['rating'] ? '-fill' : '' ?>"></i>
+                                                <i class="<?= $i <= $r['rating'] ? 'fas' : 'far' ?> fa-star"></i>
                                             <?php endfor; ?>
                                         </div>
                                     </td>
                                     <td><small><?= htmlspecialchars(substr($r['comment'], 0, 50)) ?>...</small></td>
                                     <td><?= date('d/m/Y H:i', strtotime($r['created_at'])) ?></td>
-                                    <td class="text-end">
+                                    <td class="text-right">
                                         <a href="review_approve.php?id=<?= $r['id'] ?>" class="btn btn-sm btn-outline-<?= $r['is_approved'] ? 'warning' : 'success' ?>" title="<?= $r['is_approved'] ? 'Unapprove' : 'Approve' ?>">
-                                            <i class="bi bi-<?= $r['is_approved'] ? 'x-circle' : 'check-circle' ?>"></i>
+                                            <i class="fas fa-<?= $r['is_approved'] ? 'times-circle' : 'check-circle' ?>"></i>
                                         </a>
                                         <a href="review_delete.php?id=<?= $r['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete" title="Delete">
-                                            <i class="bi bi-trash"></i>
+                                            <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -117,3 +117,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

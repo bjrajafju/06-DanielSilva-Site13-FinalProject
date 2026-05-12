@@ -33,14 +33,14 @@ include 'layout/sidebar.php';
                                 <th>From</th>
                                 <th>Subject</th>
                                 <th>Date</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($messages as $m): ?>
                                 <tr class="<?= $m['is_read'] ? 'text-muted' : 'fw-bold' ?>">
                                     <td>
-                                        <span class="badge bg-<?= $m['is_read'] ? 'secondary' : 'primary' ?>">
+                                        <span class="badge badge-<?= $m['is_read'] ? 'secondary' : 'primary' ?>">
                                             <?= $m['is_read'] ? 'Read' : 'New' ?>
                                         </span>
                                     </td>
@@ -50,9 +50,9 @@ include 'layout/sidebar.php';
                                     </td>
                                     <td><?= $m['subject'] ?></td>
                                     <td><?= date('d/m/Y H:i', strtotime($m['created_at'])) ?></td>
-                                    <td class="text-end">
-                                        <a href="message_view.php?id=<?= $m['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i> View</a>
-                                        <a href="message_delete.php?id=<?= $m['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
+                                    <td class="text-right">
+                                        <a href="message_view.php?id=<?= $m['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i> View</a>
+                                        <a href="message_delete.php?id=<?= $m['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -77,3 +77,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

@@ -36,7 +36,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0">News</h2>
-        <a href="news_form.php" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Add New Post</a>
+        <a href="news_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Post</a>
     </div>
 
     <div class="container-fluid">
@@ -46,7 +46,7 @@ include 'layout/sidebar.php';
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>News List</span>
                 <form class="d-flex" method="GET">
-                    <input class="form-control form-control-sm me-2" type="search" name="search" placeholder="Search title..." value="<?= htmlspecialchars($search) ?>">
+                    <input class="form-control form-control-sm mr-2" type="search" name="search" placeholder="Search title..." value="<?= htmlspecialchars($search) ?>">
                     <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
                 </form>
             </div>
@@ -59,7 +59,7 @@ include 'layout/sidebar.php';
                                 <th>Title (Default)</th>
                                 <th>Date</th>
                                 <th>Status</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -74,13 +74,13 @@ include 'layout/sidebar.php';
                                     <td><?= $trans['title'] ?? 'N/A' ?></td>
                                     <td><?= date('d/m/Y', strtotime($n['created_at'])) ?></td>
                                     <td>
-                                        <span class="badge bg-<?= $n['is_active'] ? 'success' : 'danger' ?>">
+                                        <span class="badge badge-<?= $n['is_active'] ? 'success' : 'danger' ?>">
                                             <?= $n['is_active'] ? 'Active' : 'Inactive' ?>
                                         </span>
                                     </td>
-                                    <td class="text-end">
-                                        <a href="news_form.php?id=<?= $n['id'] ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
-                                        <a href="news_delete.php?id=<?= $n['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
+                                    <td class="text-right">
+                                        <a href="news_form.php?id=<?= $n['id'] ?>" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
+                                        <a href="news_delete.php?id=<?= $n['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -106,3 +106,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

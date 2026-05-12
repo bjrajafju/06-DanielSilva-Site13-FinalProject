@@ -10,7 +10,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0">Colors</h2>
-        <a href="color_form.php" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Add New Color</a>
+        <a href="color_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Color</a>
     </div>
 
     <div class="container-fluid">
@@ -27,7 +27,7 @@ include 'layout/sidebar.php';
                                 <th>HEX</th>
                                 <th>Name (EN)</th>
                                 <th>Name (PT)</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,9 +42,9 @@ include 'layout/sidebar.php';
                                     <td><code><?= $c['hex'] ?></code></td>
                                     <td><?= $t_gb['name'] ?? 'N/A' ?></td>
                                     <td><?= $t_pt['name'] ?? 'N/A' ?></td>
-                                    <td class="text-end">
-                                        <a href="color_form.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
-                                        <a href="color_delete.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
+                                    <td class="text-right">
+                                        <a href="color_form.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
+                                        <a href="color_delete.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -57,3 +57,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

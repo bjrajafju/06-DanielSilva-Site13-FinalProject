@@ -18,3 +18,5 @@ if ($id) {
 }
 
 redirect("products.php");
+
+

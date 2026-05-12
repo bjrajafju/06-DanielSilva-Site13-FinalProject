@@ -10,7 +10,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0">Languages</h2>
-        <a href="lang_form.php" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Add New Language</a>
+        <a href="lang_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Language</a>
     </div>
 
     <div class="container-fluid">
@@ -26,7 +26,7 @@ include 'layout/sidebar.php';
                                 <th>ID</th>
                                 <th>Emoji</th>
                                 <th>Code</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,9 +35,9 @@ include 'layout/sidebar.php';
                                     <td>#<?= $l['id'] ?></td>
                                     <td><span class="fs-4"><?= $l['emoji'] ?></span></td>
                                     <td><code><?= $l['code'] ?></code></td>
-                                    <td class="text-end">
-                                        <a href="lang_form.php?id=<?= $l['id'] ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
-                                        <a href="lang_delete.php?id=<?= $l['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
+                                    <td class="text-right">
+                                        <a href="lang_form.php?id=<?= $l['id'] ?>" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
+                                        <a href="lang_delete.php?id=<?= $l['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -50,3 +50,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

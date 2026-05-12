@@ -27,7 +27,7 @@ include 'layout/sidebar.php';
                                 <th>Title (EN)</th>
                                 <th>Title (PT)</th>
                                 <th>Status</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,12 +41,12 @@ include 'layout/sidebar.php';
                                     <td><?= $t_gb['title'] ?? 'N/A' ?></td>
                                     <td><?= $t_pt['title'] ?? 'N/A' ?></td>
                                     <td>
-                                        <span class="badge bg-<?= $p['is_active'] ? 'success' : 'danger' ?>">
+                                        <span class="badge badge-<?= $p['is_active'] ? 'success' : 'danger' ?>">
                                             <?= $p['is_active'] ? 'Active' : 'Inactive' ?>
                                         </span>
                                     </td>
-                                    <td class="text-end">
-                                        <a href="page_form.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
+                                    <td class="text-right">
+                                        <a href="page_form.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -59,3 +59,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

@@ -40,7 +40,7 @@ include 'layout/sidebar.php';
                                 <th>User / Session</th>
                                 <th>Items</th>
                                 <th>Created At</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,16 +51,16 @@ include 'layout/sidebar.php';
                                     <td><strong>#<?= $c['id'] ?></strong></td>
                                     <td>
                                         <?php if ($c['user_id']): ?>
-                                            <span class="badge bg-primary">User</span> <?= $c['user_email'] ?>
+                                            <span class="badge badge-primary">User</span> <?= $c['user_email'] ?>
                                         <?php else: ?>
-                                            <span class="badge bg-secondary">Guest</span> <small class="text-muted"><?= substr($c['session_id'], 0, 8) ?>...</small>
+                                            <span class="badge badge-secondary">Guest</span> <small class="text-muted"><?= substr($c['session_id'], 0, 8) ?>...</small>
                                         <?php endif; ?>
                                     </td>
                                     <td><?= $item_count ?> items</td>
                                     <td><?= date('d/m/Y H:i', strtotime($c['created_at'])) ?></td>
-                                    <td class="text-end">
-                                        <a href="cart_view.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i> View</a>
-                                        <a href="cart_delete.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
+                                    <td class="text-right">
+                                        <a href="cart_view.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i> View</a>
+                                        <a href="cart_delete.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -85,3 +85,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

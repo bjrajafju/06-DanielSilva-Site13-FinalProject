@@ -24,7 +24,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0">Interface Translations</h2>
-        <a href="traduz_form.php" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Add New Translation</a>
+        <a href="traduz_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Translation</a>
     </div>
 
     <div class="container-fluid">
@@ -34,7 +34,7 @@ include 'layout/sidebar.php';
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>Translation List (traduz)</span>
                 <form class="d-flex" method="GET">
-                    <input class="form-control form-control-sm me-2" type="search" name="search" placeholder="Search key or text..." value="<?= htmlspecialchars($search) ?>">
+                    <input class="form-control form-control-sm mr-2" type="search" name="search" placeholder="Search key or text..." value="<?= htmlspecialchars($search) ?>">
                     <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
                 </form>
             </div>
@@ -46,7 +46,7 @@ include 'layout/sidebar.php';
                                 <th>Code Key</th>
                                 <th>Module</th>
                                 <th>Translations</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,7 +57,7 @@ include 'layout/sidebar.php';
                             ?>
                                 <tr>
                                     <td><code><?= $code ?></code></td>
-                                    <td><span class="badge bg-secondary"><?= strtoupper($module) ?></span></td>
+                                    <td><span class="badge badge-secondary"><?= strtoupper($module) ?></span></td>
                                     <td>
                                         <?php foreach ($trans as $t): ?>
                                             <div class="mb-1">
@@ -66,9 +66,9 @@ include 'layout/sidebar.php';
                                             </div>
                                         <?php endforeach; ?>
                                     </td>
-                                    <td class="text-end">
-                                        <a href="traduz_form.php?code=<?= urlencode($code) ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
-                                        <a href="traduz_delete.php?code=<?= urlencode($code) ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
+                                    <td class="text-right">
+                                        <a href="traduz_form.php?code=<?= urlencode($code) ?>" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
+                                        <a href="traduz_delete.php?code=<?= urlencode($code) ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -93,3 +93,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

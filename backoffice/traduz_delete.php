@@ -9,3 +9,5 @@ if ($code) {
 }
 
 redirect("traduz.php");
+
+

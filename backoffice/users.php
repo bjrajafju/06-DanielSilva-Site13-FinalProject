@@ -17,7 +17,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0">Users</h2>
-        <a href="user_form.php" class="btn btn-primary btn-sm"><i class="bi bi-person-plus"></i> Add New User</a>
+        <a href="user_form.php" class="btn btn-primary btn-sm"><i class="fas fa-user-plus"></i> Add New User</a>
     </div>
 
     <div class="container-fluid">
@@ -35,7 +35,7 @@ include 'layout/sidebar.php';
                                 <th>Role</th>
                                 <th>Mobile</th>
                                 <th>Joined</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,16 +45,16 @@ include 'layout/sidebar.php';
                                     <td><?= $u['email'] ?></td>
                                     <td>
                                         <?php if ($u['is_admin']): ?>
-                                            <span class="badge bg-primary">Admin</span>
+                                            <span class="badge badge-primary">Admin</span>
                                         <?php else: ?>
-                                            <span class="badge bg-secondary">User</span>
+                                            <span class="badge badge-secondary">User</span>
                                         <?php endif; ?>
                                     </td>
                                     <td><?= $u['mobile'] ?: 'N/A' ?></td>
                                     <td><?= date('d/m/Y', strtotime($u['created_at'])) ?></td>
-                                    <td class="text-end">
-                                        <a href="user_form.php?id=<?= $u['id'] ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
-                                        <a href="user_delete.php?id=<?= $u['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
+                                    <td class="text-right">
+                                        <a href="user_form.php?id=<?= $u['id'] ?>" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
+                                        <a href="user_delete.php?id=<?= $u['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -79,3 +79,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

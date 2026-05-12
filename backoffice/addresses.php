@@ -24,7 +24,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0">User Addresses</h2>
-        <a href="address_form.php" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Add New Address</a>
+        <a href="address_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Address</a>
     </div>
 
     <div class="container-fluid">
@@ -43,21 +43,21 @@ include 'layout/sidebar.php';
                                 <th>Address</th>
                                 <th>City</th>
                                 <th>Country</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($addresses as $a): ?>
                                 <tr>
                                     <td><?= $a['user_fname'] ? $a['user_fname'] . ' ' . $a['user_lname'] : 'Guest' ?></td>
-                                    <td><span class="badge bg-<?= $a['type'] == 'billing' ? 'primary' : 'info' ?>"><?= strtoupper($a['type']) ?></span></td>
+                                    <td><span class="badge badge-<?= $a['type'] == 'billing' ? 'primary' : 'info' ?>"><?= strtoupper($a['type']) ?></span></td>
                                     <td><?= $a['first_name'] . ' ' . $a['last_name'] ?></td>
                                     <td><?= $a['address_line1'] ?></td>
                                     <td><?= $a['city'] ?></td>
                                     <td><code><?= $a['country_code'] ?></code></td>
-                                    <td class="text-end">
-                                        <a href="address_form.php?id=<?= $a['id'] ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
-                                        <a href="address_delete.php?id=<?= $a['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
+                                    <td class="text-right">
+                                        <a href="address_form.php?id=<?= $a['id'] ?>" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
+                                        <a href="address_delete.php?id=<?= $a['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -82,3 +82,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

@@ -16,3 +16,5 @@ if ($id) {
 }
 
 redirect("colors.php");
+
+

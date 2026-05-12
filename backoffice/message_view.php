@@ -18,7 +18,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0">View Message</h2>
-        <a href="messages.php" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Back to List</a>
+        <a href="messages.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to List</a>
     </div>
 
     <div class="container-fluid">
@@ -38,7 +38,7 @@ include 'layout/sidebar.php';
                         <div class="bg-light p-4 rounded mb-4" style="white-space: pre-wrap; min-height: 200px;"><?= htmlspecialchars($msg['message']) ?></div>
 
                         <div class="d-flex justify-content-end">
-                            <a href="message_delete.php?id=<?= $id ?>" class="btn btn-outline-danger btn-delete"><i class="bi bi-trash"></i> Delete Message</a>
+                            <a href="message_delete.php?id=<?= $id ?>" class="btn btn-outline-danger btn-delete"><i class="fas fa-trash"></i> Delete Message</a>
                         </div>
                     </div>
                 </div>
@@ -48,3 +48,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

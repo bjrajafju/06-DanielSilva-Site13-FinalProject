@@ -26,7 +26,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0">Product Variants</h2>
-        <a href="product_variant_form.php" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Add New Variant</a>
+        <a href="product_variant_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Variant</a>
     </div>
 
     <div class="container-fluid">
@@ -45,7 +45,7 @@ include 'layout/sidebar.php';
                                 <th>Color</th>
                                 <th>Stock</th>
                                 <th>Available</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,7 +58,7 @@ include 'layout/sidebar.php';
                                 <tr>
                                     <td><code><?= $v['codProd'] ?></code></td>
                                     <td><?= $p_trans['title'] ?? 'N/A' ?></td>
-                                    <td><span class="badge bg-secondary"><?= $v['size_name'] ?></span></td>
+                                    <td><span class="badge badge-secondary"><?= $v['size_name'] ?></span></td>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div style="width: 20px; height: 20px; background: <?= $v['hex'] ?>; border: 1px solid #ddd; margin-right: 10px;"></div>
@@ -71,16 +71,16 @@ include 'layout/sidebar.php';
                                         if ($v['stock'] <= 0) $stock_class = 'danger';
                                         elseif ($v['stock'] <= 5) $stock_class = 'warning';
                                         ?>
-                                        <span class="badge bg-<?= $stock_class ?>"><?= $v['stock'] ?></span>
+                                        <span class="badge badge-<?= $stock_class ?>"><?= $v['stock'] ?></span>
                                     </td>
                                     <td>
-                                        <span class="badge bg-<?= $v['is_available'] ? 'success' : 'danger' ?>">
+                                        <span class="badge badge-<?= $v['is_available'] ? 'success' : 'danger' ?>">
                                             <?= $v['is_available'] ? 'Yes' : 'No' ?>
                                         </span>
                                     </td>
-                                    <td class="text-end">
-                                        <a href="product_variant_form.php?id=<?= $v['id'] ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
-                                        <a href="product_variant_delete.php?id=<?= $v['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
+                                    <td class="text-right">
+                                        <a href="product_variant_form.php?id=<?= $v['id'] ?>" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
+                                        <a href="product_variant_delete.php?id=<?= $v['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -105,3 +105,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

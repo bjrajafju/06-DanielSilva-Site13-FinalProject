@@ -44,7 +44,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0">Products</h2>
-        <a href="product_form.php" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Add New Product</a>
+        <a href="product_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Product</a>
     </div>
 
     <div class="container-fluid">
@@ -54,7 +54,7 @@ include 'layout/sidebar.php';
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>Product List</span>
                 <form class="d-flex" method="GET">
-                    <input class="form-control form-control-sm me-2" type="search" name="search" placeholder="Search..." value="<?= htmlspecialchars($search) ?>">
+                    <input class="form-control form-control-sm mr-2" type="search" name="search" placeholder="Search..." value="<?= htmlspecialchars($search) ?>">
                     <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
                 </form>
             </div>
@@ -69,7 +69,7 @@ include 'layout/sidebar.php';
                                 <th>Category</th>
                                 <th>Price</th>
                                 <th>Status</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,13 +88,13 @@ include 'layout/sidebar.php';
                                     <td><?= $cat_trans['name'] ?? 'Uncategorized' ?></td>
                                     <td><?= number_format($p['price'], 2) ?>€</td>
                                     <td>
-                                        <span class="badge bg-<?= $p['is_active'] ? 'success' : 'danger' ?>">
+                                        <span class="badge badge-<?= $p['is_active'] ? 'success' : 'danger' ?>">
                                             <?= $p['is_active'] ? 'Active' : 'Inactive' ?>
                                         </span>
                                     </td>
-                                    <td class="text-end">
-                                        <a href="product_form.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
-                                        <a href="product_delete.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
+                                    <td class="text-right">
+                                        <a href="product_form.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
+                                        <a href="product_delete.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -120,3 +120,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

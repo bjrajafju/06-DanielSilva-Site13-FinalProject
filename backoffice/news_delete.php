@@ -9,3 +9,5 @@ if ($id) {
 }
 
 redirect("news.php");
+
+

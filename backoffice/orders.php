@@ -41,7 +41,7 @@ include 'layout/sidebar.php';
                                 <th>Total</th>
                                 <th>Status</th>
                                 <th>Date</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,16 +54,16 @@ include 'layout/sidebar.php';
                                     </td>
                                     <td><?= number_format($o['total'], 2) ?>€</td>
                                     <td>
-                                        <span class="badge bg-<?=
+                                        <span class="badge badge-<?=
                                                                 $o['status'] == 'completed' ? 'success' : ($o['status'] == 'pending' ? 'warning' : ($o['status'] == 'cancelled' ? 'danger' : 'info'))
                                                                 ?>">
                                             <?= strtoupper($o['status']) ?>
                                         </span>
                                     </td>
                                     <td><?= date('d/m/Y H:i', strtotime($o['created_at'])) ?></td>
-                                    <td class="text-end">
-                                        <a href="order_view.php?id=<?= $o['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i> View</a>
-                                        <a href="order_delete.php?id=<?= $o['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
+                                    <td class="text-right">
+                                        <a href="order_view.php?id=<?= $o['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i> View</a>
+                                        <a href="order_delete.php?id=<?= $o['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -88,3 +88,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

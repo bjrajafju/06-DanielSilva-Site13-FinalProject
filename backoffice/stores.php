@@ -10,7 +10,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0">Stores</h2>
-        <a href="store_form.php" class="btn btn-primary btn-sm"><i class="bi bi-shop"></i> Add New Store</a>
+        <a href="store_form.php" class="btn btn-primary btn-sm"><i class="fas fa-store"></i> Add New Store</a>
     </div>
 
     <div class="container-fluid">
@@ -27,7 +27,7 @@ include 'layout/sidebar.php';
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Active</th>
-                                <th class="text-end">Actions</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,13 +39,13 @@ include 'layout/sidebar.php';
                                     <td><?= $s['email'] ?></td>
                                     <td><?= $s['phone'] ?></td>
                                     <td>
-                                        <span class="badge bg-<?= $s['is_active'] ? 'success' : 'danger' ?>">
+                                        <span class="badge badge-<?= $s['is_active'] ? 'success' : 'danger' ?>">
                                             <?= $s['is_active'] ? 'Active' : 'Inactive' ?>
                                         </span>
                                     </td>
-                                    <td class="text-end">
-                                        <a href="store_form.php?id=<?= $s['id'] ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
-                                        <a href="store_delete.php?id=<?= $s['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="bi bi-trash"></i></a>
+                                    <td class="text-right">
+                                        <a href="store_form.php?id=<?= $s['id'] ?>" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
+                                        <a href="store_delete.php?id=<?= $s['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -58,3 +58,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

@@ -20,3 +20,5 @@ if ($id) {
 }
 
 redirect("lang.php");
+
+

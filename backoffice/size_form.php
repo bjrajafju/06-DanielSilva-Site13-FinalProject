@@ -26,7 +26,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0"><?= $id ? 'Edit Size' : 'Create Size' ?></h2>
-        <a href="sizes.php" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Back to List</a>
+        <a href="sizes.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to List</a>
     </div>
 
     <div class="container-fluid">
@@ -41,7 +41,7 @@ include 'layout/sidebar.php';
                                 <input type="text" name="name" class="form-control" value="<?= $size['name'] ?? '' ?>" required>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">
-                                <i class="bi bi-save"></i> Save Size
+                                <i class="fas fa-save"></i> Save Size
                             </button>
                         </form>
                     </div>
@@ -52,3 +52,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

@@ -10,3 +10,5 @@ if ($id) {
 }
 
 redirect("carts.php");
+
+

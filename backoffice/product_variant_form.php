@@ -41,7 +41,7 @@ include 'layout/sidebar.php';
 <div id="content">
     <div class="topbar">
         <h2 class="h4 mb-0"><?= $id ? 'Edit Variant' : 'Create Variant' ?></h2>
-        <a href="product_variants.php" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Back to List</a>
+        <a href="product_variants.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to List</a>
     </div>
 
     <div class="container-fluid">
@@ -107,7 +107,7 @@ include 'layout/sidebar.php';
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100">
-                                <i class="bi bi-save"></i> Save Variant
+                                <i class="fas fa-save"></i> Save Variant
                             </button>
                         </form>
                     </div>
@@ -118,3 +118,4 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
+

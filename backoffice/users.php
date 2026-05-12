@@ -2,7 +2,7 @@
 include_once 'includes/helpers.php';
 
 $limit = 10;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
 $total_items = db_count('users');
@@ -16,26 +16,27 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Users</h2>
-        <a href="user_form.php" class="btn btn-primary btn-sm"><i class="fas fa-user-plus"></i> Add New User</a>
+        <h2 class="h4 mb-0">Utilizadores</h2>
+        <a href="user_form.php" class="btn btn-primary btn-sm"><i class="fas fa-user-plus"></i> Adicionar Novo
+            Utilizador</a>
     </div>
 
     <div class="container-fluid">
         <?php show_alert(); ?>
 
         <div class="card">
-            <div class="card-header">User List</div>
+            <div class="card-header">Lista de Utilizadores</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Mobile</th>
-                                <th>Joined</th>
-                                <th class="text-right">Actions</th>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Função</th>
+                                <th>Telemóvel</th>
+                                <th>Registo</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,14 +48,17 @@ include 'layout/sidebar.php';
                                         <?php if ($u['is_admin']): ?>
                                             <span class="badge badge-primary">Admin</span>
                                         <?php else: ?>
-                                            <span class="badge badge-secondary">User</span>
+                                            <span class="badge badge-secondary">Cliente</span>
                                         <?php endif; ?>
                                     </td>
                                     <td><?= $u['mobile'] ?: 'N/A' ?></td>
                                     <td><?= date('d/m/Y', strtotime($u['created_at'])) ?></td>
                                     <td class="text-right">
-                                        <a href="user_form.php?id=<?= $u['id'] ?>" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
-                                        <a href="user_delete.php?id=<?= $u['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
+                                        <a href="user_form.php?id=<?= $u['id'] ?>" class="btn btn-sm btn-outline-info"><i
+                                                class="fas fa-edit"></i></a>
+                                        <a href="user_delete.php?id=<?= $u['id'] ?>"
+                                            class="btn btn-sm btn-outline-danger btn-delete"><i
+                                                class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -79,4 +83,3 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
-

@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    set_alert("Translation updated successfully!");
+    set_alert("Tradução atualizada com sucesso!");
     redirect("traduz.php");
 }
 
@@ -46,8 +46,8 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0"><?= $code ? 'Edit Translation' : 'Create Translation' ?></h2>
-        <a href="traduz.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to List</a>
+        <h2 class="h4 mb-0"><?= $code ? 'Editar Tradução' : 'Criar Tradução' ?></h2>
+        <a href="traduz.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Voltar à Lista</a>
     </div>
 
     <div class="container-fluid">
@@ -55,32 +55,36 @@ include 'layout/sidebar.php';
             <div class="col-lg-8">
                 <form action="" method="POST">
                     <div class="card mb-4">
-                        <div class="card-header">Translation Key</div>
+                        <div class="card-header">Chave da Tradução</div>
                         <div class="card-body">
                             <div class="mb-3">
-                                <label class="form-label">Code Key (e.g. home.title, contact.form.success)</label>
-                                <input type="text" name="code" class="form-control" value="<?= htmlspecialchars($code) ?>" required>
-                                <div class="form-text">Use dot notation for grouping (module.section.key)</div>
+                                <label class="form-label">Chave de Código (ex: home.title, contact.form.success)</label>
+                                <input type="text" name="code" class="form-control"
+                                    value="<?= htmlspecialchars($code) ?>" required>
+                                <div class="form-text">Use a notação por pontos para agrupamento (modulo.seccao.chave)
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="card mb-4">
-                        <div class="card-header">Content</div>
+                        <div class="card-header">Conteúdo</div>
                         <div class="card-body">
                             <?php foreach ($languages as $lang):
                                 $t = $trans_map[$lang['code']] ?? [];
-                            ?>
+                                ?>
                                 <div class="mb-3">
-                                    <label class="form-label"><?= $lang['emoji'] ?> Text (<?= strtoupper($lang['code']) ?>)</label>
-                                    <textarea name="trans[<?= $lang['code'] ?>][text]" class="form-control" rows="3" required><?= htmlspecialchars($t['text'] ?? '') ?></textarea>
+                                    <label class="form-label"><?= $lang['emoji'] ?> Texto
+                                        (<?= strtoupper($lang['code']) ?>)</label>
+                                    <textarea name="trans[<?= $lang['code'] ?>][text]" class="form-control" rows="3"
+                                        required><?= htmlspecialchars($t['text'] ?? '') ?></textarea>
                                 </div>
                             <?php endforeach; ?>
                         </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary w-100">
-                        <i class="fas fa-save"></i> Save Translation
+                        <i class="fas fa-save"></i> Guardar Tradução
                     </button>
                 </form>
             </div>
@@ -89,4 +93,3 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
-

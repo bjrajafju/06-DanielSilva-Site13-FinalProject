@@ -31,32 +31,32 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Product Reviews</h2>
+        <h2 class="h4 mb-0">Avaliações de Produtos</h2>
     </div>
 
     <div class="container-fluid">
         <?php show_alert(); ?>
 
         <div class="mb-4">
-            <a href="?status=all" class="btn btn-sm <?= $status === 'all' ? 'btn-primary' : 'btn-outline-primary' ?>">All</a>
-            <a href="?status=pending" class="btn btn-sm <?= $status === 'pending' ? 'btn-primary' : 'btn-outline-primary' ?>">Pending</a>
-            <a href="?status=approved" class="btn btn-sm <?= $status === 'approved' ? 'btn-primary' : 'btn-outline-primary' ?>">Approved</a>
+            <a href="?status=all" class="btn btn-sm <?= $status === 'all' ? 'btn-primary' : 'btn-outline-primary' ?>">Todas</a>
+            <a href="?status=pending" class="btn btn-sm <?= $status === 'pending' ? 'btn-primary' : 'btn-outline-primary' ?>">Pendentes</a>
+            <a href="?status=approved" class="btn btn-sm <?= $status === 'approved' ? 'btn-primary' : 'btn-outline-primary' ?>">Aprovadas</a>
         </div>
 
         <div class="card">
-            <div class="card-header">Reviews</div>
+            <div class="card-header">Avaliações</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
-                                <th>Status</th>
-                                <th>Product</th>
-                                <th>User</th>
-                                <th>Rating</th>
-                                <th>Comment</th>
-                                <th>Date</th>
-                                <th class="text-right">Actions</th>
+                                <th>Estado</th>
+                                <th>Produto</th>
+                                <th>Utilizador</th>
+                                <th>Classificação</th>
+                                <th>Comentário</th>
+                                <th>Data</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,7 +64,7 @@ include 'layout/sidebar.php';
                                 <tr>
                                     <td>
                                         <span class="badge badge-<?= $r['is_approved'] ? 'success' : 'warning' ?>">
-                                            <?= $r['is_approved'] ? 'Approved' : 'Pending' ?>
+                                            <?= $r['is_approved'] ? 'Aprovada' : 'Pendente' ?>
                                         </span>
                                     </td>
                                     <td><?= htmlspecialchars($r['product_title']) ?></td>
@@ -82,10 +82,10 @@ include 'layout/sidebar.php';
                                     <td><small><?= htmlspecialchars(substr($r['comment'], 0, 50)) ?>...</small></td>
                                     <td><?= date('d/m/Y H:i', strtotime($r['created_at'])) ?></td>
                                     <td class="text-right">
-                                        <a href="review_approve.php?id=<?= $r['id'] ?>" class="btn btn-sm btn-outline-<?= $r['is_approved'] ? 'warning' : 'success' ?>" title="<?= $r['is_approved'] ? 'Unapprove' : 'Approve' ?>">
+                                        <a href="review_approve.php?id=<?= $r['id'] ?>" class="btn btn-sm btn-outline-<?= $r['is_approved'] ? 'warning' : 'success' ?>" title="<?= $r['is_approved'] ? 'Desaprovar' : 'Aprovar' ?>">
                                             <i class="fas fa-<?= $r['is_approved'] ? 'times-circle' : 'check-circle' ?>"></i>
                                         </a>
-                                        <a href="review_delete.php?id=<?= $r['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete" title="Delete">
+                                        <a href="review_delete.php?id=<?= $r['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete" title="Eliminar">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
@@ -93,7 +93,7 @@ include 'layout/sidebar.php';
                             <?php endforeach; ?>
                             <?php if (empty($reviews)): ?>
                                 <tr>
-                                    <td colspan="7" class="text-center">No reviews found.</td>
+                                    <td colspan="7" class="text-center">Nenhuma avaliação encontrada.</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>

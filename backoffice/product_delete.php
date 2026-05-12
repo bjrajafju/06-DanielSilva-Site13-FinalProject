@@ -1,19 +1,19 @@
 <?php
 include_once 'includes/helpers.php';
 
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
 if ($id) {
     // Check for variants
     $variants = db_get_all('product_variants', "product_id = $id");
     if ($variants) {
-        set_alert("Cannot delete product because it has variants. Please delete variants first.", "danger");
+        set_alert("Não é possível eliminar o produto porque possui variantes. Por favor, elimine as variantes primeiro.", "danger");
     } else {
         // Delete translations
         db_delete('product_translations', "product_id = $id");
         // Delete product
         db_delete('products', "id = $id");
-        set_alert("Product and its translations deleted successfully!");
+        set_alert("Produto e as suas traduções eliminados com sucesso!");
     }
 }
 

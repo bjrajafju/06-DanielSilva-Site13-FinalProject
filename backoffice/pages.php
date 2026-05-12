@@ -9,14 +9,14 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Pages</h2>
+        <h2 class="h4 mb-0">Páginas</h2>
     </div>
 
     <div class="container-fluid">
         <?php show_alert(); ?>
 
         <div class="card">
-            <div class="card-header">Static Pages List</div>
+            <div class="card-header">Lista de Páginas Estáticas</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
@@ -24,10 +24,10 @@ include 'layout/sidebar.php';
                             <tr>
                                 <th>ID</th>
                                 <th>Slug</th>
-                                <th>Title (EN)</th>
-                                <th>Title (PT)</th>
-                                <th>Status</th>
-                                <th class="text-right">Actions</th>
+                                <th>Título (EN)</th>
+                                <th>Título (PT)</th>
+                                <th>Estado</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,7 +42,7 @@ include 'layout/sidebar.php';
                                     <td><?= $t_pt['title'] ?? 'N/A' ?></td>
                                     <td>
                                         <span class="badge badge-<?= $p['is_active'] ? 'success' : 'danger' ?>">
-                                            <?= $p['is_active'] ? 'Active' : 'Inactive' ?>
+                                            <?= $p['is_active'] ? 'Ativo' : 'Inativo' ?>
                                         </span>
                                     </td>
                                     <td class="text-right">

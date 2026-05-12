@@ -25,27 +25,27 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Product Variants</h2>
-        <a href="product_variant_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Variant</a>
+        <h2 class="h4 mb-0">Variantes de Produto</h2>
+        <a href="product_variant_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Adicionar Nova Variante</a>
     </div>
 
     <div class="container-fluid">
         <?php show_alert(); ?>
 
         <div class="card">
-            <div class="card-header">Variant List</div>
+            <div class="card-header">Lista de Variantes</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
-                                <th>Product Code</th>
-                                <th>Product Title</th>
-                                <th>Size</th>
-                                <th>Color</th>
+                                <th>Código Prod</th>
+                                <th>Título do Produto</th>
+                                <th>Tamanho</th>
+                                <th>Cor</th>
                                 <th>Stock</th>
-                                <th>Available</th>
-                                <th class="text-right">Actions</th>
+                                <th>Disponível</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,7 +75,7 @@ include 'layout/sidebar.php';
                                     </td>
                                     <td>
                                         <span class="badge badge-<?= $v['is_available'] ? 'success' : 'danger' ?>">
-                                            <?= $v['is_available'] ? 'Yes' : 'No' ?>
+                                            <?= $v['is_available'] ? 'Sim' : 'Não' ?>
                                         </span>
                                     </td>
                                     <td class="text-right">

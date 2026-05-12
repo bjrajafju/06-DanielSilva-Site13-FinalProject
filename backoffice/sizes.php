@@ -9,23 +9,23 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Sizes</h2>
-        <a href="size_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Size</a>
+        <h2 class="h4 mb-0">Tamanhos</h2>
+        <a href="size_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Adicionar Novo Tamanho</a>
     </div>
 
     <div class="container-fluid">
         <?php show_alert(); ?>
 
         <div class="card">
-            <div class="card-header">Size List</div>
+            <div class="card-header">Lista de Tamanhos</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th class="text-right">Actions</th>
+                                <th>Nome</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>

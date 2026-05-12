@@ -1,10 +1,11 @@
 <?php
 include_once 'includes/helpers.php';
 
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 $cart = db_get_one('carts', "id = $id");
 
-if (!$cart) redirect("carts.php");
+if (!$cart)
+    redirect("carts.php");
 
 $items = db_select(
     "ci.*, p.codProd, pt.title",
@@ -21,27 +22,27 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Cart Details #<?= $id ?></h2>
-        <a href="carts.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to List</a>
+        <h2 class="h4 mb-0">Detalhes do Carrinho #<?= $id ?></h2>
+        <a href="carts.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Voltar à Lista</a>
     </div>
 
     <div class="container-fluid">
         <div class="card">
-            <div class="card-header">Items in Cart</div>
+            <div class="card-header">Itens no Carrinho</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Product</th>
-                                <th>Variant ID</th>
-                                <th>Quantity</th>
+                                <th>Produto</th>
+                                <th>ID Variante</th>
+                                <th>Quantidade</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if (empty($items)): ?>
                                 <tr>
-                                    <td colspan="3" class="text-center">Cart is empty</td>
+                                    <td colspan="3" class="text-center">O carrinho está vazio</td>
                                 </tr>
                             <?php else: ?>
                                 <?php foreach ($items as $item): ?>
@@ -63,4 +64,3 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
-

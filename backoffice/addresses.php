@@ -2,7 +2,7 @@
 include_once 'includes/helpers.php';
 
 $limit = 10;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
 $total_items = db_count('addresses');
@@ -23,41 +23,47 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">User Addresses</h2>
-        <a href="address_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Address</a>
+        <h2 class="h4 mb-0">Moradas de Utilizadores</h2>
+        <a href="address_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Adicionar Nova Morada</a>
     </div>
 
     <div class="container-fluid">
         <?php show_alert(); ?>
 
         <div class="card">
-            <div class="card-header">Address List</div>
+            <div class="card-header">Lista de Moradas</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
-                                <th>User</th>
-                                <th>Type</th>
-                                <th>Name</th>
-                                <th>Address</th>
-                                <th>City</th>
-                                <th>Country</th>
-                                <th class="text-right">Actions</th>
+                                <th>Utilizador</th>
+                                <th>Tipo</th>
+                                <th>Nome</th>
+                                <th>Morada</th>
+                                <th>Cidade</th>
+                                <th>País</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($addresses as $a): ?>
                                 <tr>
-                                    <td><?= $a['user_fname'] ? $a['user_fname'] . ' ' . $a['user_lname'] : 'Guest' ?></td>
-                                    <td><span class="badge badge-<?= $a['type'] == 'billing' ? 'primary' : 'info' ?>"><?= strtoupper($a['type']) ?></span></td>
+                                    <td><?= $a['user_fname'] ? $a['user_fname'] . ' ' . $a['user_lname'] : 'Convidado' ?>
+                                    </td>
+                                    <td><span
+                                            class="badge badge-<?= $a['type'] == 'billing' ? 'primary' : 'info' ?>"><?= $a['type'] == 'billing' ? 'FATURAÇÃO' : 'ENVIO' ?></span>
+                                    </td>
                                     <td><?= $a['first_name'] . ' ' . $a['last_name'] ?></td>
                                     <td><?= $a['address_line1'] ?></td>
                                     <td><?= $a['city'] ?></td>
                                     <td><code><?= $a['country_code'] ?></code></td>
                                     <td class="text-right">
-                                        <a href="address_form.php?id=<?= $a['id'] ?>" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
-                                        <a href="address_delete.php?id=<?= $a['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
+                                        <a href="address_form.php?id=<?= $a['id'] ?>" class="btn btn-sm btn-outline-info"><i
+                                                class="fas fa-edit"></i></a>
+                                        <a href="address_delete.php?id=<?= $a['id'] ?>"
+                                            class="btn btn-sm btn-outline-danger btn-delete"><i
+                                                class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -82,4 +88,3 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
-

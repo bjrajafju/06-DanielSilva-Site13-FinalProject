@@ -74,7 +74,7 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar d-flex justify-content-between align-items-center">
-        <h2 class="h4 mb-0 font-weight-bold">Store Overview</h2>
+        <h2 class="h4 mb-0 font-weight-bold">Visão Geral da Loja</h2>
         <div class="text-right">
             <span class="text-muted small"><?= date('l, d F Y') ?></span>
         </div>
@@ -90,10 +90,11 @@ include 'layout/sidebar.php';
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1 text-muted">Revenue (Month)
+                                <div class="text-xs font-weight-bold text-uppercase mb-1 text-muted">Receita (Mês)
                                 </div>
                                 <div class="h4 mb-0 font-weight-bold text-gray-800">
-                                    <?= number_format($stats['revenue'], 2) ?>€</div>
+                                    <?= number_format($stats['revenue'], 2) ?>€
+                                </div>
                                 <div class="mt-2">
                                     <?php if ($stats['revenue_growth'] >= 0): ?>
                                         <span class="badge badge-light text-success trend-badge">
@@ -106,7 +107,7 @@ include 'layout/sidebar.php';
                                             <?= number_format(abs($stats['revenue_growth']), 1) ?>%
                                         </span>
                                     <?php endif; ?>
-                                    <span class="text-muted small ml-1">vs last month</span>
+                                    <span class="text-muted small ml-1">vs mês anterior</span>
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -125,11 +126,12 @@ include 'layout/sidebar.php';
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1 text-muted">Pending Orders
+                                <div class="text-xs font-weight-bold text-uppercase mb-1 text-muted">Encomendas
+                                    Pendentes
                                 </div>
                                 <div class="h4 mb-0 font-weight-bold text-gray-800"><?= $stats['pending_orders'] ?>
                                 </div>
-                                <div class="mt-2 text-muted small">Requiring action</div>
+                                <div class="mt-2 text-muted small">A aguardar ação</div>
                             </div>
                             <div class="col-auto">
                                 <div class="kpi-icon bg-light-warning text-warning">
@@ -147,11 +149,13 @@ include 'layout/sidebar.php';
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1 text-muted">Avg. Order Value
+                                <div class="text-xs font-weight-bold text-uppercase mb-1 text-muted">Valor Médio de
+                                    Encomenda
                                 </div>
                                 <div class="h4 mb-0 font-weight-bold text-gray-800">
-                                    <?= number_format($stats['aov'], 2) ?>€</div>
-                                <div class="mt-2 text-muted small">Per transaction</div>
+                                    <?= number_format($stats['aov'], 2) ?>€
+                                </div>
+                                <div class="mt-2 text-muted small">Por transação</div>
                             </div>
                             <div class="col-auto">
                                 <div class="kpi-icon bg-light-info text-info">
@@ -169,10 +173,10 @@ include 'layout/sidebar.php';
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1 text-muted">Total Customers
+                                <div class="text-xs font-weight-bold text-uppercase mb-1 text-muted">Total de Clientes
                                 </div>
                                 <div class="h4 mb-0 font-weight-bold text-gray-800"><?= $stats['total_users'] ?></div>
-                                <div class="mt-2 text-muted small">Registered accounts</div>
+                                <div class="mt-2 text-muted small">Contas registadas</div>
                             </div>
                             <div class="col-auto">
                                 <div class="kpi-icon bg-light-success text-success">
@@ -190,13 +194,13 @@ include 'layout/sidebar.php';
             <div class="col-lg-8 mb-4">
                 <div class="card dashboard-card h-100">
                     <div class="card-header bg-transparent border-0 py-3">
-                        <h6 class="m-0 font-weight-bold text-dark">Revenue Evolution (Last 15 Days)</h6>
+                        <h6 class="m-0 font-weight-bold text-dark">Evolução da Receita (Últimos 15 Dias)</h6>
                     </div>
                     <div class="card-body">
                         <?php if (empty($chart_data)): ?>
                             <div class="empty-state">
                                 <i class="fas fa-chart-line"></i>
-                                <p>No sales data available for the last 15 days.</p>
+                                <p>Sem dados de vendas nos últimos 15 dias.</p>
                             </div>
                         <?php else: ?>
                             <div style="position: relative; height: 300px;">
@@ -209,13 +213,13 @@ include 'layout/sidebar.php';
             <div class="col-lg-4 mb-4">
                 <div class="card dashboard-card h-100">
                     <div class="card-header bg-transparent border-0 py-3">
-                        <h6 class="m-0 font-weight-bold text-dark">Category Sales</h6>
+                        <h6 class="m-0 font-weight-bold text-dark">Vendas por Categoria</h6>
                     </div>
                     <div class="card-body">
                         <?php if (empty($cat_data)): ?>
                             <div class="empty-state">
                                 <i class="fas fa-chart-pie"></i>
-                                <p>No category data available.</p>
+                                <p>Sem dados de categorias disponíveis.</p>
                             </div>
                         <?php else: ?>
                             <div style="position: relative; height: 300px;">
@@ -234,25 +238,25 @@ include 'layout/sidebar.php';
                 <div class="card dashboard-card h-100">
                     <div
                         class="card-header bg-transparent border-0 py-3 d-flex justify-content-between align-items-center">
-                        <h6 class="m-0 font-weight-bold text-dark">Stock Alerts <span
+                        <h6 class="m-0 font-weight-bold text-dark">Alertas de Stock <span
                                 class="badge badge-danger ml-2"><?= count($low_stock) ?></span></h6>
-                        <a href="product_variants.php" class="btn btn-sm btn-outline-primary">Manage Stock</a>
+                        <a href="product_variants.php" class="btn btn-sm btn-outline-primary">Gerir Stock</a>
                     </div>
                     <div class="card-body p-0">
                         <?php if (empty($low_stock)): ?>
                             <div class="empty-state py-5">
                                 <i class="fas fa-check-circle text-success"></i>
-                                <p>All products are well stocked!</p>
+                                <p>Todos os produtos estão com stock suficiente!</p>
                             </div>
                         <?php else: ?>
                             <div class="table-responsive">
                                 <table class="table table-hover mb-0">
                                     <thead class="bg-light">
                                         <tr>
-                                            <th class="border-0 px-4">Product</th>
-                                            <th class="border-0">Variant</th>
+                                            <th class="border-0 px-4">Produto</th>
+                                            <th class="border-0">Variante</th>
                                             <th class="border-0 text-center">Stock</th>
-                                            <th class="border-0 text-right px-4">Action</th>
+                                            <th class="border-0 text-right px-4">Ação</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -260,13 +264,13 @@ include 'layout/sidebar.php';
                                             <tr>
                                                 <td class="px-4 font-weight-bold"><?= $item['title'] ?></td>
                                                 <td>
-                                                    <span class="small text-muted">Size: <?= $item['size_name'] ?></span><br>
-                                                    <span class="small text-muted">Color: <?= $item['color_name'] ?></span>
+                                                    <span class="small text-muted">Tam: <?= $item['size_name'] ?></span><br>
+                                                    <span class="small text-muted">Cor: <?= $item['color_name'] ?></span>
                                                 </td>
                                                 <td class="text-center">
                                                     <span
                                                         class="badge badge-pill badge-<?= $item['stock'] <= 2 ? 'danger' : 'warning' ?>">
-                                                        <?= $item['stock'] ?> left
+                                                        restam <?= $item['stock'] ?>
                                                     </span>
                                                 </td>
                                                 <td class="text-right px-4">
@@ -287,13 +291,13 @@ include 'layout/sidebar.php';
             <div class="col-lg-5 mb-4">
                 <div class="card dashboard-card h-100">
                     <div class="card-header bg-transparent border-0 py-3">
-                        <h6 class="m-0 font-weight-bold text-dark">Top Products</h6>
+                        <h6 class="m-0 font-weight-bold text-dark">Produtos Mais Vendidos</h6>
                     </div>
                     <div class="card-body p-0">
                         <?php if (empty($top_products)): ?>
                             <div class="empty-state py-5">
                                 <i class="fas fa-box-open"></i>
-                                <p>No sales recorded yet.</p>
+                                <p>Ainda sem vendas registadas.</p>
                             </div>
                         <?php else: ?>
                             <div class="list-group list-group-flush">
@@ -303,11 +307,12 @@ include 'layout/sidebar.php';
                                             style="width: 40px; height: 40px; object-fit: cover;">
                                         <div class="flex-grow-1">
                                             <div class="small font-weight-bold"><?= $p['title'] ?></div>
-                                            <div class="text-muted small"><?= $p['total_sold'] ?> sold</div>
+                                            <div class="text-muted small"><?= $p['total_sold'] ?> vendidos</div>
                                         </div>
                                         <div class="text-right">
                                             <div class="font-weight-bold text-dark">
-                                                <?= number_format($p['total_revenue'], 2) ?>€</div>
+                                                <?= number_format($p['total_revenue'], 2) ?>€
+                                            </div>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
@@ -324,8 +329,8 @@ include 'layout/sidebar.php';
                 <div class="card dashboard-card mb-4">
                     <div
                         class="card-header bg-transparent border-0 py-3 d-flex justify-content-between align-items-center">
-                        <h6 class="m-0 font-weight-bold text-dark">Latest Orders</h6>
-                        <a href="orders.php" class="btn btn-sm btn-outline-secondary">View All</a>
+                        <h6 class="m-0 font-weight-bold text-dark">Últimas Encomendas</h6>
+                        <a href="orders.php" class="btn btn-sm btn-outline-secondary">Ver Todas</a>
                     </div>
                     <div class="card-body p-0">
                         <?php
@@ -333,19 +338,19 @@ include 'layout/sidebar.php';
                         if (empty($recent_orders)): ?>
                             <div class="empty-state py-5">
                                 <i class="fas fa-shopping-cart"></i>
-                                <p>No orders found.</p>
+                                <p>Nenhuma encomenda encontrada.</p>
                             </div>
                         <?php else: ?>
                             <div class="table-responsive">
                                 <table class="table table-hover mb-0">
                                     <thead class="bg-light text-muted small text-uppercase">
                                         <tr>
-                                            <th class="border-0 px-4">Order ID</th>
-                                            <th class="border-0">Customer</th>
-                                            <th class="border-0">Date</th>
-                                            <th class="border-0">Amount</th>
-                                            <th class="border-0">Status</th>
-                                            <th class="border-0 text-right px-4">Details</th>
+                                            <th class="border-0 px-4">ID Encomenda</th>
+                                            <th class="border-0">Cliente</th>
+                                            <th class="border-0">Data</th>
+                                            <th class="border-0">Total</th>
+                                            <th class="border-0">Estado</th>
+                                            <th class="border-0 text-right px-4">Detalhes</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -355,7 +360,8 @@ include 'layout/sidebar.php';
                                                 <td><?= $order['first_name'] ? htmlspecialchars($order['first_name'] . ' ' . $order['last_name']) : 'Guest' ?>
                                                 </td>
                                                 <td class="text-muted">
-                                                    <?= date('d M Y, H:i', strtotime($order['created_at'])) ?></td>
+                                                    <?= date('d M Y, H:i', strtotime($order['created_at'])) ?>
+                                                </td>
                                                 <td class="font-weight-bold"><?= number_format($order['total'], 2) ?>€</td>
                                                 <td>
                                                     <?php
@@ -369,7 +375,16 @@ include 'layout/sidebar.php';
                                                     ?>
                                                     <span class="badge badge-<?= $status_class ?> px-3 py-2 text-uppercase"
                                                         style="font-size: 0.65rem;">
-                                                        <?= $order['status'] ?>
+                                                        <?php
+                                                        $status_pt = [
+                                                            'pending' => 'pendente',
+                                                            'paid' => 'pago',
+                                                            'shipped' => 'enviado',
+                                                            'completed' => 'concluída',
+                                                            'cancelled' => 'cancelada'
+                                                        ];
+                                                        echo $status_pt[$order['status']] ?? $order['status'];
+                                                        ?>
                                                     </span>
                                                 </td>
                                                 <td class="text-right px-4">
@@ -402,7 +417,7 @@ include 'layout/sidebar.php';
                 data: {
                     labels: <?= json_encode($chart_labels) ?>,
                     datasets: [{
-                        label: 'Revenue (€)',
+                        label: 'Receita (€)',
                         data: <?= json_encode($chart_data) ?>,
                         borderColor: '#4e73df',
                         backgroundColor: 'rgba(78, 115, 223, 0.05)',
@@ -457,4 +472,3 @@ include 'layout/sidebar.php';
 </script>
 
 <?php include 'layout/footer.php'; ?>
-

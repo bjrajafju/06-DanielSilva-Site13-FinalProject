@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($id) {
         db_update('pages', $data, "id = $id");
         $page_id = $id;
-        set_alert("Page updated successfully!");
+        set_alert("Página atualizada com sucesso!");
     } else {
         // We only allow editing existing pages for now as per requirements (About Us)
         redirect("pages.php");
@@ -58,8 +58,8 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0"><?= $id ? 'Edit Page' : 'Create Page' ?></h2>
-        <a href="pages.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to List</a>
+        <h2 class="h4 mb-0"><?= $id ? 'Editar Página' : 'Criar Página' ?></h2>
+        <a href="pages.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Voltar à Lista</a>
     </div>
 
     <div class="container-fluid">
@@ -67,12 +67,12 @@ include 'layout/sidebar.php';
             <div class="row">
                 <div class="col-lg-8">
                     <div class="card mb-4">
-                        <div class="card-header">Translations</div>
+                        <div class="card-header">Traduções</div>
                         <div class="card-body">
                             <ul class="nav nav-tabs mb-3" id="langTabs" role="tablist">
                                 <?php foreach ($languages as $index => $lang): ?>
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link <?= $index === 0 ? 'active' : '' ?>" id="tab-<?= $lang['code'] ?>" data-bs-toggle="tab" data-bs-target="#content-<?= $lang['code'] ?>" type="button" role="tab">
+                                        <button class="nav-link <?= $index === 0 ? 'active' : '' ?>" id="tab-<?= $lang['code'] ?>" data-toggle="tab" data-target="#content-<?= $lang['code'] ?>" type="button" role="tab">
                                             <?= $lang['emoji'] ?> <?= strtoupper($lang['code']) ?>
                                         </button>
                                     </li>
@@ -84,11 +84,11 @@ include 'layout/sidebar.php';
                                 ?>
                                     <div class="tab-pane fade <?= $index === 0 ? 'show active' : '' ?>" id="content-<?= $lang['code'] ?>" role="tabpanel">
                                         <div class="mb-3">
-                                            <label class="form-label">Title (<?= strtoupper($lang['code']) ?>)</label>
+                                            <label class="form-label">Título (<?= strtoupper($lang['code']) ?>)</label>
                                             <input type="text" name="trans[<?= $lang['code'] ?>][title]" class="form-control" value="<?= $t['title'] ?? '' ?>" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Content (HTML allowed)</label>
+                                            <label class="form-label">Conteúdo (Aceita HTML)</label>
                                             <textarea name="trans[<?= $lang['code'] ?>][content]" class="form-control" rows="15"><?= $t['content'] ?? '' ?></textarea>
                                         </div>
                                     </div>
@@ -100,16 +100,16 @@ include 'layout/sidebar.php';
 
                 <div class="col-lg-4">
                     <div class="card mb-4">
-                        <div class="card-header">Settings</div>
+                        <div class="card-header">Definições</div>
                         <div class="card-body">
                             <div class="mb-3">
                                 <label class="form-label">Slug</label>
                                 <input type="text" class="form-control" value="<?= $page_data['slug'] ?? '' ?>" disabled>
-                                <div class="form-text">Slug cannot be changed.</div>
+                                <div class="form-text">O slug não pode ser alterado.</div>
                             </div>
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" name="is_active" id="isActive" <?= ($page_data['is_active'] ?? 1) ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="isActive">Page is Active</label>
+                            <div class="custom-control custom-switch mb-3">
+                                <input class="custom-control-input" type="checkbox" name="is_active" id="isActive" <?= ($page_data['is_active'] ?? 1) ? 'checked' : '' ?>>
+                                <label class="custom-control-label" for="isActive">Página Ativa</label>
                             </div>
                         </div>
                     </div>
@@ -117,9 +117,9 @@ include 'layout/sidebar.php';
                     <div class="card">
                         <div class="card-body">
                             <button type="submit" class="btn btn-primary w-100 mb-2">
-                                <i class="fas fa-save"></i> Save Page
+                                <i class="fas fa-save"></i> Guardar Página
                             </button>
-                            <a href="pages.php" class="btn btn-outline-secondary w-100">Cancel</a>
+                            <a href="pages.php" class="btn btn-outline-secondary w-100">Cancelar</a>
                         </div>
                     </div>
                 </div>

@@ -43,8 +43,8 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Products</h2>
-        <a href="product_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Product</a>
+        <h2 class="h4 mb-0">Produtos</h2>
+        <a href="product_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Adicionar Novo Produto</a>
     </div>
 
     <div class="container-fluid">
@@ -52,10 +52,10 @@ include 'layout/sidebar.php';
 
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span>Product List</span>
+                <span>Lista de Produtos</span>
                 <form class="d-flex" method="GET">
-                    <input class="form-control form-control-sm mr-2" type="search" name="search" placeholder="Search..." value="<?= htmlspecialchars($search) ?>">
-                    <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+                    <input class="form-control form-control-sm mr-2" type="search" name="search" placeholder="Pesquisar..." value="<?= htmlspecialchars($search) ?>">
+                    <button class="btn btn-outline-primary btn-sm" type="submit">Pesquisar</button>
                 </form>
             </div>
             <div class="card-body">
@@ -63,13 +63,13 @@ include 'layout/sidebar.php';
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
-                                <th>Image</th>
-                                <th>Code</th>
-                                <th>Title (Default)</th>
-                                <th>Category</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th class="text-right">Actions</th>
+                                <th>Imagem</th>
+                                <th>Código</th>
+                                <th>Título (Padrão)</th>
+                                <th>Categoria</th>
+                                <th>Preço</th>
+                                <th>Estado</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,11 +85,11 @@ include 'layout/sidebar.php';
                                     </td>
                                     <td><code><?= $p['codProd'] ?></code></td>
                                     <td><?= $trans['title'] ?? 'N/A' ?></td>
-                                    <td><?= $cat_trans['name'] ?? 'Uncategorized' ?></td>
+                                    <td><?= $cat_trans['name'] ?? 'Sem Categoria' ?></td>
                                     <td><?= number_format($p['price'], 2) ?>€</td>
                                     <td>
                                         <span class="badge badge-<?= $p['is_active'] ? 'success' : 'danger' ?>">
-                                            <?= $p['is_active'] ? 'Active' : 'Inactive' ?>
+                                            <?= $p['is_active'] ? 'Ativo' : 'Inativo' ?>
                                         </span>
                                     </td>
                                     <td class="text-right">

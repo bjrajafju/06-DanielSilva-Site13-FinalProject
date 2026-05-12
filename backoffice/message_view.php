@@ -17,8 +17,8 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">View Message</h2>
-        <a href="messages.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to List</a>
+        <h2 class="h4 mb-0">Ver Mensagem</h2>
+        <a href="messages.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Voltar à Lista</a>
     </div>
 
     <div class="container-fluid">
@@ -26,19 +26,19 @@ include 'layout/sidebar.php';
             <div class="col-lg-8">
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between">
-                        <span>Message from <?= $msg['name'] ?></span>
+                        <span>Mensagem de <?= $msg['name'] ?></span>
                         <span class="text-muted"><?= date('d/m/Y H:i', strtotime($msg['created_at'])) ?></span>
                     </div>
                     <div class="card-body">
                         <div class="mb-4">
-                            <h5 class="card-title">Subject: <?= $msg['subject'] ?></h5>
-                            <p class="card-text text-muted">Email: <a href="mailto:<?= $msg['email'] ?>"><?= $msg['email'] ?></a></p>
+                            <h5 class="card-title">Assunto: <?= $msg['subject'] ?></h5>
+                            <p class="card-text text-muted">E-mail: <a href="mailto:<?= $msg['email'] ?>"><?= $msg['email'] ?></a></p>
                         </div>
                         <hr>
                         <div class="bg-light p-4 rounded mb-4" style="white-space: pre-wrap; min-height: 200px;"><?= htmlspecialchars($msg['message']) ?></div>
 
                         <div class="d-flex justify-content-end">
-                            <a href="message_delete.php?id=<?= $id ?>" class="btn btn-outline-danger btn-delete"><i class="fas fa-trash"></i> Delete Message</a>
+                            <a href="message_delete.php?id=<?= $id ?>" class="btn btn-outline-danger btn-delete"><i class="fas fa-trash"></i> Eliminar Mensagem</a>
                         </div>
                     </div>
                 </div>

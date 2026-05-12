@@ -35,8 +35,8 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">News</h2>
-        <a href="news_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Post</a>
+        <h2 class="h4 mb-0">Notícias</h2>
+        <a href="news_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Adicionar Novo Artigo</a>
     </div>
 
     <div class="container-fluid">
@@ -44,10 +44,10 @@ include 'layout/sidebar.php';
 
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span>News List</span>
+                <span>Lista de Notícias</span>
                 <form class="d-flex" method="GET">
-                    <input class="form-control form-control-sm mr-2" type="search" name="search" placeholder="Search title..." value="<?= htmlspecialchars($search) ?>">
-                    <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+                    <input class="form-control form-control-sm mr-2" type="search" name="search" placeholder="Pesquisar título..." value="<?= htmlspecialchars($search) ?>">
+                    <button class="btn btn-outline-primary btn-sm" type="submit">Pesquisar</button>
                 </form>
             </div>
             <div class="card-body">
@@ -55,11 +55,11 @@ include 'layout/sidebar.php';
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
-                                <th>Image</th>
-                                <th>Title (Default)</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th class="text-right">Actions</th>
+                                <th>Imagem</th>
+                                <th>Título (Padrão)</th>
+                                <th>Data</th>
+                                <th>Estado</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,7 +75,7 @@ include 'layout/sidebar.php';
                                     <td><?= date('d/m/Y', strtotime($n['created_at'])) ?></td>
                                     <td>
                                         <span class="badge badge-<?= $n['is_active'] ? 'success' : 'danger' ?>">
-                                            <?= $n['is_active'] ? 'Active' : 'Inactive' ?>
+                                            <?= $n['is_active'] ? 'Ativo' : 'Inativo' ?>
                                         </span>
                                     </td>
                                     <td class="text-right">

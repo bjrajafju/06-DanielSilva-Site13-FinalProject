@@ -21,11 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($id) {
         db_update('news', $data, "id = $id");
         $news_id = $id;
-        set_alert("News updated successfully!");
+        set_alert("Notícia atualizada com sucesso!");
     } else {
         $data['created_at'] = date('Y-m-d H:i:s');
         $news_id = db_insert('news', $data);
-        set_alert("News created successfully!");
+        set_alert("Notícia criada com sucesso!");
     }
 
     // Handle Translations
@@ -62,8 +62,8 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0"><?= $id ? 'Edit News' : 'Create News' ?></h2>
-        <a href="news.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to List</a>
+        <h2 class="h4 mb-0"><?= $id ? 'Editar Notícia' : 'Criar Notícia' ?></h2>
+        <a href="news.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Voltar à Lista</a>
     </div>
 
     <div class="container-fluid">
@@ -71,12 +71,12 @@ include 'layout/sidebar.php';
             <div class="row">
                 <div class="col-lg-8">
                     <div class="card mb-4">
-                        <div class="card-header">Translations</div>
+                        <div class="card-header">Traduções</div>
                         <div class="card-body">
                             <ul class="nav nav-tabs mb-3" id="langTabs" role="tablist">
                                 <?php foreach ($languages as $index => $lang): ?>
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link <?= $index === 0 ? 'active' : '' ?>" id="tab-<?= $lang['code'] ?>" data-bs-toggle="tab" data-bs-target="#content-<?= $lang['code'] ?>" type="button" role="tab">
+                                        <button class="nav-link <?= $index === 0 ? 'active' : '' ?>" id="tab-<?= $lang['code'] ?>" data-toggle="tab" data-target="#content-<?= $lang['code'] ?>" type="button" role="tab">
                                             <?= $lang['emoji'] ?> <?= strtoupper($lang['code']) ?>
                                         </button>
                                     </li>
@@ -88,19 +88,19 @@ include 'layout/sidebar.php';
                                 ?>
                                     <div class="tab-pane fade <?= $index === 0 ? 'show active' : '' ?>" id="content-<?= $lang['code'] ?>" role="tabpanel">
                                         <div class="mb-3">
-                                            <label class="form-label">Title (<?= strtoupper($lang['code']) ?>)</label>
+                                            <label class="form-label">Título (<?= strtoupper($lang['code']) ?>)</label>
                                             <input type="text" name="trans[<?= $lang['code'] ?>][title]" class="form-control" value="<?= $t['title'] ?? '' ?>" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Slug (<?= strtoupper($lang['code']) ?>) - Auto-generated if empty</label>
+                                            <label class="form-label">Slug (<?= strtoupper($lang['code']) ?>) - Gerado automaticamente se vazio</label>
                                             <input type="text" name="trans[<?= $lang['code'] ?>][slug]" class="form-control" value="<?= $t['slug'] ?? '' ?>">
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Short Description</label>
+                                            <label class="form-label">Introdução / Resumo</label>
                                             <textarea name="trans[<?= $lang['code'] ?>][short_description]" class="form-control" rows="3"><?= $t['short_description'] ?? '' ?></textarea>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Full Content (HTML allowed)</label>
+                                            <label class="form-label">Conteúdo Completo (Aceita HTML)</label>
                                             <textarea name="trans[<?= $lang['code'] ?>][content]" class="form-control" rows="10"><?= $t['content'] ?? '' ?></textarea>
                                         </div>
                                     </div>
@@ -113,24 +113,24 @@ include 'layout/sidebar.php';
                 <div class="col-lg-4">
                     <!-- Image -->
                     <div class="card mb-4">
-                        <div class="card-header">Post Image</div>
+                        <div class="card-header">Imagem do Artigo</div>
                         <div class="card-body text-center">
                             <div class="mb-3">
                                 <?php if (isset($news_data['image'])): ?>
                                     <img src="../<?= $news_data['image'] ?>" class="img-thumbnail mb-3" style="max-height: 200px;">
                                 <?php endif; ?>
                                 <input type="file" name="image" class="form-control">
-                                <div class="form-text">Upload news image</div>
+                                <div class="form-text">Upload da imagem da notícia</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="card mb-4">
-                        <div class="card-header">Settings</div>
+                        <div class="card-header">Definições</div>
                         <div class="card-body">
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" name="is_active" id="isActive" <?= ($news_data['is_active'] ?? 1) ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="isActive">Post is Active</label>
+                            <div class="custom-control custom-switch mb-3">
+                                <input class="custom-control-input" type="checkbox" name="is_active" id="isActive" <?= ($news_data['is_active'] ?? 1) ? 'checked' : '' ?>>
+                                <label class="custom-control-label" for="isActive">Artigo Ativo</label>
                             </div>
                         </div>
                     </div>
@@ -138,9 +138,9 @@ include 'layout/sidebar.php';
                     <div class="card">
                         <div class="card-body">
                             <button type="submit" class="btn btn-primary w-100 mb-2">
-                                <i class="fas fa-save"></i> Save News
+                                <i class="fas fa-save"></i> Guardar Artigo
                             </button>
-                            <a href="news.php" class="btn btn-outline-secondary w-100">Cancel</a>
+                            <a href="news.php" class="btn btn-outline-secondary w-100">Cancelar</a>
                         </div>
                     </div>
                 </div>

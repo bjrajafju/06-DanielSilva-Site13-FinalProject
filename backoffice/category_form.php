@@ -1,7 +1,7 @@
 <?php
 include_once 'includes/helpers.php';
 
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 $category = $id ? db_get_one('categories', "id = $id") : null;
 $translations = $id ? get_entity_translations('category_translations', 'category_id', $id) : [];
 $languages = get_active_languages();
@@ -15,10 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($id) {
         db_update('categories', $data, "id = $id");
         $category_id = $id;
-        set_alert("Category updated successfully!");
+        set_alert("Categoria atualizada com sucesso!");
     } else {
         $category_id = db_insert('categories', $data);
-        set_alert("Category created successfully!");
+        set_alert("Categoria criada com sucesso!");
     }
 
     // Handle Translations
@@ -49,8 +49,8 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0"><?= $id ? 'Edit Category' : 'Create Category' ?></h2>
-        <a href="categories.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to List</a>
+        <h2 class="h4 mb-0"><?= $id ? 'Editar Categoria' : 'Criar Categoria' ?></h2>
+        <a href="categories.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Voltar à Lista</a>
     </div>
 
     <div class="container-fluid">
@@ -58,31 +58,34 @@ include 'layout/sidebar.php';
             <div class="col-lg-8">
                 <form action="" method="POST" enctype="multipart/form-data">
                     <div class="card mb-4">
-                        <div class="card-header">Category Image</div>
+                        <div class="card-header">Imagem da Categoria</div>
                         <div class="card-body text-center">
                             <?php if (isset($category['image'])): ?>
-                                <img src="../<?= $category['image'] ?>" class="img-thumbnail mb-3" style="max-height: 150px;">
+                                <img src="../<?= $category['image'] ?>" class="img-thumbnail mb-3"
+                                    style="max-height: 150px;">
                             <?php endif; ?>
                             <input type="file" name="image" class="form-control">
                         </div>
                     </div>
 
                     <div class="card mb-4">
-                        <div class="card-header">Translations</div>
+                        <div class="card-header">Traduções</div>
                         <div class="card-body">
                             <?php foreach ($languages as $lang):
                                 $t = $translations[$lang['code']] ?? [];
-                            ?>
+                                ?>
                                 <div class="mb-3">
-                                    <label class="form-label"><?= $lang['emoji'] ?> Name (<?= strtoupper($lang['code']) ?>)</label>
-                                    <input type="text" name="trans[<?= $lang['code'] ?>][name]" class="form-control" value="<?= $t['name'] ?? '' ?>" required>
+                                    <label class="form-label"><?= $lang['emoji'] ?> Nome
+                                        (<?= strtoupper($lang['code']) ?>)</label>
+                                    <input type="text" name="trans[<?= $lang['code'] ?>][name]" class="form-control"
+                                        value="<?= $t['name'] ?? '' ?>" required>
                                 </div>
                             <?php endforeach; ?>
                         </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary w-100">
-                        <i class="fas fa-save"></i> Save Category
+                        <i class="fas fa-save"></i> Guardar Categoria
                     </button>
                 </form>
             </div>
@@ -91,4 +94,3 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
-

@@ -23,8 +23,8 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Interface Translations</h2>
-        <a href="traduz_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Translation</a>
+        <h2 class="h4 mb-0">Traduções de Interface</h2>
+        <a href="traduz_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Adicionar Nova Tradução</a>
     </div>
 
     <div class="container-fluid">
@@ -32,10 +32,10 @@ include 'layout/sidebar.php';
 
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span>Translation List (traduz)</span>
+                <span>Lista de Traduções (traduz)</span>
                 <form class="d-flex" method="GET">
-                    <input class="form-control form-control-sm mr-2" type="search" name="search" placeholder="Search key or text..." value="<?= htmlspecialchars($search) ?>">
-                    <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+                    <input class="form-control form-control-sm mr-2" type="search" name="search" placeholder="Pesquisar chave ou texto..." value="<?= htmlspecialchars($search) ?>">
+                    <button class="btn btn-outline-primary btn-sm" type="submit">Pesquisar</button>
                 </form>
             </div>
             <div class="card-body">
@@ -43,10 +43,10 @@ include 'layout/sidebar.php';
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
-                                <th>Code Key</th>
-                                <th>Module</th>
-                                <th>Translations</th>
-                                <th class="text-right">Actions</th>
+                                <th>Chave (Código)</th>
+                                <th>Módulo</th>
+                                <th>Traduções</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>

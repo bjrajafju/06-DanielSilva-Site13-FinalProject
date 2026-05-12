@@ -9,15 +9,15 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Languages</h2>
-        <a href="lang_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Language</a>
+        <h2 class="h4 mb-0">Idiomas</h2>
+        <a href="lang_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Adicionar Novo Idioma</a>
     </div>
 
     <div class="container-fluid">
         <?php show_alert(); ?>
 
         <div class="card">
-            <div class="card-header">Language List</div>
+            <div class="card-header">Lista de Idiomas</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
@@ -25,8 +25,8 @@ include 'layout/sidebar.php';
                             <tr>
                                 <th>ID</th>
                                 <th>Emoji</th>
-                                <th>Code</th>
-                                <th class="text-right">Actions</th>
+                                <th>Código</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,8 +36,11 @@ include 'layout/sidebar.php';
                                     <td><span class="fs-4"><?= $l['emoji'] ?></span></td>
                                     <td><code><?= $l['code'] ?></code></td>
                                     <td class="text-right">
-                                        <a href="lang_form.php?id=<?= $l['id'] ?>" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a>
-                                        <a href="lang_delete.php?id=<?= $l['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
+                                        <a href="lang_form.php?id=<?= $l['id'] ?>" class="btn btn-sm btn-outline-info"><i
+                                                class="fas fa-edit"></i></a>
+                                        <a href="lang_delete.php?id=<?= $l['id'] ?>"
+                                            class="btn btn-sm btn-outline-danger btn-delete"><i
+                                                class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -50,4 +53,3 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
-

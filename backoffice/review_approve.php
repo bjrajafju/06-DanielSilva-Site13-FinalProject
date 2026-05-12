@@ -5,9 +5,9 @@ $id = $_GET['id'] ?? null;
 
 if ($id) {
     if (toggle_review_approval($id)) {
-        set_alert("Review status updated successfully!", "success");
+        set_alert("Estado da avaliação atualizado com sucesso!", "success");
     } else {
-        set_alert("Error updating review status.", "danger");
+        set_alert("Erro ao atualizar o estado da avaliação.", "danger");
     }
 }
 

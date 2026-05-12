@@ -5,7 +5,7 @@ $code = isset($_GET['code']) ? $_GET['code'] : '';
 
 if ($code) {
     db_delete('traduz', "code = '" . addslashes($code) . "'");
-    set_alert("Translation deleted successfully!");
+    set_alert("Tradução eliminada com sucesso!");
 }
 
 redirect("traduz.php");

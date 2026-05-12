@@ -9,25 +9,25 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Stores</h2>
-        <a href="store_form.php" class="btn btn-primary btn-sm"><i class="fas fa-store"></i> Add New Store</a>
+        <h2 class="h4 mb-0">Lojas</h2>
+        <a href="store_form.php" class="btn btn-primary btn-sm"><i class="fas fa-store"></i> Adicionar Nova Loja</a>
     </div>
 
     <div class="container-fluid">
         <?php show_alert(); ?>
 
         <div class="card">
-            <div class="card-header">Store List</div>
+            <div class="card-header">Lista de Lojas</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
-                                <th>Name (EN)</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Active</th>
-                                <th class="text-right">Actions</th>
+                                <th>Nome (EN)</th>
+                                <th>E-mail</th>
+                                <th>Telefone</th>
+                                <th>Ativo</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,7 @@ include 'layout/sidebar.php';
                                     <td><?= $s['phone'] ?></td>
                                     <td>
                                         <span class="badge badge-<?= $s['is_active'] ? 'success' : 'danger' ?>">
-                                            <?= $s['is_active'] ? 'Active' : 'Inactive' ?>
+                                            <?= $s['is_active'] ? 'Ativo' : 'Inativo' ?>
                                         </span>
                                     </td>
                                     <td class="text-right">

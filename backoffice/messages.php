@@ -16,24 +16,24 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Contact Messages</h2>
+        <h2 class="h4 mb-0">Mensagens de Contacto</h2>
     </div>
 
     <div class="container-fluid">
         <?php show_alert(); ?>
 
         <div class="card">
-            <div class="card-header">Messages</div>
+            <div class="card-header">Mensagens</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
-                                <th>Status</th>
-                                <th>From</th>
-                                <th>Subject</th>
-                                <th>Date</th>
-                                <th class="text-right">Actions</th>
+                                <th>Estado</th>
+                                <th>De</th>
+                                <th>Assunto</th>
+                                <th>Data</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,7 +41,7 @@ include 'layout/sidebar.php';
                                 <tr class="<?= $m['is_read'] ? 'text-muted' : 'fw-bold' ?>">
                                     <td>
                                         <span class="badge badge-<?= $m['is_read'] ? 'secondary' : 'primary' ?>">
-                                            <?= $m['is_read'] ? 'Read' : 'New' ?>
+                                            <?= $m['is_read'] ? 'Lida' : 'Nova' ?>
                                         </span>
                                     </td>
                                     <td>
@@ -51,7 +51,7 @@ include 'layout/sidebar.php';
                                     <td><?= $m['subject'] ?></td>
                                     <td><?= date('d/m/Y H:i', strtotime($m['created_at'])) ?></td>
                                     <td class="text-right">
-                                        <a href="message_view.php?id=<?= $m['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i> View</a>
+                                        <a href="message_view.php?id=<?= $m['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i> Ver</a>
                                         <a href="message_delete.php?id=<?= $m['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>

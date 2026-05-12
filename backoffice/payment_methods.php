@@ -9,25 +9,25 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Payment Methods</h2>
-        <a href="payment_method_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add New Payment Method</a>
+        <h2 class="h4 mb-0">Métodos de Pagamento</h2>
+        <a href="payment_method_form.php" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Adicionar Novo Método de Pagamento</a>
     </div>
 
     <div class="container-fluid">
         <?php show_alert(); ?>
 
         <div class="card">
-            <div class="card-header">Payment Method List</div>
+            <div class="card-header">Lista de Métodos de Pagamento</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
-                                <th>Code</th>
-                                <th>Name (EN)</th>
-                                <th>Name (PT)</th>
-                                <th>Active</th>
-                                <th class="text-right">Actions</th>
+                                <th>Código</th>
+                                <th>Nome (EN)</th>
+                                <th>Nome (PT)</th>
+                                <th>Ativo</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,7 +41,7 @@ include 'layout/sidebar.php';
                                     <td><?= $t_pt['name'] ?? 'N/A' ?></td>
                                     <td>
                                         <span class="badge badge-<?= $pm['is_active'] ? 'success' : 'danger' ?>">
-                                            <?= $pm['is_active'] ? 'Active' : 'Inactive' ?>
+                                            <?= $pm['is_active'] ? 'Ativo' : 'Inativo' ?>
                                         </span>
                                     </td>
                                     <td class="text-right">

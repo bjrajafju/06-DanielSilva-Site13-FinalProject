@@ -9,7 +9,7 @@
     // Confirmation for delete actions
     document.querySelectorAll('.btn-delete').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            if (!confirm('Are you sure you want to delete this item?')) {
+            if (!confirm('Tem a certeza que deseja eliminar este item?')) {
                 e.preventDefault();
             }
         });

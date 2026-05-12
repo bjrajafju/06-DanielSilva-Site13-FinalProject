@@ -25,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($id) {
         db_update('product_variants', $data, "id = $id");
-        set_alert("Variant updated successfully!");
+        set_alert("Variante atualizada com sucesso!");
     } else {
         db_insert('product_variants', $data);
-        set_alert("Variant created successfully!");
+        set_alert("Variante criada com sucesso!");
     }
 
     redirect("product_variants.php");
@@ -40,21 +40,21 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0"><?= $id ? 'Edit Variant' : 'Create Variant' ?></h2>
-        <a href="product_variants.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to List</a>
+        <h2 class="h4 mb-0"><?= $id ? 'Editar Variante' : 'Criar Variante' ?></h2>
+        <a href="product_variants.php" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Voltar à Lista</a>
     </div>
 
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <div class="card">
-                    <div class="card-header">Variant Details</div>
+                    <div class="card-header">Detalhes da Variante</div>
                     <div class="card-body">
                         <form action="" method="POST">
                             <div class="mb-3">
-                                <label class="form-label">Product</label>
-                                <select name="product_id" class="form-select" required>
-                                    <option value="">Select Product</option>
+                                <label class="form-label">Produto</label>
+                                <select name="product_id" class="form-control" required>
+                                    <option value="">Selecionar Produto</option>
                                     <?php foreach ($products as $p):
                                         $p_trans = db_get_one("product_translations", "product_id = {$p['id']} AND lang_code = 'gb'");
                                         if (!$p_trans) $p_trans = db_get_one("product_translations", "product_id = {$p['id']}");
@@ -68,9 +68,9 @@ include 'layout/sidebar.php';
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Size</label>
-                                    <select name="size_id" class="form-select" required>
-                                        <option value="">Select Size</option>
+                                    <label class="form-label">Tamanho</label>
+                                    <select name="size_id" class="form-control" required>
+                                        <option value="">Selecionar Tamanho</option>
                                         <?php foreach ($sizes as $s): ?>
                                             <option value="<?= $s['id'] ?>" <?= ($variant['size_id'] ?? '') == $s['id'] ? 'selected' : '' ?>>
                                                 <?= $s['name'] ?>
@@ -79,14 +79,14 @@ include 'layout/sidebar.php';
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Color</label>
-                                    <select name="color_id" class="form-select" required>
-                                        <option value="">Select Color</option>
+                                    <label class="form-label">Cor</label>
+                                    <select name="color_id" class="form-control" required>
+                                        <option value="">Selecionar Cor</option>
                                         <?php foreach ($colors as $c):
                                             $c_trans = db_get_one("color_translations", "color_id = {$c['id']} AND lang_code = 'gb'");
                                         ?>
                                             <option value="<?= $c['id'] ?>" <?= ($variant['color_id'] ?? '') == $c['id'] ? 'selected' : '' ?>>
-                                                <?= $c_trans['name'] ?? "Color #{$c['id']}" ?> (<?= $c['hex'] ?>)
+                                                <?= $c_trans['name'] ?? "Cor #{$c['id']}" ?> (<?= $c['hex'] ?>)
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
@@ -95,19 +95,19 @@ include 'layout/sidebar.php';
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Stock Quantity</label>
+                                    <label class="form-label">Quantidade em Stock</label>
                                     <input type="number" name="stock" class="form-control" value="<?= $variant['stock'] ?? 0 ?>" min="0" required>
                                 </div>
                                 <div class="col-md-6 mb-4">
-                                    <div class="form-check form-switch mt-4 pt-2">
-                                        <input class="form-check-input" type="checkbox" name="is_available" id="isAvailable" <?= ($variant['is_available'] ?? 1) ? 'checked' : '' ?>>
-                                        <label class="form-check-label" for="isAvailable">Variant is Available</label>
+                                    <div class="custom-control custom-switch mt-4 pt-2">
+                                        <input class="custom-control-input" type="checkbox" name="is_available" id="isAvailable" <?= ($variant['is_available'] ?? 1) ? 'checked' : '' ?>>
+                                        <label class="custom-control-label" for="isAvailable">Variante Disponível</label>
                                     </div>
                                 </div>
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100">
-                                <i class="fas fa-save"></i> Save Variant
+                                <i class="fas fa-save"></i> Guardar Variante
                             </button>
                         </form>
                     </div>

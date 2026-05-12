@@ -2,7 +2,7 @@
 include_once 'includes/helpers.php';
 
 $limit = 10;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
 $total_items = db_count('carts');
@@ -23,44 +23,48 @@ include 'layout/sidebar.php';
 
 <div id="content">
     <div class="topbar">
-        <h2 class="h4 mb-0">Active Carts</h2>
+        <h2 class="h4 mb-0">Carrinhos Ativos</h2>
     </div>
 
     <div class="container-fluid">
         <?php show_alert(); ?>
 
         <div class="card">
-            <div class="card-header">Cart Monitor</div>
+            <div class="card-header">Monitor de Carrinhos</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
-                                <th>Cart ID</th>
-                                <th>User / Session</th>
-                                <th>Items</th>
-                                <th>Created At</th>
-                                <th class="text-right">Actions</th>
+                                <th>ID Carrinho</th>
+                                <th>Utilizador / Sessão</th>
+                                <th>Itens</th>
+                                <th>Criado em</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($carts as $c):
                                 $item_count = db_count('cart_items', "cart_id = {$c['id']}");
-                            ?>
+                                ?>
                                 <tr>
                                     <td><strong>#<?= $c['id'] ?></strong></td>
                                     <td>
                                         <?php if ($c['user_id']): ?>
-                                            <span class="badge badge-primary">User</span> <?= $c['user_email'] ?>
+                                            <span class="badge badge-primary">Utilizador</span> <?= $c['user_email'] ?>
                                         <?php else: ?>
-                                            <span class="badge badge-secondary">Guest</span> <small class="text-muted"><?= substr($c['session_id'], 0, 8) ?>...</small>
+                                            <span class="badge badge-secondary">Convidado</span> <small
+                                                class="text-muted"><?= substr($c['session_id'], 0, 8) ?>...</small>
                                         <?php endif; ?>
                                     </td>
-                                    <td><?= $item_count ?> items</td>
+                                    <td><?= $item_count ?> itens</td>
                                     <td><?= date('d/m/Y H:i', strtotime($c['created_at'])) ?></td>
                                     <td class="text-right">
-                                        <a href="cart_view.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i> View</a>
-                                        <a href="cart_delete.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-danger btn-delete"><i class="fas fa-trash"></i></a>
+                                        <a href="cart_view.php?id=<?= $c['id'] ?>" class="btn btn-sm btn-outline-primary"><i
+                                                class="fas fa-eye"></i> Ver</a>
+                                        <a href="cart_delete.php?id=<?= $c['id'] ?>"
+                                            class="btn btn-sm btn-outline-danger btn-delete"><i
+                                                class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -85,4 +89,3 @@ include 'layout/sidebar.php';
 </div>
 
 <?php include 'layout/footer.php'; ?>
-

@@ -41,7 +41,7 @@ function show_alert()
         $msg = $_SESSION['alert']['msg'];
         echo "<div class='alert alert-$type alert-dismissible fade show' role='alert'>
                 $msg
-                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Fechar'>
                     <span aria-hidden='true'>&times;</span>
                 </button>
               </div>";

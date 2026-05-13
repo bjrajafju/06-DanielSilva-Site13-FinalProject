@@ -56,7 +56,7 @@ CREATE TABLE
     KEY `country_id` (`country_id`),
     CONSTRAINT `addresses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
     CONSTRAINT `addresses_ibfk_2` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 11 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 19 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -131,21 +131,6 @@ VALUES
     '2026-05-04 11:13:52'
   ),
   (
-    7,
-    4,
-    'Super',
-    'User',
-    '999999999',
-    'Rua 123',
-    '123',
-    'Porto',
-    'Porto',
-    '4000',
-    1,
-    'billing',
-    '2026-05-04 11:14:41'
-  ),
-  (
     8,
     4,
     'Super',
@@ -189,6 +174,126 @@ VALUES
     1,
     'shipping',
     '2026-05-05 11:17:31'
+  ),
+  (
+    11,
+    4,
+    'Super',
+    'User',
+    '999999999',
+    'Rua 123',
+    '123',
+    'Porto',
+    'Porto',
+    '4000',
+    1,
+    'billing',
+    '2026-05-07 19:08:24'
+  ),
+  (
+    12,
+    4,
+    'Super',
+    'User',
+    '999999999',
+    'Rua 123',
+    '123',
+    'Porto',
+    'Porto',
+    '4000',
+    1,
+    'shipping',
+    '2026-05-07 19:08:24'
+  ),
+  (
+    13,
+    4,
+    'Super',
+    'User',
+    '999999999',
+    'Rua 123',
+    '123',
+    'Porto',
+    'Porto',
+    '4000',
+    1,
+    'billing',
+    '2026-05-08 09:27:06'
+  ),
+  (
+    14,
+    4,
+    'Super',
+    'User',
+    '999999999',
+    'Rua 123',
+    '123',
+    'Porto',
+    'Porto',
+    '4000',
+    1,
+    'shipping',
+    '2026-05-08 09:27:06'
+  ),
+  (
+    15,
+    3,
+    'Daniel',
+    'Silva',
+    '03203030320',
+    'Rua 123',
+    'Rau 123',
+    'qwqaee',
+    'qwe',
+    '1234',
+    3,
+    'billing',
+    '2026-05-11 11:01:28'
+  ),
+  (
+    16,
+    3,
+    'Daniel',
+    'Silva',
+    '03203030320',
+    'Rua 123',
+    'Rau 123',
+    'qwqaee',
+    'qwe',
+    '1234',
+    3,
+    'shipping',
+    '2026-05-11 11:01:28'
+  ),
+  (
+    17,
+    4,
+    'Super',
+    'User',
+    '999999999',
+    'Rua 123',
+    '123',
+    'Porto',
+    'Porto',
+    '4000',
+    1,
+    'billing',
+    '2026-05-12 11:16:52'
+  ),
+  (
+    18,
+    4,
+    'Super',
+    'User',
+    '999999999',
+    'Rua 123',
+    '123',
+    'Porto',
+    'Porto',
+    '4000',
+    1,
+    'shipping',
+    '2026-05-12 11:16:52'
   );
 
 /*!40000 ALTER TABLE `addresses` ENABLE KEYS */;
@@ -215,7 +320,7 @@ CREATE TABLE
     KEY `variant_id` (`variant_id`),
     CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`),
     CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`variant_id`) REFERENCES `product_variants` (`id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 28 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 35 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -230,10 +335,7 @@ INSERT INTO
   `cart_items`
 VALUES
   (10, 1, 8, 2),
-  (11, 1, 9, 1),
-  (12, 2, 8, 1),
-  (20, 3, 13, 4),
-  (22, 3, 9, 1);
+  (11, 1, 9, 1);
 
 /*!40000 ALTER TABLE `cart_items` ENABLE KEYS */;
 
@@ -272,14 +374,7 @@ INSERT INTO
   `carts`
 VALUES
   (1, 1, NULL, '2026-05-02 16:52:58'),
-  (2, NULL, 'sess_abc123', '2026-05-02 16:52:58'),
   (3, 3, NULL, '2026-05-02 23:04:24'),
-  (
-    6,
-    NULL,
-    'c6kjstuiuvsosakvaesi5277q3',
-    '2026-05-04 07:25:23'
-  ),
   (7, 4, NULL, '2026-05-04 10:31:01');
 
 /*!40000 ALTER TABLE `carts` ENABLE KEYS */;
@@ -454,7 +549,7 @@ INSERT INTO
   `colors`
 VALUES
   (1, '#000000'),
-  (2, '#FFFFFF'),
+  (2, '#ffffff'),
   (3, '#FF0000'),
   (4, '#0000FF'),
   (5, '#00FF00');
@@ -561,7 +656,7 @@ CREATE TABLE
     `emoji` varchar(10) DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `code` (`code`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -601,7 +696,7 @@ CREATE TABLE
     `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
     `is_read` tinyint (1) DEFAULT 0,
     PRIMARY KEY (`id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 6 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -631,19 +726,111 @@ VALUES
     'ewfew',
     'r',
     '2026-05-05 19:29:38',
-    0
-  ),
-  (
-    3,
-    'asd',
-    'admin@gmail.com',
-    'asd',
-    'asd',
-    '2026-05-06 08:09:45',
-    0
+    1
   );
 
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
+
+UNLOCK TABLES;
+
+--
+-- Table structure for table `news`
+--
+DROP TABLE IF EXISTS `news`;
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+
+/*!50503 SET character_set_client = utf8mb4 */;
+
+CREATE TABLE
+  `news` (
+    `id` int (11) NOT NULL AUTO_INCREMENT,
+    `image` varchar(255) DEFAULT NULL,
+    `is_active` tinyint (1) DEFAULT 1,
+    `created_at` datetime DEFAULT current_timestamp(),
+    `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    PRIMARY KEY (`id`)
+  ) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `news`
+--
+LOCK TABLES `news` WRITE;
+
+/*!40000 ALTER TABLE `news` DISABLE KEYS */;
+
+INSERT INTO
+  `news`
+VALUES
+  (
+    1,
+    'img/img_69fb6f733cb9e9.21219221.png',
+    1,
+    '2026-05-06 18:15:32',
+    '2026-05-12 12:48:15'
+  );
+
+/*!40000 ALTER TABLE `news` ENABLE KEYS */;
+
+UNLOCK TABLES;
+
+--
+-- Table structure for table `news_translations`
+--
+DROP TABLE IF EXISTS `news_translations`;
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+
+/*!50503 SET character_set_client = utf8mb4 */;
+
+CREATE TABLE
+  `news_translations` (
+    `id` int (11) NOT NULL AUTO_INCREMENT,
+    `news_id` int (11) NOT NULL,
+    `lang_code` varchar(5) NOT NULL,
+    `title` varchar(255) NOT NULL,
+    `slug` varchar(255) NOT NULL,
+    `short_description` text NOT NULL,
+    `content` text NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `news_id` (`news_id`),
+    CONSTRAINT `news_translations_ibfk_1` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`) ON DELETE CASCADE
+  ) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `news_translations`
+--
+LOCK TABLES `news_translations` WRITE;
+
+/*!40000 ALTER TABLE `news_translations` DISABLE KEYS */;
+
+INSERT INTO
+  `news_translations`
+VALUES
+  (
+    1,
+    1,
+    'pt',
+    'Primeira noticia',
+    'primeira-noticia',
+    'Descrição pequena da noticia',
+    'Conteudo todo da noticia'
+  ),
+  (
+    2,
+    1,
+    'gb',
+    'Fist news',
+    'fist-news',
+    'Short Description of first news',
+    'Full content of first news'
+  );
+
+/*!40000 ALTER TABLE `news_translations` ENABLE KEYS */;
 
 UNLOCK TABLES;
 
@@ -673,7 +860,7 @@ CREATE TABLE
     PRIMARY KEY (`id`),
     KEY `order_id` (`order_id`),
     CONSTRAINT `order_addresses_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 21 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -713,34 +900,6 @@ VALUES
     'Porto',
     'Porto',
     '4000-000',
-    'Portugal'
-  ),
-  (
-    5,
-    5,
-    'billing',
-    'Daniel',
-    'Silva',
-    '999999999',
-    'Rua 123',
-    '123',
-    'Porto',
-    'Porto',
-    '49999',
-    'Portugal'
-  ),
-  (
-    6,
-    5,
-    'shipping',
-    'Daniel',
-    'Silva',
-    '999999999',
-    'Rua 123',
-    '123',
-    'Porto',
-    'Porto',
-    '49999',
     'Portugal'
   ),
   (
@@ -826,6 +985,118 @@ VALUES
     'Porto',
     '4000',
     'Portugal'
+  ),
+  (
+    13,
+    9,
+    'billing',
+    'Super',
+    'User',
+    '999999999',
+    'Rua 123',
+    '123',
+    'Porto',
+    'Porto',
+    '4000',
+    'Portugal'
+  ),
+  (
+    14,
+    9,
+    'shipping',
+    'Super',
+    'User',
+    '999999999',
+    'Rua 123',
+    '123',
+    'Porto',
+    'Porto',
+    '4000',
+    'Portugal'
+  ),
+  (
+    15,
+    10,
+    'billing',
+    'Super',
+    'User',
+    '999999999',
+    'Rua 123',
+    '123',
+    'Porto',
+    'Porto',
+    '4000',
+    'Portugal'
+  ),
+  (
+    16,
+    10,
+    'shipping',
+    'Super',
+    'User',
+    '999999999',
+    'Rua 123',
+    '123',
+    'Porto',
+    'Porto',
+    '4000',
+    'Portugal'
+  ),
+  (
+    17,
+    11,
+    'billing',
+    'Daniel',
+    'Silva',
+    '03203030320',
+    'Rua 123',
+    'Rau 123',
+    'qwqaee',
+    'qwe',
+    '1234',
+    'Espanha'
+  ),
+  (
+    18,
+    11,
+    'shipping',
+    'Daniel',
+    'Silva',
+    '03203030320',
+    'Rua 123',
+    'Rau 123',
+    'qwqaee',
+    'qwe',
+    '1234',
+    'Espanha'
+  ),
+  (
+    19,
+    12,
+    'billing',
+    'Super',
+    'User',
+    '999999999',
+    'Rua 123',
+    '123',
+    'Porto',
+    'Porto',
+    '4000',
+    'Portugal'
+  ),
+  (
+    20,
+    12,
+    'shipping',
+    'Super',
+    'User',
+    '999999999',
+    'Rua 123',
+    '123',
+    'Porto',
+    'Porto',
+    '4000',
+    'Portugal'
   );
 
 /*!40000 ALTER TABLE `order_addresses` ENABLE KEYS */;
@@ -853,7 +1124,7 @@ CREATE TABLE
     PRIMARY KEY (`id`),
     KEY `order_id` (`order_id`),
     CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 18 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -870,10 +1141,18 @@ VALUES
   (2, 1, 1, 1, 'Blue Casual Shirt', 29.99, 2),
   (3, 3, 1, 9, 'Camisa Azul Casual', 29.99, 1),
   (4, 4, 1, 9, 'Camisa Azul Casual', 29.99, 1),
-  (5, 5, 1, 9, 'Camisa Azul Casual', 29.99, 1),
   (6, 6, 1, 8, 'Blue Casual Shirt', 29.99, 2),
   (7, 7, 5, 13, 'Classic Watch', 19.99, 3),
-  (8, 8, 5, 13, 'Relógio Clássico', 19.99, 1);
+  (8, 8, 5, 13, 'Relógio Clássico', 19.99, 1),
+  (9, 9, 6, 14, 'Sunglasses', 14.99, 4),
+  (10, 10, 6, 14, 'Sunglasses', 14.99, 6),
+  (11, 11, 5, 13, 'Relógio Clássico', 19.99, 4),
+  (12, 11, 1, 9, 'Camisa Azul Casual', 29.99, 1),
+  (13, 11, 6, 14, 'Óculos de Sol', 14.99, 3),
+  (14, 11, 2, 10, 'Camisa Branca Elegante', 34.99, 3),
+  (15, 12, 6, 14, 'Sunglasses', 14.99, 1),
+  (16, 12, 4, 12, 'Leather Shoes', 79.99, 3),
+  (17, 12, 3, 11, 'Running Shoes', 59.99, 5);
 
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 
@@ -909,7 +1188,7 @@ CREATE TABLE
     KEY `payment_method_id` (`payment_method_id`),
     CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
     CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_methods` (`id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -940,7 +1219,7 @@ VALUES
     29.99,
     10.00,
     39.99,
-    'pending',
+    'shipped',
     '2026-05-04 07:35:49'
   ),
   (
@@ -950,18 +1229,8 @@ VALUES
     29.99,
     10.00,
     39.99,
-    'pending',
+    'completed',
     '2026-05-04 07:37:57'
-  ),
-  (
-    5,
-    NULL,
-    1,
-    29.99,
-    10.00,
-    39.99,
-    'pending',
-    '2026-05-04 07:39:55'
   ),
   (
     6,
@@ -980,7 +1249,7 @@ VALUES
     59.97,
     10.00,
     69.97,
-    'pending',
+    'completed',
     '2026-05-04 11:14:41'
   ),
   (
@@ -990,11 +1259,98 @@ VALUES
     19.99,
     10.00,
     29.99,
-    'pending',
+    'completed',
     '2026-05-05 11:17:31'
+  ),
+  (
+    9,
+    4,
+    1,
+    59.96,
+    10.00,
+    69.96,
+    'completed',
+    '2026-05-07 19:08:24'
+  ),
+  (
+    10,
+    4,
+    1,
+    89.94,
+    10.00,
+    99.94,
+    'completed',
+    '2026-05-08 09:27:06'
+  ),
+  (
+    11,
+    3,
+    1,
+    259.89,
+    10.00,
+    269.89,
+    'completed',
+    '2026-05-11 11:01:28'
+  ),
+  (
+    12,
+    4,
+    1,
+    554.91,
+    10.00,
+    564.91,
+    'pending',
+    '2026-05-12 11:16:52'
   );
 
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+
+UNLOCK TABLES;
+
+--
+-- Table structure for table `password_resets`
+--
+DROP TABLE IF EXISTS `password_resets`;
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+
+/*!50503 SET character_set_client = utf8mb4 */;
+
+CREATE TABLE
+  `password_resets` (
+    `id` int (11) NOT NULL AUTO_INCREMENT,
+    `user_id` int (11) NOT NULL,
+    `token_hash` varchar(255) NOT NULL,
+    `expires_at` datetime NOT NULL,
+    `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+    `ip_address` varchar(45) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `token_hash` (`token_hash`),
+    KEY `user_id` (`user_id`)
+  ) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `password_resets`
+--
+LOCK TABLES `password_resets` WRITE;
+
+/*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
+
+INSERT INTO
+  `password_resets`
+VALUES
+  (
+    1,
+    4,
+    '00802e48dcf3a51f855361b343dcff8b08645ff2da2c83838d01c238fd1dd5ca',
+    '2026-05-11 13:31:30',
+    '2026-05-11 10:31:30',
+    '::1'
+  );
+
+/*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 
 UNLOCK TABLES;
 
@@ -1074,7 +1430,7 @@ INSERT INTO
   `payment_methods`
 VALUES
   (1, 'mbway', 1),
-  (2, 'paypal', 1),
+  (2, 'paypal', 0),
   (3, 'card', 1);
 
 /*!40000 ALTER TABLE `payment_methods` ENABLE KEYS */;
@@ -1261,6 +1617,7 @@ CREATE TABLE
     `size_id` int (11) DEFAULT NULL,
     `color_id` int (11) DEFAULT NULL,
     `is_available` tinyint (1) DEFAULT 1,
+    `stock` int (11) NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `product_id` (`product_id`, `size_id`, `color_id`),
     KEY `size_id` (`size_id`),
@@ -1282,13 +1639,13 @@ LOCK TABLES `product_variants` WRITE;
 INSERT INTO
   `product_variants`
 VALUES
-  (8, 1, 2, 4, 1),
-  (9, 1, 3, 4, 1),
-  (10, 2, 3, 2, 1),
-  (11, 3, 4, 1, 1),
-  (12, 4, 4, 1, 1),
-  (13, 5, 1, 3, 1),
-  (14, 6, 2, 5, 1);
+  (8, 1, 2, 4, 1, 10),
+  (9, 1, 3, 4, 1, 9),
+  (10, 2, 3, 2, 1, 7),
+  (11, 3, 4, 1, 1, 5),
+  (12, 4, 4, 1, 1, 7),
+  (13, 5, 1, 3, 1, 6),
+  (14, 6, 2, 5, 1, 6);
 
 /*!40000 ALTER TABLE `product_variants` ENABLE KEYS */;
 
@@ -1389,10 +1746,173 @@ VALUES
     'img/product-6.jpg',
     1,
     '2026-05-02 16:52:58',
-    '2026-05-02 16:52:58'
+    '2026-05-12 11:44:06'
   );
 
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
+
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reviews`
+--
+DROP TABLE IF EXISTS `reviews`;
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+
+/*!50503 SET character_set_client = utf8mb4 */;
+
+CREATE TABLE
+  `reviews` (
+    `id` int (11) NOT NULL AUTO_INCREMENT,
+    `product_id` int (11) NOT NULL,
+    `user_id` int (11) DEFAULT NULL,
+    `name` varchar(255) NOT NULL,
+    `email` varchar(255) NOT NULL,
+    `rating` int (1) NOT NULL,
+    `comment` text NOT NULL,
+    `is_approved` tinyint (1) DEFAULT 0,
+    `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+    PRIMARY KEY (`id`),
+    KEY `product_id` (`product_id`),
+    KEY `user_id` (`user_id`),
+    CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
+  ) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reviews`
+--
+LOCK TABLES `reviews` WRITE;
+
+/*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
+
+INSERT INTO
+  `reviews`
+VALUES
+  (
+    2,
+    6,
+    4,
+    'Super User',
+    'bjrajafju@gmail.com',
+    3,
+    'adfsad',
+    1,
+    '2026-05-06 19:08:32'
+  ),
+  (
+    3,
+    6,
+    4,
+    'Super User',
+    'bjrajafju@gmail.com',
+    4,
+    'bem bom',
+    1,
+    '2026-05-06 19:12:02'
+  ),
+  (
+    4,
+    6,
+    4,
+    'Super User',
+    'bjrajafju@gmail.com',
+    4,
+    'sedef',
+    1,
+    '2026-05-06 19:12:34'
+  );
+
+/*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
+
+UNLOCK TABLES;
+
+--
+-- Table structure for table `settings`
+--
+DROP TABLE IF EXISTS `settings`;
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+
+/*!50503 SET character_set_client = utf8mb4 */;
+
+CREATE TABLE
+  `settings` (
+    `id` int (11) NOT NULL AUTO_INCREMENT,
+    `settings_key` varchar(100) NOT NULL,
+    `settings_value` text DEFAULT NULL,
+    `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+    `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `settings_key` (`settings_key`)
+  ) ENGINE = InnoDB AUTO_INCREMENT = 8 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `settings`
+--
+LOCK TABLES `settings` WRITE;
+
+/*!40000 ALTER TABLE `settings` DISABLE KEYS */;
+
+INSERT INTO
+  `settings`
+VALUES
+  (
+    1,
+    'smtp_host',
+    'smtp.gmail.com',
+    '2026-05-11 10:23:58',
+    '2026-05-11 10:57:27'
+  ),
+  (
+    2,
+    'smtp_port',
+    '587',
+    '2026-05-11 10:23:58',
+    '2026-05-11 10:23:58'
+  ),
+  (
+    3,
+    'smtp_user',
+    'danielbateeria@gmail.com',
+    '2026-05-11 10:23:58',
+    '2026-05-11 10:57:27'
+  ),
+  (
+    4,
+    'smtp_pass',
+    'umryqhucjtlsdzfh',
+    '2026-05-11 10:23:58',
+    '2026-05-11 10:57:27'
+  ),
+  (
+    5,
+    'smtp_encryption',
+    'tls',
+    '2026-05-11 10:23:58',
+    '2026-05-11 10:23:58'
+  ),
+  (
+    6,
+    'smtp_from_email',
+    'danielbateeria@gmail.com',
+    '2026-05-11 10:23:58',
+    '2026-05-11 10:57:27'
+  ),
+  (
+    7,
+    'smtp_from_name',
+    'Dani Shopper',
+    '2026-05-11 10:23:58',
+    '2026-05-11 10:57:27'
+  );
+
+/*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 
 UNLOCK TABLES;
 
@@ -1453,7 +1973,7 @@ CREATE TABLE
     PRIMARY KEY (`id`),
     KEY `store_id` (`store_id`),
     CONSTRAINT `store_translations_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`) ON DELETE CASCADE
-  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 3 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1463,6 +1983,12 @@ CREATE TABLE
 LOCK TABLES `store_translations` WRITE;
 
 /*!40000 ALTER TABLE `store_translations` DISABLE KEYS */;
+
+INSERT INTO
+  `store_translations`
+VALUES
+  (1, 1, 'pt', 'Lojinha', 'Aqui e ali'),
+  (2, 1, 'gb', 'Storezinha', 'Here and there');
 
 /*!40000 ALTER TABLE `store_translations` ENABLE KEYS */;
 
@@ -1485,7 +2011,7 @@ CREATE TABLE
     `is_active` tinyint (1) DEFAULT 1,
     `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
     PRIMARY KEY (`id`)
-  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1495,6 +2021,17 @@ CREATE TABLE
 LOCK TABLES `stores` WRITE;
 
 /*!40000 ALTER TABLE `stores` DISABLE KEYS */;
+
+INSERT INTO
+  `stores`
+VALUES
+  (
+    1,
+    'store@gmail.com',
+    '919191919',
+    1,
+    '2026-05-06 14:48:13'
+  );
 
 /*!40000 ALTER TABLE `stores` ENABLE KEYS */;
 
@@ -1518,7 +2055,7 @@ CREATE TABLE
     PRIMARY KEY (`id`),
     UNIQUE KEY `lang_code` (`lang_code`, `code`),
     CONSTRAINT `traduz_ibfk_1` FOREIGN KEY (`lang_code`) REFERENCES `lang` (`code`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 501 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 675 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1852,14 +2389,14 @@ VALUES
   (
     149,
     'gb',
-    'shop.products.sort_best_rating',
-    'Best Rating'
+    'shop.products.sort_price_asc',
+    'Price Low to High'
   ),
   (
     150,
     'pt',
-    'shop.products.sort_best_rating',
-    'Melhor Classificação'
+    'shop.products.sort_price_asc',
+    'Preço Ascendente'
   ),
   (151, 'gb', 'shop.pagination.previous', 'Previous'),
   (152, 'pt', 'shop.pagination.previous', 'Anterior'),
@@ -3294,6 +3831,663 @@ VALUES
     'pt',
     'contact.form.success',
     'Mensagem enviada com sucesso'
+  ),
+  (501, 'pt', 'menu.about', 'Sobre Nós'),
+  (502, 'gb', 'menu.about', 'About Us'),
+  (503, 'pt', 'menu.news', 'Notícias'),
+  (504, 'gb', 'menu.news', 'News'),
+  (505, 'pt', 'news.read_more', 'Ler Mais'),
+  (506, 'gb', 'news.read_more', 'Read More'),
+  (507, 'pt', 'news.latest', 'Últimas Notícias'),
+  (508, 'gb', 'news.latest', 'Latest News'),
+  (509, 'pt', 'news.back_to_list', 'Voltar à lista'),
+  (510, 'gb', 'news.back_to_list', 'Back to list'),
+  (
+    511,
+    'pt',
+    'news.empty_list',
+    'Nenhuma notícia encontrada.'
+  ),
+  (512, 'gb', 'news.empty_list', 'No news found.'),
+  (533, 'pt', 'about.title', 'Sobre Nós'),
+  (534, 'gb', 'about.title', 'About Us'),
+  (535, 'pt', 'about.subtitle', 'A Nossa História'),
+  (536, 'gb', 'about.subtitle', 'Our Story'),
+  (
+    537,
+    'pt',
+    'about.text_1',
+    'Bem-vindo à Danishopper. Começámos com uma pequena ideia e crescemos para nos tornarmos uma referência no mercado e-commerce.'
+  ),
+  (
+    538,
+    'gb',
+    'about.text_1',
+    'Welcome to Danishopper. We started with a small idea and grew to become a reference in the e-commerce market.'
+  ),
+  (
+    539,
+    'pt',
+    'about.text_2',
+    'O nosso compromisso é com a qualidade e a satisfação do cliente. Trabalhamos todos os dias para lhe trazer as últimas tendências.'
+  ),
+  (
+    540,
+    'gb',
+    'about.text_2',
+    'Our commitment is to quality and customer satisfaction. We work every day to bring you the latest trends.'
+  ),
+  (
+    541,
+    'gb',
+    'detail.product.reviews_count_label',
+    'Reviews'
+  ),
+  (
+    542,
+    'pt',
+    'detail.product.reviews_count_label',
+    'Avaliações'
+  ),
+  (
+    543,
+    'gb',
+    'detail.reviews.reviews_for_title',
+    'reviews for'
+  ),
+  (
+    544,
+    'pt',
+    'detail.reviews.reviews_for_title',
+    'avaliações para'
+  ),
+  (
+    545,
+    'gb',
+    'detail.reviews.no_reviews',
+    'No reviews yet. Be the first to review this product!'
+  ),
+  (
+    546,
+    'pt',
+    'detail.reviews.no_reviews',
+    'Ainda não há avaliações. Seja o primeiro a avaliar este produto!'
+  ),
+  (
+    547,
+    'gb',
+    'detail.reviews.success_message',
+    'Your review has been submitted and is awaiting approval.'
+  ),
+  (
+    548,
+    'pt',
+    'detail.reviews.success_message',
+    'A sua avaliação foi submetida e aguarda aprovação.'
+  ),
+  (
+    549,
+    'gb',
+    'detail.reviews.error_missing_fields',
+    'Please fill all required fields and select a rating.'
+  ),
+  (
+    550,
+    'pt',
+    'detail.reviews.error_missing_fields',
+    'Por favor, preencha todos os campos obrigatórios e selecione uma classificação.'
+  ),
+  (
+    551,
+    'gb',
+    'detail.reviews.error_db_error',
+    'An error occurred while saving your review. Please try again.'
+  ),
+  (
+    552,
+    'pt',
+    'detail.reviews.error_db_error',
+    'Ocorreu um erro ao guardar a sua avaliação. Por favor, tente novamente.'
+  ),
+  (
+    553,
+    'gb',
+    'detail.reviews.logged_as',
+    'Logged in as'
+  ),
+  (
+    554,
+    'pt',
+    'detail.reviews.logged_as',
+    'Sessão iniciada como'
+  ),
+  (
+    555,
+    'gb',
+    'shop.sidebar.filter_category_title',
+    'Filter by category'
+  ),
+  (
+    556,
+    'pt',
+    'shop.sidebar.filter_category_title',
+    'Filtrar por categoria'
+  ),
+  (
+    557,
+    'gb',
+    'shop.products.sort_price_desc',
+    'Price High to Low'
+  ),
+  (
+    558,
+    'pt',
+    'shop.products.sort_price_desc',
+    'Preço Descendente'
+  ),
+  (
+    559,
+    'gb',
+    'login.error.access_denied',
+    'Access Denied: You do not have permission to access the backoffice.'
+  ),
+  (
+    560,
+    'pt',
+    'login.error.access_denied',
+    'Acesso negado: Não tem permissão para aceder ao backoffice.'
+  ),
+  (
+    573,
+    'pt',
+    'detail.product.add_to_wishlist',
+    'Adicionar aos Favoritos'
+  ),
+  (
+    574,
+    'gb',
+    'detail.product.add_to_wishlist',
+    'Add to Wishlist'
+  ),
+  (
+    575,
+    'pt',
+    'detail.product.remove_from_wishlist',
+    'Remover dos Favoritos'
+  ),
+  (
+    576,
+    'gb',
+    'detail.product.remove_from_wishlist',
+    'Remove from Wishlist'
+  ),
+  (577, 'pt', 'wishlist.title', 'Os Meus Favoritos'),
+  (578, 'gb', 'wishlist.title', 'My Wishlist'),
+  (
+    579,
+    'pt',
+    'wishlist.empty',
+    'A sua lista de favoritos está vazia.'
+  ),
+  (
+    580,
+    'gb',
+    'wishlist.empty',
+    'Your wishlist is empty.'
+  ),
+  (
+    581,
+    'pt',
+    'wishlist.header.breadcrumb_home',
+    'Início'
+  ),
+  (
+    582,
+    'gb',
+    'wishlist.header.breadcrumb_home',
+    'Home'
+  ),
+  (
+    583,
+    'pt',
+    'wishlist.header.breadcrumb_wishlist',
+    'Favoritos'
+  ),
+  (
+    584,
+    'gb',
+    'wishlist.header.breadcrumb_wishlist',
+    'Wishlist'
+  ),
+  (
+    585,
+    'pt',
+    'error.out_of_stock',
+    'Desculpe, não temos stock suficiente para este produto.'
+  ),
+  (
+    586,
+    'gb',
+    'error.out_of_stock',
+    'Sorry, we do not have enough stock for this product.'
+  ),
+  (
+    587,
+    'pt',
+    'error.out_of_stock_max',
+    'Stock insuficiente. O máximo disponível é: '
+  ),
+  (
+    588,
+    'gb',
+    'error.out_of_stock_max',
+    'Insufficient stock. The maximum available is: '
+  ),
+  (589, 'gb', 'header.nav.profile', 'My Profile'),
+  (590, 'pt', 'header.nav.profile', 'O Meu Perfil'),
+  (591, 'gb', 'header.nav.orders', 'My Orders'),
+  (
+    592,
+    'pt',
+    'header.nav.orders',
+    'As Minhas Encomendas'
+  ),
+  (593, 'gb', 'header.nav.wishlist', 'Wishlist'),
+  (
+    594,
+    'pt',
+    'header.nav.wishlist',
+    'Lista de Desejos'
+  ),
+  (595, 'gb', 'profile.header.title', 'My Account'),
+  (
+    596,
+    'pt',
+    'profile.header.title',
+    'A Minha Conta'
+  ),
+  (597, 'gb', 'profile.menu.dashboard', 'Dashboard'),
+  (598, 'pt', 'profile.menu.dashboard', 'Painel'),
+  (599, 'gb', 'profile.menu.orders', 'Orders'),
+  (600, 'pt', 'profile.menu.orders', 'Encomendas'),
+  (601, 'gb', 'profile.menu.settings', 'Settings'),
+  (602, 'pt', 'profile.menu.settings', 'Definições'),
+  (
+    603,
+    'gb',
+    'profile.stats.total_orders',
+    'Total Orders'
+  ),
+  (
+    604,
+    'pt',
+    'profile.stats.total_orders',
+    'Total Encomendas'
+  ),
+  (
+    605,
+    'gb',
+    'profile.stats.total_spent',
+    'Total Spent'
+  ),
+  (
+    606,
+    'pt',
+    'profile.stats.total_spent',
+    'Total Gasto'
+  ),
+  (
+    607,
+    'gb',
+    'profile.settings.personal_info',
+    'Personal Information'
+  ),
+  (
+    608,
+    'pt',
+    'profile.settings.personal_info',
+    'Informação Pessoal'
+  ),
+  (
+    609,
+    'gb',
+    'profile.settings.security',
+    'Security & Password'
+  ),
+  (
+    610,
+    'pt',
+    'profile.settings.security',
+    'Segurança e Password'
+  ),
+  (
+    611,
+    'gb',
+    'profile.settings.first_name',
+    'First Name'
+  ),
+  (612, 'pt', 'profile.settings.first_name', 'Nome'),
+  (
+    613,
+    'gb',
+    'profile.settings.last_name',
+    'Last Name'
+  ),
+  (
+    614,
+    'pt',
+    'profile.settings.last_name',
+    'Apelido'
+  ),
+  (
+    615,
+    'gb',
+    'profile.settings.email',
+    'Email Address'
+  ),
+  (
+    616,
+    'pt',
+    'profile.settings.email',
+    'Endereþo de Email'
+  ),
+  (
+    617,
+    'gb',
+    'profile.settings.current_password',
+    'Current Password'
+  ),
+  (
+    618,
+    'pt',
+    'profile.settings.current_password',
+    'Password Atual'
+  ),
+  (
+    619,
+    'gb',
+    'profile.settings.new_password',
+    'New Password'
+  ),
+  (
+    620,
+    'pt',
+    'profile.settings.new_password',
+    'Nova Password'
+  ),
+  (
+    621,
+    'gb',
+    'profile.settings.confirm_password',
+    'Confirm New Password'
+  ),
+  (
+    622,
+    'pt',
+    'profile.settings.confirm_password',
+    'Confirmar Nova Password'
+  ),
+  (
+    623,
+    'gb',
+    'profile.settings.btn_save',
+    'Save Changes'
+  ),
+  (
+    624,
+    'pt',
+    'profile.settings.btn_save',
+    'Guardar Alterações'
+  ),
+  (625, 'gb', 'profile.orders.table.id', 'Order #'),
+  (
+    626,
+    'pt',
+    'profile.orders.table.id',
+    'Encomenda #'
+  ),
+  (627, 'gb', 'profile.orders.table.date', 'Date'),
+  (628, 'pt', 'profile.orders.table.date', 'Data'),
+  (629, 'gb', 'profile.orders.table.total', 'Total'),
+  (630, 'pt', 'profile.orders.table.total', 'Total'),
+  (
+    631,
+    'gb',
+    'profile.orders.table.status',
+    'Status'
+  ),
+  (
+    632,
+    'pt',
+    'profile.orders.table.status',
+    'Estado'
+  ),
+  (
+    633,
+    'gb',
+    'profile.orders.table.actions',
+    'Actions'
+  ),
+  (
+    634,
+    'pt',
+    'profile.orders.table.actions',
+    'Ações'
+  ),
+  (
+    635,
+    'gb',
+    'profile.orders.view_details',
+    'View Details'
+  ),
+  (
+    636,
+    'pt',
+    'profile.orders.view_details',
+    'Ver Detalhes'
+  ),
+  (
+    637,
+    'gb',
+    'profile.orders.empty',
+    'You haven\'t placed any orders yet.'
+  ),
+  (
+    638,
+    'pt',
+    'profile.orders.empty',
+    'Ainda não realizou nenhuma encomenda.'
+  ),
+  (639, 'gb', 'profile.dashboard.greeting', 'Hello'),
+  (640, 'pt', 'profile.dashboard.greeting', 'Olá'),
+  (
+    641,
+    'gb',
+    'profile.dashboard.member_since',
+    'Member since'
+  ),
+  (
+    642,
+    'pt',
+    'profile.dashboard.member_since',
+    'Membro desde'
+  ),
+  (
+    643,
+    'gb',
+    'profile.dashboard.recent_orders',
+    'Recent Orders'
+  ),
+  (
+    644,
+    'pt',
+    'profile.dashboard.recent_orders',
+    'Encomendas Recentes'
+  ),
+  (
+    645,
+    'gb',
+    'profile.orders.shipping_address',
+    'Shipping Address'
+  ),
+  (
+    646,
+    'pt',
+    'profile.orders.shipping_address',
+    'Morada de Envio'
+  ),
+  (
+    647,
+    'gb',
+    'profile.orders.btn_shop',
+    'Start Shopping'
+  ),
+  (
+    648,
+    'pt',
+    'profile.orders.btn_shop',
+    'Começar a Comprar'
+  ),
+  (
+    649,
+    'gb',
+    'profile.settings.mobile',
+    'Mobile Number'
+  ),
+  (650, 'pt', 'profile.settings.mobile', 'Telemóvel'),
+  (651, 'gb', 'profile.orders.items', 'Items'),
+  (652, 'pt', 'profile.orders.items', 'Itens'),
+  (
+    653,
+    'gb',
+    'forgot_password.title',
+    'Forgot Password'
+  ),
+  (
+    654,
+    'pt',
+    'forgot_password.title',
+    'Recuperar Palavra-passe'
+  ),
+  (
+    655,
+    'gb',
+    'forgot_password.instruction',
+    'Enter your email address and we will send you a link to reset your password.'
+  ),
+  (
+    656,
+    'pt',
+    'forgot_password.instruction',
+    'Introduza o seu e-mail e enviaremos um link para redefinir a sua palavra-passe.'
+  ),
+  (
+    657,
+    'gb',
+    'forgot_password.success',
+    'If an account exists with this email, a recovery link has been sent.'
+  ),
+  (
+    658,
+    'pt',
+    'forgot_password.success',
+    'Se existir uma conta com este e-mail, foi enviado um link de recuperaþÒo.'
+  ),
+  (
+    659,
+    'gb',
+    'forgot_password.link',
+    'Forgot Password?'
+  ),
+  (
+    660,
+    'pt',
+    'forgot_password.link',
+    'Esqueceu-se da palavra-passe?'
+  ),
+  (
+    661,
+    'gb',
+    'reset_password.title',
+    'Reset Password'
+  ),
+  (
+    662,
+    'pt',
+    'reset_password.title',
+    'Redefinir Palavra-passe'
+  ),
+  (
+    663,
+    'gb',
+    'reset_password.new_password',
+    'New Password'
+  ),
+  (
+    664,
+    'pt',
+    'reset_password.new_password',
+    'Nova Palavra-passe'
+  ),
+  (
+    665,
+    'gb',
+    'reset_password.confirm_password',
+    'Confirm New Password'
+  ),
+  (
+    666,
+    'pt',
+    'reset_password.confirm_password',
+    'Confirmar Nova Palavra-passe'
+  ),
+  (
+    667,
+    'gb',
+    'reset_password.success',
+    'Your password has been reset successfully. You can now login.'
+  ),
+  (
+    668,
+    'pt',
+    'reset_password.success',
+    'A sua palavra-passe foi redefinida com sucesso. Jß pode iniciar sessÒo.'
+  ),
+  (
+    669,
+    'gb',
+    'reset_password.error.invalid_token',
+    'Invalid or expired token.'
+  ),
+  (
+    670,
+    'pt',
+    'reset_password.error.invalid_token',
+    'Link invßlido ou expirado.'
+  ),
+  (
+    671,
+    'gb',
+    'reset_password.error.mismatch',
+    'Passwords do not match.'
+  ),
+  (
+    672,
+    'pt',
+    'reset_password.error.mismatch',
+    'As palavras-passe nÒo coincidem.'
+  ),
+  (
+    673,
+    'gb',
+    'forgot_password.rate_limited',
+    'Too many requests. Please try again later.'
+  ),
+  (
+    674,
+    'pt',
+    'forgot_password.rate_limited',
+    'Demasiados pedidos. Por favor, tente mais tarde.'
   );
 
 /*!40000 ALTER TABLE `traduz` ENABLE KEYS */;
@@ -3318,6 +4512,7 @@ CREATE TABLE
     `password` varchar(255) NOT NULL,
     `mobile` varchar(30) DEFAULT NULL,
     `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+    `is_admin` tinyint (1) DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `email` (`email`)
   ) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
@@ -3341,7 +4536,8 @@ VALUES
     'john@example.com',
     '$2y$10$hash1',
     '912345678',
-    '2026-05-02 16:52:58'
+    '2026-05-02 16:52:58',
+    0
   ),
   (
     2,
@@ -3350,25 +4546,28 @@ VALUES
     'maria@example.com',
     '$2y$10$hash2',
     '934567890',
-    '2026-05-02 16:52:58'
+    '2026-05-02 16:52:58',
+    0
   ),
   (
     3,
     'Daniel',
     'Silva',
     'daniel.school.37@gmail.com',
-    '$2y$10$EIksbewMF/.5/QFNIHKet.tjUD2fiX2SMgNmL4DTJi0osRONUxxaG',
+    '$2y$10$QblM/RXqCAbqhdfNC5kn7O6hMABvbXA5rNAxRmN4YCaBvIJDZ4UOq',
     '',
-    '2026-05-02 19:43:35'
+    '2026-05-02 19:43:35',
+    0
   ),
   (
     4,
     'Super',
     'User',
     'bjrajafju@gmail.com',
-    '$2y$10$NQBQjCxJmeJnyuSMZTbN.Oa9NXN1C7zLsKnoNgHznHMouYgFduihC',
+    '$2y$10$EIksbewMF/.5/QFNIHKet.tjUD2fiX2SMgNmL4DTJi0osRONUxxaG',
     '932329389',
-    '2026-05-04 10:28:13'
+    '2026-05-04 10:28:13',
+    1
   );
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
@@ -3376,101 +4575,46 @@ VALUES
 UNLOCK TABLES;
 
 --
--- Table structure for table `news`
+-- Table structure for table `wishlist`
 --
-CREATE TABLE
-  `news` (
-    `id` int (11) NOT NULL AUTO_INCREMENT,
-    `image` varchar(255) DEFAULT NULL,
-    `is_active` tinyint (1) DEFAULT 1,
-    `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`)
-  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+DROP TABLE IF EXISTS `wishlist`;
 
---
--- Table structure for table `news_translations`
---
-CREATE TABLE
-  `news_translations` (
-    `id` int (11) NOT NULL AUTO_INCREMENT,
-    `news_id` int (11) NOT NULL,
-    `lang_code` varchar(5) NOT NULL,
-    `title` varchar(255) NOT NULL,
-    `slug` varchar(255) NOT NULL,
-    `short_description` text NOT NULL,
-    `content` text NOT NULL,
-    PRIMARY KEY (`id`),
-    KEY `news_id` (`news_id`),
-    CONSTRAINT `news_translations_ibfk_1` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`) ON DELETE CASCADE
-  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
 
---
--- Table structure for table `reviews`
---
-CREATE TABLE `reviews` (
-    `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `product_id` INT(11) NOT NULL,
-    `user_id` INT(11) DEFAULT NULL,
-    `name` VARCHAR(255) NOT NULL,
-    `email` VARCHAR(255) NOT NULL,
-    `rating` INT(1) NOT NULL,
-    `comment` TEXT NOT NULL,
-    `is_approved` TINYINT(1) DEFAULT 0,
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+/*!50503 SET character_set_client = utf8mb4 */;
+
+CREATE TABLE
+  `wishlist` (
+    `id` int (11) NOT NULL AUTO_INCREMENT,
+    `user_id` int (11) NOT NULL,
+    `product_id` int (11) NOT NULL,
+    `created_at` datetime DEFAULT current_timestamp(),
     PRIMARY KEY (`id`),
+    UNIQUE KEY `user_id` (`user_id`, `product_id`),
     KEY `product_id` (`product_id`),
-    KEY `user_id` (`user_id`),
-    CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
-    CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `wishlist_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
+  ) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Update traduz table with new keys
+-- Dumping data for table `wishlist`
 --
+LOCK TABLES `wishlist` WRITE;
+
+/*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
+
 INSERT INTO
-  `traduz` (`lang_code`, `code`, `text`)
+  `wishlist`
 VALUES
-  ('pt', 'menu.about', 'Sobre Nós'),
-  ('gb', 'menu.about', 'About Us'),
-  ('pt', 'about.title', 'Sobre Nós'),
-  ('gb', 'about.title', 'About Us'),
-  ('pt', 'about.subtitle', 'A Nossa História'),
-  ('gb', 'about.subtitle', 'Our Story'),
-  (
-    'pt',
-    'about.text_1',
-    'Bem-vindo à Danishopper. Começámos com uma pequena ideia e crescemos para nos tornarmos uma referência no mercado e-commerce.'
-  ),
-  (
-    'gb',
-    'about.text_1',
-    'Welcome to Danishopper. We started with a small idea and grew to become a reference in the e-commerce market.'
-  ),
-  (
-    'pt',
-    'about.text_2',
-    'O nosso compromisso é com a qualidade e a satisfação do cliente. Trabalhamos todos os dias para lhe trazer as últimas tendências.'
-  ),
-  (
-    'gb',
-    'about.text_2',
-    'Our commitment is to quality and customer satisfaction. We work every day to bring you the latest trends.'
-  ),
-  ('pt', 'menu.news', 'Notícias'),
-  ('gb', 'menu.news', 'News'),
-  ('pt', 'news.read_more', 'Ler Mais'),
-  ('gb', 'news.read_more', 'Read More'),
-  ('pt', 'news.latest', 'Últimas Notícias'),
-  ('gb', 'news.latest', 'Latest News'),
-  ('pt', 'news.back_to_list', 'Voltar à lista'),
-  ('gb', 'news.back_to_list', 'Back to list'),
-  (
-    'pt',
-    'news.empty_list',
-    'Nenhuma notícia encontrada.'
-  ),
-  ('gb', 'news.empty_list', 'No news found.');
+  (2, 4, 6, '2026-05-07 19:34:28'),
+  (3, 4, 5, '2026-05-07 19:34:48'),
+  (4, 4, 3, '2026-05-12 12:16:41');
+
+/*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
+
+UNLOCK TABLES;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -3488,4 +4632,4 @@ VALUES
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-06  9:24:06
+-- Dump completed on 2026-05-13  8:35:37

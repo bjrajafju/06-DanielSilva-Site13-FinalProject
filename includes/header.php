@@ -2,17 +2,32 @@
 include_once 'config.php';
 
 $categories = get_categories();
+
+// SEO Setup
+$meta_title = isset($meta_title) ? $meta_title . " | DaniShopper" : get_setting('meta_title', 'DaniShopper');
+$meta_description = $meta_description ?? get_setting('meta_description', '');
+$meta_keywords = $meta_keywords ?? get_setting('meta_keywords', '');
+$meta_image = $meta_image ?? ($SETTINGS['url_site'] . '/' . get_setting('og_image', 'img/og-default.jpg'));
+$meta_url = $SETTINGS['url_site'] . $_SERVER['REQUEST_URI'];
+$favicon = get_setting('favicon', 'img/favicon.ico');
 ?>
 
 <head>
     <meta charset="utf-8">
-    <title>DaniShopper</title>
+    <title><?= $meta_title ?></title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+    <meta content="<?= $meta_keywords ?>" name="keywords">
+    <meta content="<?= $meta_description ?>" name="description">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="<?= $meta_title ?>">
+    <meta property="og:description" content="<?= $meta_description ?>">
+    <meta property="og:image" content="<?= $meta_image ?>">
+    <meta property="og:url" content="<?= $meta_url ?>">
+    <meta property="og:type" content="website">
 
     <!-- Favicon -->
-    <link href="<?= $SETTINGS['url_site'] ?>/img/favicon.ico" rel="icon">
+    <link href="<?= $SETTINGS['url_site'] ?>/<?= $favicon ?>" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -72,7 +87,8 @@ $categories = get_categories();
             <div class="col-lg-3 d-none d-lg-block">
                 <a href="" class="text-decoration-none">
                     <h1 class="m-0 display-5 font-weight-semi-bold">
-                        <span class="text-primary font-weight-bold border px-3 mr-1">D</span><?php echo t('header.brand.name'); ?>
+                        <span
+                            class="text-primary font-weight-bold border px-3 mr-1">D</span><?php echo t('header.brand.name'); ?>
                     </h1>
                 </a>
             </div>
@@ -92,11 +108,11 @@ $categories = get_categories();
             </div>
 
             <div class="col-lg-3 col-6 text-right">
-                <a href="<?= $SETTINGS['url_site'] ?>/wishlist.php" class="btn border">
+                <a href="<?= get_url('wishlist.php') ?>" class="btn border">
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge"><?= get_wishlist_count($_SESSION['user_id'] ?? null) ?></span>
                 </a>
-                <a href="<?= $SETTINGS['url_site'] ?>/cart.php" class="btn border">
+                <a href="<?= get_url('cart.php') ?>" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
                 </a>
             </div>
@@ -137,10 +153,9 @@ $categories = get_categories();
 
                         <?php
                         foreach ($categories as $cat):
-                        ?>
+                            ?>
 
-                            <a href="<?= $SETTINGS['url_site'] ?>/shop.php?categories[]=<?= $cat['id'] ?>"
-                                class="nav-item nav-link">
+                            <a href="<?= get_url('shop.php?categories[]=' . $cat['id']) ?>" class="nav-item nav-link">
                                 <?= $cat['name'] ?>
                             </a>
 
@@ -155,7 +170,8 @@ $categories = get_categories();
 
                     <a href="" class="text-decoration-none d-block d-lg-none">
                         <h1 class="m-0 display-5 font-weight-semi-bold">
-                            <span class="text-primary font-weight-bold border px-3 mr-1">D</span><?php echo t('header.brand.name'); ?>
+                            <span
+                                class="text-primary font-weight-bold border px-3 mr-1">D</span><?php echo t('header.brand.name'); ?>
                         </h1>
                     </a>
 
@@ -166,24 +182,25 @@ $categories = get_categories();
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
 
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="<?= $SETTINGS['url_site'] ?>/index.php"
+                            <a href="<?= get_url('index.php') ?>"
                                 class="nav-item nav-link"><?php echo t('header.nav.home'); ?></a>
 
-                            <a href="<?= $SETTINGS['url_site'] ?>/shop.php"
+                            <a href="<?= get_url('shop.php') ?>"
                                 class="nav-item nav-link"><?php echo t('header.nav.shop'); ?></a>
 
-                            <a href="<?= $SETTINGS['url_site'] ?>/news.php"
+                            <a href="<?= get_url('news.php') ?>"
                                 class="nav-item nav-link"><?php echo t('menu.news'); ?></a>
 
-                            <a href="<?= $SETTINGS['url_site'] ?>/about.php"
+                            <a href="<?= get_url('about.php') ?>"
                                 class="nav-item nav-link"><?php echo t('menu.about'); ?></a>
 
-                            <a href="<?= $SETTINGS['url_site'] ?>/contact.php"
+                            <a href="<?= get_url('contact.php') ?>"
                                 class="nav-item nav-link"><?php echo t('header.nav.contact'); ?></a>
 
                             <?php if (is_admin()): ?>
                                 <a href="<?= $SETTINGS['url_site'] ?>/backoffice/index.php"
-                                    class="nav-item nav-link text-primary font-weight-bold"><i class="fas fa-user-shield"></i> Backoffice</a>
+                                    class="nav-item nav-link text-primary font-weight-bold"><i
+                                        class="fas fa-user-shield"></i> Backoffice</a>
                             <?php endif; ?>
                         </div>
 
@@ -194,16 +211,26 @@ $categories = get_categories();
                                         <i class="fas fa-user text-primary mr-1"></i> <?= $_SESSION['user_first_name'] ?>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right rounded-0 m-0">
-                                        <a href="<?= $SETTINGS['url_site'] ?>/profile.php" class="dropdown-item"><i class="fas fa-id-card-alt mr-2 text-primary"></i> <?= t('header.nav.profile') ?></a>
-                                        <a href="<?= $SETTINGS['url_site'] ?>/profile.php?section=orders" class="dropdown-item"><i class="fas fa-box-open mr-2 text-primary"></i> <?= t('header.nav.orders') ?></a>
-                                        <a href="<?= $SETTINGS['url_site'] ?>/wishlist.php" class="dropdown-item"><i class="fas fa-heart mr-2 text-primary"></i> <?= t('header.nav.wishlist') ?></a>
+                                        <a href="<?= get_url('profile.php') ?>" class="dropdown-item"><i
+                                                class="fas fa-id-card-alt mr-2 text-primary"></i>
+                                            <?= t('header.nav.profile') ?></a>
+                                        <a href="<?= get_url('profile.php?section=orders') ?>" class="dropdown-item"><i
+                                                class="fas fa-box-open mr-2 text-primary"></i>
+                                            <?= t('header.nav.orders') ?></a>
+                                        <a href="<?= get_url('wishlist.php') ?>" class="dropdown-item"><i
+                                                class="fas fa-heart mr-2 text-primary"></i>
+                                            <?= t('header.nav.wishlist') ?></a>
                                         <div class="dropdown-divider"></div>
-                                        <a href="<?= $SETTINGS['url_site'] ?>/logout.php" class="dropdown-item"><i class="fas fa-sign-out-alt mr-2 text-primary"></i> <?= t('header.nav.logout') ?></a>
+                                        <a href="<?= $SETTINGS['url_site'] ?>/logout.php" class="dropdown-item"><i
+                                                class="fas fa-sign-out-alt mr-2 text-primary"></i>
+                                            <?= t('header.nav.logout') ?></a>
                                     </div>
                                 </div>
                             <?php else: ?>
-                                <a href="<?= $SETTINGS['url_site'] ?>/login.php" class="nav-item nav-link"><?php echo t('header.nav.login'); ?></a>
-                                <a href="<?= $SETTINGS['url_site'] ?>/register.php" class="nav-item nav-link"><?php echo t('header.nav.register'); ?></a>
+                                <a href="<?= get_url('login.php') ?>"
+                                    class="nav-item nav-link"><?php echo t('header.nav.login'); ?></a>
+                                <a href="<?= get_url('register.php') ?>"
+                                    class="nav-item nav-link"><?php echo t('header.nav.register'); ?></a>
                             <?php endif; ?>
                         </div>
 
@@ -217,7 +244,8 @@ $categories = get_categories();
 
     <!-- Cart Merge Modal -->
     <?php if (isset($_SESSION['show_cart_merge_popup']) && $_SESSION['show_cart_merge_popup']): ?>
-        <div class="modal fade" id="cartMergeModal" tabindex="-1" role="dialog" aria-labelledby="cartMergeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal fade" id="cartMergeModal" tabindex="-1" role="dialog" aria-labelledby="cartMergeModalLabel"
+            aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-primary text-white">
@@ -227,8 +255,10 @@ $categories = get_categories();
                         <p class="mb-0"><?= t('cart.merge.modal_body') ?></p>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-primary px-4" id="btnMergeCart"><?= t('cart.merge.btn_merge') ?></button>
-                        <button type="button" class="btn btn-secondary px-4" id="btnDiscardCart"><?= t('cart.merge.btn_discard') ?></button>
+                        <button type="button" class="btn btn-primary px-4"
+                            id="btnMergeCart"><?= t('cart.merge.btn_merge') ?></button>
+                        <button type="button" class="btn btn-secondary px-4"
+                            id="btnDiscardCart"><?= t('cart.merge.btn_discard') ?></button>
                     </div>
                 </div>
             </div>
@@ -238,7 +268,7 @@ $categories = get_categories();
             // Garantir que o jQuery está carregado (o layout já inclui no footer, mas o header corre antes)
             // Por isso usamos um intervalo ou colocamos no final do body se possível.
             // Neste projeto, o footer é incluído DEPOIS do header, então o script deve correr no final.
-            document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener("DOMContentLoaded", function () {
                 if (typeof jQuery !== 'undefined') {
                     $('#cartMergeModal').modal('show');
 
@@ -250,7 +280,7 @@ $categories = get_categories();
                                 action: action
                             },
                             dataType: 'json',
-                            success: function(response) {
+                            success: function (response) {
                                 if (response.success) {
                                     $('#cartMergeModal').modal('hide');
                                     location.reload();
@@ -259,11 +289,11 @@ $categories = get_categories();
                         });
                     }
 
-                    $('#btnMergeCart').on('click', function() {
+                    $('#btnMergeCart').on('click', function () {
                         handleMerge('merge');
                     });
 
-                    $('#btnDiscardCart').on('click', function() {
+                    $('#btnDiscardCart').on('click', function () {
                         handleMerge('discard');
                     });
                 }

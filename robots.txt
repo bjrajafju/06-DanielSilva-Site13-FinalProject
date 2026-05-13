@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /backoffice/
+Disallow: /includes/
+Disallow: /sql/
+Disallow: /uploads/
+Disallow: /cart
+Disallow: /checkout
+Disallow: /profile
+
+Sitemap: http://localhost:8000/sitemap.xml

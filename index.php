@@ -2,6 +2,7 @@
 <html lang="gb">
 <?php
 include_once 'includes/config.php';
+$meta_title = "Home";
 include 'includes/header.php';
 
 $categories = get_categories();
@@ -46,15 +47,17 @@ $products = get_products(8);
 
         <?php
         foreach ($categories as $cat):
-        ?>
+            ?>
             <div class="col-lg-4 col-md-6 pb-1">
                 <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
                     <p class="text-right">
-                        <?= get_product_count_by_category($cat['id']) ?> <?= t('home.categories.products'); ?>
+                        <?= get_product_count_by_category($cat['id']) ?>     <?= t('home.categories.products'); ?>
                     </p>
 
-                    <a href="<?= $SETTINGS['url_site'] ?>/shop.php?categories[]=<?= $cat['id'] ?>" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="<?= $cat['image'] ?>" alt="">
+                    <a href="<?= get_url('shop.php?categories[]=' . $cat['id']) ?>"
+                        class="cat-img position-relative overflow-hidden mb-3">
+                        <img class="img-fluid" src="<?= $cat['image'] ?>" alt="<?= htmlspecialchars($cat['name']) ?>"
+                            loading="lazy">
                     </a>
 
                     <h5 class="font-weight-semi-bold m-0">
@@ -80,13 +83,14 @@ $products = get_products(8);
 
         <?php
         foreach ($products as $p):
-        ?>
+            ?>
 
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="card product-item border-0 mb-4">
 
                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="<?= $p['image'] ?>" alt="">
+                        <img class="img-fluid w-100" src="<?= $p['image'] ?>" alt="<?= htmlspecialchars($p['title']) ?>"
+                            loading="lazy">
                     </div>
 
                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
@@ -100,8 +104,7 @@ $products = get_products(8);
                     </div>
 
                     <div class="card-footer d-flex justify-content-center bg-light border">
-                        <a href="<?= $SETTINGS['url_site'] ?>/detail.php?slug=<?= $p['slug'] ?>"
-                            class="btn btn-sm text-dark p-0">
+                        <a href="<?= get_url('detail.php?slug=' . $p['slug']) ?>" class="btn btn-sm text-dark p-0">
                             <i class="fas fa-eye text-primary mr-1"></i>
                             <?= t('products.buttons.detail') ?>
                         </a>
@@ -122,7 +125,8 @@ $products = get_products(8);
     <div class="row justify-content-md-center py-5 px-xl-5">
         <div class="col-md-6 col-12 py-5">
             <div class="text-center mb-2 pb-2">
-                <h2 class="section-title px-5 mb-3"><span class="bg-secondary px-2"><?= t('home.subscribe.title') ?></span></h2>
+                <h2 class="section-title px-5 mb-3"><span
+                        class="bg-secondary px-2"><?= t('home.subscribe.title') ?></span></h2>
                 <p><?= t('home.subscribe.description') ?></p>
             </div>
             <form action="">
@@ -154,13 +158,14 @@ $products = get_products(8);
 
         <?php
         foreach ($products as $p):
-        ?>
+            ?>
 
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="card product-item border-0 mb-4">
 
                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="<?= $p['image'] ?>" alt="">
+                        <img class="img-fluid w-100" src="<?= $p['image'] ?>" alt="<?= htmlspecialchars($p['title']) ?>"
+                            loading="lazy">
                     </div>
 
                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
@@ -174,8 +179,7 @@ $products = get_products(8);
                     </div>
 
                     <div class="card-footer d-flex justify-content-center bg-light border">
-                        <a href="<?= $SETTINGS['url_site'] ?>/detail.php?slug=<?= $p['slug'] ?>"
-                            class="btn btn-sm text-dark p-0">
+                        <a href="<?= get_url('detail.php?slug=' . $p['slug']) ?>" class="btn btn-sm text-dark p-0">
                             <i class="fas fa-eye text-primary mr-1"></i>
                             <?= t('products.buttons.detail') ?>
                         </a>

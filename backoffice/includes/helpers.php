@@ -103,7 +103,7 @@ function get_dashboard_stats()
 
 function get_low_stock_details($limit = 5)
 {
-    $sql = "SELECT p.id, pt.title, s.name as size_name, c.hex as color_hex, ct.name as color_name, pv.stock 
+    $sql = "SELECT pv.id, pt.title, s.name as size_name, c.hex as color_hex, ct.name as color_name, pv.stock 
             FROM product_variants pv
             JOIN products p ON p.id = pv.product_id
             JOIN product_translations pt ON pt.product_id = p.id AND pt.lang_code = 'gb'

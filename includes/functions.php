@@ -55,15 +55,19 @@ function db_select_grouped($select, $from, $joins = "", $where = "1", $group = "
 {
     $sql = "SELECT $select FROM $from";
 
-    if ($joins) $sql .= " $joins";
+    if ($joins)
+        $sql .= " $joins";
 
     $sql .= " WHERE $where";
 
-    if ($group) $sql .= " GROUP BY $group";
+    if ($group)
+        $sql .= " GROUP BY $group";
 
-    if ($order) $sql .= " ORDER BY $order";
+    if ($order)
+        $sql .= " ORDER BY $order";
 
-    if ($limit) $sql .= " LIMIT $limit";
+    if ($limit)
+        $sql .= " LIMIT $limit";
 
     return my_query($sql);
 }
@@ -74,7 +78,8 @@ function db_insert($table, $data)
     global $SETTINGS;
     $fields = array_keys($data);
     $values = array_map(function ($v) use ($SETTINGS) {
-        if ($v === null) return "NULL";
+        if ($v === null)
+            return "NULL";
         return "'" . $SETTINGS['conn']->real_escape_string($v) . "'";
     }, array_values($data));
 
@@ -287,7 +292,7 @@ function get_product_by_id($id)
 {
     global $LANG_CODE;
 
-    $id = (int)$id;
+    $id = (int) $id;
     $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
 
     $res = db_select(
@@ -332,7 +337,7 @@ function get_product_variants($product_id)
 {
     global $LANG_CODE;
 
-    $product_id = (int)$product_id;
+    $product_id = (int) $product_id;
     $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
 
     return db_select(
@@ -360,7 +365,7 @@ function get_product_variants($product_id)
 
 function get_product_count_by_category($category_id)
 {
-    $category_id = (int)$category_id;
+    $category_id = (int) $category_id;
     return db_count("products", "category_id = $category_id AND is_active = 1");
 }
 
@@ -368,7 +373,7 @@ function get_product_sizes($product_id)
 {
     global $LANG_CODE;
 
-    $product_id = (int)$product_id;
+    $product_id = (int) $product_id;
     $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
 
     return db_select(
@@ -386,7 +391,7 @@ function get_product_colors($product_id)
 {
     global $LANG_CODE;
 
-    $product_id = (int)$product_id;
+    $product_id = (int) $product_id;
     $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
 
     return db_select(
@@ -449,7 +454,7 @@ function get_payment_methods()
 
 function get_last_user_address($user_id, $type)
 {
-    $user_id = (int)$user_id;
+    $user_id = (int) $user_id;
     $type = addslashes($type);
 
     $res = db_select(
@@ -467,7 +472,7 @@ function get_last_user_address($user_id, $type)
 function get_country_by_id($country_id)
 {
     global $LANG_CODE;
-    $country_id = (int)$country_id;
+    $country_id = (int) $country_id;
     $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
 
     $res = db_select(
@@ -482,7 +487,7 @@ function get_country_by_id($country_id)
 
 function clear_cart($cart_id)
 {
-    $cart_id = (int)$cart_id;
+    $cart_id = (int) $cart_id;
     return my_query("DELETE FROM cart_items WHERE cart_id = $cart_id");
 }
 
@@ -490,7 +495,7 @@ function get_cart_items($cart_id)
 {
     global $LANG_CODE;
 
-    $cart_id = (int)$cart_id;
+    $cart_id = (int) $cart_id;
     $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
 
     return db_select(
@@ -549,7 +554,8 @@ function get_or_create_cart()
     if ($user_id) {
         $cart = db_get_one("carts", "user_id = $user_id");
 
-        if ($cart) return $cart;
+        if ($cart)
+            return $cart;
 
         $cart_id = db_insert("carts", [
             'user_id' => $user_id,
@@ -561,7 +567,8 @@ function get_or_create_cart()
 
     $cart = db_get_one("carts", "session_id = '" . addslashes($session_id) . "'");
 
-    if ($cart) return $cart;
+    if ($cart)
+        return $cart;
 
     $cart_id = db_insert("carts", [
         'user_id' => null,
@@ -598,10 +605,10 @@ function add_to_cart($variant_id, $quantity = 1)
 
 function get_cart_item_quantity($cart_id, $variant_id)
 {
-    $cart_id = (int)$cart_id;
-    $variant_id = (int)$variant_id;
+    $cart_id = (int) $cart_id;
+    $variant_id = (int) $variant_id;
     $res = db_get_one("cart_items", "cart_id = $cart_id AND variant_id = $variant_id");
-    return $res ? (int)$res['quantity'] : 0;
+    return $res ? (int) $res['quantity'] : 0;
 }
 
 function get_session_cart()
@@ -612,28 +619,28 @@ function get_session_cart()
 
 function get_user_cart($user_id)
 {
-    $user_id = (int)$user_id;
+    $user_id = (int) $user_id;
     return db_get_one("carts", "user_id = $user_id");
 }
 
 function attach_cart_to_user($cart_id, $user_id)
 {
-    $cart_id = (int)$cart_id;
-    $user_id = (int)$user_id;
+    $cart_id = (int) $cart_id;
+    $user_id = (int) $user_id;
     return my_query("UPDATE carts SET user_id = $user_id, session_id = NULL WHERE id = $cart_id");
 }
 
 function delete_cart($cart_id)
 {
-    $cart_id = (int)$cart_id;
+    $cart_id = (int) $cart_id;
     my_query("DELETE FROM cart_items WHERE cart_id = $cart_id");
     return my_query("DELETE FROM carts WHERE id = $cart_id");
 }
 
 function merge_carts($session_cart_id, $user_cart_id)
 {
-    $session_cart_id = (int)$session_cart_id;
-    $user_cart_id = (int)$user_cart_id;
+    $session_cart_id = (int) $session_cart_id;
+    $user_cart_id = (int) $user_cart_id;
 
     $session_items = db_get_all("cart_items", "cart_id = $session_cart_id");
 
@@ -642,7 +649,7 @@ function merge_carts($session_cart_id, $user_cart_id)
         $quantity = $item['quantity'];
 
         $variant = db_get_one("product_variants", "id = $variant_id");
-        $stock = $variant ? (int)$variant['stock'] : 0;
+        $stock = $variant ? (int) $variant['stock'] : 0;
 
         // Verificar se já existe no carrinho do user
         $existing = db_get_one("cart_items", "cart_id = $user_cart_id AND variant_id = $variant_id");
@@ -668,9 +675,9 @@ function merge_carts($session_cart_id, $user_cart_id)
 
 function get_variant_id($product_id, $size_id, $color_id)
 {
-    $product_id = (int)$product_id;
-    $size_id = (int)$size_id;
-    $color_id = (int)$color_id;
+    $product_id = (int) $product_id;
+    $size_id = (int) $size_id;
+    $color_id = (int) $color_id;
 
     $variant = db_get_one(
         "product_variants",
@@ -685,7 +692,7 @@ function get_variant_id($product_id, $size_id, $color_id)
 
 function get_cart_totals($cart_id)
 {
-    $cart_id = (int)$cart_id;
+    $cart_id = (int) $cart_id;
 
     // Subtotal: sum of (price * quantity)
     $sql = "
@@ -697,7 +704,7 @@ function get_cart_totals($cart_id)
     ";
 
     $res = my_query($sql);
-    $subtotal = (float)($res[0]['subtotal'] ?? 0);
+    $subtotal = (float) ($res[0]['subtotal'] ?? 0);
 
     $shipping = $subtotal > 0 ? 10.0 : 0.0;
     $total = $subtotal + $shipping;
@@ -890,8 +897,8 @@ function get_stores()
 function create_message($data)
 {
     return db_insert("messages", [
-        'name'    => $data['name'],
-        'email'   => $data['email'],
+        'name' => $data['name'],
+        'email' => $data['email'],
         'subject' => $data['subject'],
         'message' => $data['message']
     ]);
@@ -966,42 +973,43 @@ function get_news_by_slug_any_lang($slug)
 
 function get_product_reviews($product_id)
 {
-    $product_id = (int)$product_id;
+    $product_id = (int) $product_id;
     return db_get_all("reviews", "product_id = $product_id AND is_approved = 1", "created_at DESC");
 }
 
 function get_product_review_count($product_id)
 {
-    $product_id = (int)$product_id;
+    $product_id = (int) $product_id;
     return db_count("reviews", "product_id = $product_id AND is_approved = 1");
 }
 
 function get_product_average_rating($product_id)
 {
-    $product_id = (int)$product_id;
+    $product_id = (int) $product_id;
     $sql = "SELECT AVG(rating) as average FROM reviews WHERE product_id = $product_id AND is_approved = 1";
     $res = my_query($sql);
-    return (float)($res[0]['average'] ?? 0);
+    return (float) ($res[0]['average'] ?? 0);
 }
 
 function insert_review($data)
 {
     return db_insert("reviews", [
-        'product_id' => (int)$data['product_id'],
-        'user_id'    => $data['user_id'] ? (int)$data['user_id'] : null,
-        'name'       => $data['name'],
-        'email'      => $data['email'],
-        'rating'     => (int)$data['rating'],
-        'comment'    => $data['comment'],
+        'product_id' => (int) $data['product_id'],
+        'user_id' => $data['user_id'] ? (int) $data['user_id'] : null,
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'rating' => (int) $data['rating'],
+        'comment' => $data['comment'],
         'is_approved' => 0
     ]);
 }
 
 function toggle_review_approval($id)
 {
-    $id = (int)$id;
+    $id = (int) $id;
     $review = db_get_one("reviews", "id = $id");
-    if (!$review) return false;
+    if (!$review)
+        return false;
 
     $new_status = $review['is_approved'] ? 0 : 1;
     return db_update("reviews", ['is_approved' => $new_status], "id = $id");
@@ -1009,7 +1017,7 @@ function toggle_review_approval($id)
 
 function delete_review($id)
 {
-    $id = (int)$id;
+    $id = (int) $id;
     return db_delete("reviews", "id = $id");
 }
 
@@ -1018,8 +1026,8 @@ function delete_review($id)
  */
 function add_to_wishlist($user_id, $product_id)
 {
-    $user_id = (int)$user_id;
-    $product_id = (int)$product_id;
+    $user_id = (int) $user_id;
+    $product_id = (int) $product_id;
 
     if (is_product_in_wishlist($user_id, $product_id)) {
         return true;
@@ -1033,23 +1041,24 @@ function add_to_wishlist($user_id, $product_id)
 
 function remove_from_wishlist($user_id, $product_id)
 {
-    $user_id = (int)$user_id;
-    $product_id = (int)$product_id;
+    $user_id = (int) $user_id;
+    $product_id = (int) $product_id;
     return db_delete("wishlist", "user_id = $user_id AND product_id = $product_id");
 }
 
 function is_product_in_wishlist($user_id, $product_id)
 {
-    if (!$user_id) return false;
-    $user_id = (int)$user_id;
-    $product_id = (int)$product_id;
+    if (!$user_id)
+        return false;
+    $user_id = (int) $user_id;
+    $product_id = (int) $product_id;
     return db_count("wishlist", "user_id = $user_id AND product_id = $product_id") > 0;
 }
 
 function get_user_wishlist($user_id)
 {
     global $LANG_CODE;
-    $user_id = (int)$user_id;
+    $user_id = (int) $user_id;
     $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
 
     return db_select(
@@ -1064,8 +1073,9 @@ function get_user_wishlist($user_id)
 
 function get_wishlist_count($user_id)
 {
-    if (!$user_id) return 0;
-    $user_id = (int)$user_id;
+    if (!$user_id)
+        return 0;
+    $user_id = (int) $user_id;
     return db_count("wishlist", "user_id = $user_id");
 }
 
@@ -1074,16 +1084,16 @@ function get_wishlist_count($user_id)
  */
 function variant_has_stock($variant_id, $quantity = 1)
 {
-    $variant_id = (int)$variant_id;
-    $quantity = (int)$quantity;
+    $variant_id = (int) $variant_id;
+    $quantity = (int) $quantity;
     $variant = db_get_one("product_variants", "id = $variant_id");
     return $variant && $variant['stock'] >= $quantity;
 }
 
 function reduce_variant_stock($variant_id, $quantity)
 {
-    $variant_id = (int)$variant_id;
-    $quantity = (int)$quantity;
+    $variant_id = (int) $variant_id;
+    $quantity = (int) $quantity;
     return my_query("UPDATE product_variants SET stock = stock - $quantity WHERE id = $variant_id AND stock >= $quantity");
 }
 
@@ -1092,14 +1102,14 @@ function reduce_variant_stock($variant_id, $quantity)
  */
 function get_user_orders($user_id)
 {
-    $user_id = (int)$user_id;
+    $user_id = (int) $user_id;
     return db_select("*", "orders", "", "user_id = $user_id", "created_at DESC");
 }
 
 function get_order_items_detailed($order_id)
 {
     global $LANG_CODE;
-    $order_id = (int)$order_id;
+    $order_id = (int) $order_id;
     $LANG_CODE = addslashes($LANG_CODE ?? 'pt');
 
     return db_select(
@@ -1116,14 +1126,14 @@ function get_order_items_detailed($order_id)
 
 function get_order_address($order_id, $type = 'shipping')
 {
-    $order_id = (int)$order_id;
+    $order_id = (int) $order_id;
     $type = addslashes($type);
     return db_get_one("order_addresses", "order_id = $order_id AND type = '$type'");
 }
 
 function get_user_stats($user_id)
 {
-    $user_id = (int)$user_id;
+    $user_id = (int) $user_id;
     $orders = db_get_all("orders", "user_id = $user_id");
 
     $total_orders = count($orders);
@@ -1146,13 +1156,13 @@ function get_user_stats($user_id)
 
 function update_user_profile($user_id, $data)
 {
-    $user_id = (int)$user_id;
+    $user_id = (int) $user_id;
     return db_update("users", $data, "id = $user_id");
 }
 
 function change_user_password($user_id, $current_password, $new_password)
 {
-    $user_id = (int)$user_id;
+    $user_id = (int) $user_id;
     $user = db_get_one("users", "id = $user_id");
 
     if (!$user || !password_verify($current_password, $user['password'])) {
@@ -1195,13 +1205,13 @@ function send_email($to, $subject, $body, $isHtml = true)
     try {
         // Server settings
         $mail->isSMTP();
-        $mail->Host       = get_setting('smtp_host');
-        $mail->SMTPAuth   = true;
-        $mail->Username   = get_setting('smtp_user');
-        $mail->Password   = get_setting('smtp_pass');
+        $mail->Host = get_setting('smtp_host');
+        $mail->SMTPAuth = true;
+        $mail->Username = get_setting('smtp_user');
+        $mail->Password = get_setting('smtp_pass');
         $mail->SMTPSecure = get_setting('smtp_encryption'); // tls or ssl
-        $mail->Port       = get_setting('smtp_port');
-        $mail->CharSet    = 'UTF-8';
+        $mail->Port = get_setting('smtp_port');
+        $mail->CharSet = 'UTF-8';
 
         // Recipients
         $mail->setFrom(get_setting('smtp_from_email'), get_setting('smtp_from_name'));
@@ -1210,7 +1220,7 @@ function send_email($to, $subject, $body, $isHtml = true)
         // Content
         $mail->isHTML($isHtml);
         $mail->Subject = $subject;
-        $mail->Body    = $body;
+        $mail->Body = $body;
 
         $mail->send();
         return true;
@@ -1227,7 +1237,8 @@ function create_password_reset($email)
     $user = db_get_one("users", "email = '$email'");
 
     // Generic success response logic: we always say "check your email" in the UI
-    if (!$user) return true;
+    if (!$user)
+        return true;
 
     // Rate Limiting: Max 3 requests per hour per email/IP
     $ip = $_SERVER['REMOTE_ADDR'];
@@ -1293,7 +1304,7 @@ function validate_reset_token($token)
 
 function reset_user_password($user_id, $new_password, $token)
 {
-    $user_id = (int)$user_id;
+    $user_id = (int) $user_id;
     $hashed = password_hash($new_password, PASSWORD_DEFAULT);
 
     if (db_update("users", ['password' => $hashed], "id = $user_id")) {
@@ -1303,4 +1314,49 @@ function reset_user_password($user_id, $new_password, $token)
         return true;
     }
     return false;
+}
+
+// SEO & URL HELPERS
+function get_url($path = '')
+{
+    global $SETTINGS;
+    $url_parts = parse_url($SETTINGS['url_site']);
+    $base = rtrim($url_parts['path'] ?? '', '/');
+
+    // Simplistic pretty URL mapping
+    if ($path == 'index.php' || $path == '')
+        return $base . '/';
+    if ($path == 'shop.php')
+        return $base . '/shop';
+    if ($path == 'cart.php')
+        return $base . '/cart';
+    if ($path == 'checkout.php')
+        return $base . '/checkout';
+    if ($path == 'wishlist.php')
+        return $base . '/wishlist';
+    if ($path == 'profile.php')
+        return $base . '/profile';
+    if ($path == 'login.php')
+        return $base . '/login';
+    if ($path == 'register.php')
+        return $base . '/register';
+    if ($path == 'contact.php')
+        return $base . '/contact';
+    if ($path == 'about.php')
+        return $base . '/about';
+    if ($path == 'news.php')
+        return $base . '/news';
+
+    // Detail pages with slugs
+    if (preg_match('/detail\.php\?slug=(.+)/', $path, $matches)) {
+        return $base . '/product/' . $matches[1];
+    }
+    if (preg_match('/news-detail\.php\?slug=(.+)/', $path, $matches)) {
+        return $base . '/news/' . $matches[1];
+    }
+    if (preg_match('/shop\.php\?categories\[\]=(.+)/', $path, $matches)) {
+        return $base . '/shop?categories[]=' . $matches[1];
+    }
+
+    return $base . '/' . ltrim($path, '/');
 }

@@ -72,6 +72,9 @@
         <li class="<?= basename($_SERVER['PHP_SELF']) == 'settings_email.php' ? 'active' : '' ?>">
             <a href="settings_email.php"><i class="fas fa-at"></i> Definições de E-mail</a>
         </li>
+        <li class="<?= basename($_SERVER['PHP_SELF']) == 'settings_seo.php' ? 'active' : '' ?>">
+            <a href="settings_seo.php"><i class="fas fa-search"></i> Configurações SEO</a>
+        </li>
     </ul>
 
     <div class="px-4 py-3 mt-auto">
@@ -79,4 +82,3 @@
             Site</a>
     </div>
 </nav>
-

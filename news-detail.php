@@ -21,6 +21,10 @@ if (!$news) {
         exit;
     }
 }
+// SEO Variables
+$meta_title = $news['title'];
+$meta_description = $news['short_description'];
+$meta_image = $SETTINGS['url_site'] . '/' . $news['image'];
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +50,10 @@ if (!$news) {
     <div class="row px-xl-5">
         <div class="col-lg-8 pb-5 mx-auto">
             <div class="bg-light p-30 mb-30">
-                <img class="img-fluid w-100 mb-4 rounded" src="<?= $SETTINGS['url_site'] ?>/<?= htmlspecialchars($news['image']) ?>" alt="<?= htmlspecialchars($news['title']) ?>" onerror="this.src='https://via.placeholder.com/800x400'">
+                <img class="img-fluid w-100 mb-4 rounded"
+                    src="<?= $SETTINGS['url_site'] ?>/<?= htmlspecialchars($news['image']) ?>"
+                    alt="<?= htmlspecialchars($news['title']) ?>"
+                    onerror="this.src='https://via.placeholder.com/800x400'">
 
                 <h2 class="font-weight-semi-bold mb-3"><?= htmlspecialchars($news['title']) ?></h2>
                 <p class="text-muted mb-4">

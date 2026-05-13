@@ -29,6 +29,11 @@ $colors = get_product_colors($product['product_id']);
 $reviews = get_product_reviews($product['product_id']);
 $review_count = get_product_review_count($product['product_id']);
 $average_rating = get_product_average_rating($product['product_id']);
+
+// SEO Variables
+$meta_title = $product['title'];
+$meta_description = $product['short_description'];
+$meta_image = $SETTINGS['url_site'] . '/' . $product['image'];
 ?>
 <!DOCTYPE html>
 <html lang="<?= $_SESSION['lingua'] ?? 'pt' ?>">
@@ -39,7 +44,8 @@ $average_rating = get_product_average_rating($product['product_id']);
     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
         <h1 class="font-weight-semi-bold text-uppercase mb-3"><?= t('detail.header.title') ?></h1>
         <div class="d-inline-flex">
-            <p class="m-0"><a href="<?= $SETTINGS['url_site'] ?>/index.php"><?= t('detail.header.breadcrumb_home') ?></a></p>
+            <p class="m-0"><a
+                    href="<?= $SETTINGS['url_site'] ?>/index.php"><?= t('detail.header.breadcrumb_home') ?></a></p>
             <p class="m-0 px-2">-</p>
             <p class="m-0"><?= t('detail.header.breadcrumb_detail') ?></p>
         </div>
@@ -65,7 +71,8 @@ $average_rating = get_product_average_rating($product['product_id']);
     <div class="row px-xl-5">
         <div class="col-lg-5 pb-5">
             <div class="border">
-                <img class="w-100 h-100" src="<?= $SETTINGS['url_site'] ?>/<?= $product['image'] ?>" alt="<?= $product['title'] ?>">
+                <img class="w-100 h-100" src="<?= $SETTINGS['url_site'] ?>/<?= $product['image'] ?>"
+                    alt="<?= htmlspecialchars($product['title']) ?>" loading="lazy">
             </div>
         </div>
         <div class="col-lg-7 pb-5">
@@ -98,12 +105,8 @@ $average_rating = get_product_average_rating($product['product_id']);
                     <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
                     <?php foreach ($sizes as $size): ?>
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio"
-                                class="custom-control-input"
-                                id="size-<?= $size['id'] ?>"
-                                name="size"
-                                value="<?= $size['id'] ?>"
-                                required>
+                            <input type="radio" class="custom-control-input" id="size-<?= $size['id'] ?>" name="size"
+                                value="<?= $size['id'] ?>" required>
 
                             <label class="custom-control-label" for="size-<?= $size['id'] ?>">
                                 <?= $size['name'] ?>
@@ -117,12 +120,8 @@ $average_rating = get_product_average_rating($product['product_id']);
 
                 <?php foreach ($colors as $color): ?>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio"
-                            class="custom-control-input"
-                            id="color-<?= $color['id'] ?>"
-                            name="color"
-                            value="<?= $color['id'] ?>"
-                            required>
+                        <input type="radio" class="custom-control-input" id="color-<?= $color['id'] ?>" name="color"
+                            value="<?= $color['id'] ?>" required>
 
                         <label class="custom-control-label" for="color-<?= $color['id'] ?>">
                             <?= $color['name'] ?>
@@ -138,10 +137,7 @@ $average_rating = get_product_average_rating($product['product_id']);
                         </button>
                     </div>
 
-                    <input type="number"
-                        name="quantity"
-                        value="1"
-                        min="1"
+                    <input type="number" name="quantity" value="1" min="1"
                         class="form-control bg-secondary text-center">
 
                     <div class="input-group-btn">
@@ -164,12 +160,14 @@ $average_rating = get_product_average_rating($product['product_id']);
                     $wishlist_icon = $in_wishlist ? 'fas' : 'far';
                     ?>
                     <?php if ($user_id): ?>
-                        <a href="wishlist_action.php?product_id=<?= $product['product_id'] ?>&action=<?= $wishlist_action ?>" class="btn btn-outline-primary px-3">
+                        <a href="wishlist_action.php?product_id=<?= $product['product_id'] ?>&action=<?= $wishlist_action ?>"
+                            class="btn btn-outline-primary px-3">
                             <i class="<?= $wishlist_icon ?> fa-heart mr-1"></i>
                             <?= $in_wishlist ? t('detail.product.remove_from_wishlist') : t('detail.product.add_to_wishlist') ?>
                         </a>
                     <?php else: ?>
-                        <a href="login.php?redirect=detail.php?slug=<?= $product['slug'] ?>" class="btn btn-outline-primary px-3">
+                        <a href="login.php?redirect=detail.php?slug=<?= $product['slug'] ?>"
+                            class="btn btn-outline-primary px-3">
                             <i class="far fa-heart mr-1"></i>
                             <?= t('detail.product.add_to_wishlist') ?>
                         </a>
@@ -182,9 +180,12 @@ $average_rating = get_product_average_rating($product['product_id']);
     <div class="row px-xl-5">
         <div class="col">
             <div class="nav nav-tabs justify-content-center border-secondary mb-4">
-                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1"><?= t('detail.tabs.description') ?></a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2"><?= t('detail.tabs.information') ?></a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3"><?= t('detail.tabs.reviews') ?> (<?= $review_count ?>)</a>
+                <a class="nav-item nav-link active" data-toggle="tab"
+                    href="#tab-pane-1"><?= t('detail.tabs.description') ?></a>
+                <a class="nav-item nav-link" data-toggle="tab"
+                    href="#tab-pane-2"><?= t('detail.tabs.information') ?></a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3"><?= t('detail.tabs.reviews') ?>
+                    (<?= $review_count ?>)</a>
             </div>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="tab-pane-1">
@@ -199,11 +200,13 @@ $average_rating = get_product_average_rating($product['product_id']);
                 <div class="tab-pane fade" id="tab-pane-3">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 class="mb-4"><?= $review_count ?> <?= t('detail.reviews.reviews_for_title') ?> "<?= $product['title'] ?>"</h4>
+                            <h4 class="mb-4"><?= $review_count ?> <?= t('detail.reviews.reviews_for_title') ?>
+                                "<?= $product['title'] ?>"</h4>
                             <?php foreach ($reviews as $review): ?>
                                 <div class="media mb-4">
                                     <div class="media-body">
-                                        <h6><?= htmlspecialchars($review['name']) ?><small> - <i><?= date('d M Y', strtotime($review['created_at'])) ?></i></small></h6>
+                                        <h6><?= htmlspecialchars($review['name']) ?><small> -
+                                                <i><?= date('d M Y', strtotime($review['created_at'])) ?></i></small></h6>
                                         <div class="text-primary mb-2">
                                             <?php for ($i = 1; $i <= 5; $i++): ?>
                                                 <i class="<?= $i <= $review['rating'] ? 'fas' : 'far' ?> fa-star"></i>
@@ -249,7 +252,8 @@ $average_rating = get_product_average_rating($product['product_id']);
 
                                 <div class="form-group">
                                     <label for="message"><?= t('detail.reviews.your_review_label') ?></label>
-                                    <textarea id="message" name="comment" cols="30" rows="5" class="form-control" required></textarea>
+                                    <textarea id="message" name="comment" cols="30" rows="5" class="form-control"
+                                        required></textarea>
                                 </div>
 
                                 <?php if (!isset($_SESSION['user_id'])): ?>
@@ -262,17 +266,19 @@ $average_rating = get_product_average_rating($product['product_id']);
                                         <input type="email" name="email" class="form-control" id="email" required>
                                     </div>
                                 <?php else: ?>
-                                    <p><strong><?= t('detail.reviews.logged_as') ?>:</strong> <?= $_SESSION['user_first_name'] ?> <?= $_SESSION['user_last_name'] ?></p>
+                                    <p><strong><?= t('detail.reviews.logged_as') ?>:</strong>
+                                        <?= $_SESSION['user_first_name'] ?>     <?= $_SESSION['user_last_name'] ?></p>
                                 <?php endif; ?>
 
                                 <div class="form-group mb-0">
-                                    <input type="submit" value="<?= t('detail.reviews.submit_button') ?>" class="btn btn-primary px-3">
+                                    <input type="submit" value="<?= t('detail.reviews.submit_button') ?>"
+                                        class="btn btn-primary px-3">
                                 </div>
                             </form>
 
                             <script>
                                 document.querySelectorAll('.star-rating i').forEach(star => {
-                                    star.addEventListener('click', function() {
+                                    star.addEventListener('click', function () {
                                         const rating = this.getAttribute('data-rating');
                                         document.getElementById('rating-input').value = rating;
 
@@ -288,7 +294,7 @@ $average_rating = get_product_average_rating($product['product_id']);
                                         });
                                     });
 
-                                    star.addEventListener('mouseover', function() {
+                                    star.addEventListener('mouseover', function () {
                                         const rating = this.getAttribute('data-rating');
                                         document.querySelectorAll('.star-rating i').forEach(s => {
                                             if (s.getAttribute('data-rating') <= rating) {
@@ -301,7 +307,7 @@ $average_rating = get_product_average_rating($product['product_id']);
                                         });
                                     });
 
-                                    star.addEventListener('mouseout', function() {
+                                    star.addEventListener('mouseout', function () {
                                         const currentRating = document.getElementById('rating-input').value;
                                         document.querySelectorAll('.star-rating i').forEach(s => {
                                             if (s.getAttribute('data-rating') <= currentRating) {
@@ -317,7 +323,7 @@ $average_rating = get_product_average_rating($product['product_id']);
                             </script>
 
                             <script>
-                                document.addEventListener('DOMContentLoaded', function() {
+                                document.addEventListener('DOMContentLoaded', function () {
                                     const variants = <?= json_encode(get_product_variants($product['product_id'])) ?>;
 
                                     function updateAvailability() {
@@ -399,12 +405,11 @@ $average_rating = get_product_average_rating($product['product_id']);
 
                 <?php
                 foreach ($related_products as $related_product):
-                ?>
+                    ?>
 
                     <div class="card product-item border-0">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100"
-                                src="<?= $SETTINGS['url_site'] ?>/<?= $related_product['image'] ?>"
+                            <img class="img-fluid w-100" src="<?= $SETTINGS['url_site'] ?>/<?= $related_product['image'] ?>"
                                 alt="<?= $related_product['title'] ?>">
                         </div>
 

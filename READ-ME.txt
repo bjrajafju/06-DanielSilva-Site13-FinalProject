@@ -3,5 +3,6 @@ email: admin@gmail.com
 password: superuser
 
 O SQL de importar a base de dados (MySQL) está no ficheiro sql/database.sql
+
 Por causa de uns problemas com o xampp, eu corro o projeto abrindo o cmd na base e escrevendo o comando:
 php -S localhost:8000 router.php

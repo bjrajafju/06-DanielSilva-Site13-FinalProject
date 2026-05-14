@@ -1,7 +1,6 @@
 <?php
 include_once 'includes/config.php';
 
-// Redirect if not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -14,7 +13,6 @@ $orders = get_user_orders($user_id);
 
 $section = $_GET['section'] ?? 'dashboard';
 
-// Handle Profile Update
 $success_msg = "";
 $error_msg = "";
 
@@ -27,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'mobile' => addslashes($_POST['mobile'])
         ];
 
-        // Check if email already exists for another user
         $existing = db_get_one("users", "email = '{$data['email']}' AND id != $user_id");
         if ($existing) {
             $error_msg = "Email already in use.";
@@ -35,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (update_user_profile($user_id, $data)) {
                 $_SESSION['user_first_name'] = $data['first_name'];
                 $success_msg = "Profile updated successfully!";
-                $user = db_get_one("users", "id = $user_id"); // Refresh
+                $user = db_get_one("users", "id = $user_id");
             } else {
                 $error_msg = "Error updating profile.";
             }
@@ -52,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             if (change_user_password($user_id, $current, $new)) {
                 $success_msg = "Password changed successfully!";
-                // Clear inputs for security/UX
                 unset($_POST['current_password'], $_POST['new_password'], $_POST['confirm_password']);
             } else {
                 $error_msg = "Incorrect current password.";

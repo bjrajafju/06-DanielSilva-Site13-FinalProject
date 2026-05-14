@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         set_alert("Método de pagamento criado com sucesso!");
     }
 
-    // Handle Translations
     foreach ($languages as $lang) {
         $lang_code = $lang['code'];
         $name = $_POST['trans'][$lang_code]['name'];

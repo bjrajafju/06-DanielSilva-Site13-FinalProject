@@ -9,7 +9,6 @@ $languages = get_active_languages();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $is_active = isset($_POST['is_active']) ? 1 : 0;
 
-    // Handle Image
     $image = handle_image_upload('image', $news_data['image'] ?? '');
 
     $data = [
@@ -28,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         set_alert("Notícia criada com sucesso!");
     }
 
-    // Handle Translations
     foreach ($languages as $lang) {
         $lang_code = $lang['code'];
         $title = $_POST['trans'][$lang_code]['title'];

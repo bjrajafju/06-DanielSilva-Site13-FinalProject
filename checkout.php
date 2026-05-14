@@ -24,7 +24,6 @@ if (!$user_shipping && $user_billing) {
     $user_shipping = $user_billing;
 }
 
-// Pre-fill fields logic
 $billing_data = [
     'first_name' => $user_billing['first_name'] ?? $_SESSION['user_first_name'] ?? '',
     'last_name' => $user_billing['last_name'] ?? $_SESSION['user_last_name'] ?? '',

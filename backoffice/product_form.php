@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $price = (float) $_POST['price'];
     $is_active = isset($_POST['is_active']) ? 1 : 0;
 
-    // Handle Image
     $image = handle_image_upload('image', $product['image'] ?? '');
 
     $data = [
@@ -35,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         set_alert("Produto criado com sucesso!");
     }
 
-    // Handle Translations
     foreach ($languages as $lang) {
         $lang_code = $lang['code'];
         $title = $_POST['trans'][$lang_code]['title'];
@@ -54,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'additional_info' => $additional_info
         ];
 
-        // Check if translation exists
         $existing = db_get_one('product_translations', "product_id = $product_id AND lang_code = '$lang_code'");
         if ($existing) {
             db_update('product_translations', $trans_data, "id = {$existing['id']}");

@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['show_cart_merge_popup'] = true;
             }
 
-            // Redirect logic
             $redirect = $_GET['redirect'] ?? '';
             if (!empty($redirect)) {
                 header("Location: " . $redirect);

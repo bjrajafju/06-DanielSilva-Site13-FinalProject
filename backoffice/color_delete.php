@@ -4,7 +4,6 @@ include_once 'includes/helpers.php';
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
 if ($id) {
-    // Check for variants
     $variants = db_get_all('product_variants', "color_id = $id");
     if ($variants) {
         set_alert("Não é possível eliminar a cor porque está a ser utilizada em variantes de produtos.", "danger");

@@ -130,12 +130,10 @@ include 'layout/sidebar.php';
         const iconPreview = document.getElementById('iconPreview');
 
         iconInput.addEventListener('input', function() {
-            // Clear previous classes except fa-2x and text-primary
             iconPreview.className = 'fa-2x text-primary';
 
             const val = this.value.trim();
             if (val) {
-                // FontAwesome classes usually have multiple parts like 'fab fa-facebook'
                 val.split(' ').forEach(cls => {
                     if (cls) iconPreview.classList.add(cls);
                 });

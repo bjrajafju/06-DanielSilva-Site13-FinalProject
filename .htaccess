@@ -1,26 +1,16 @@
 Options -MultiViews
 RewriteEngine On
 
-# Detect the base automatically (if possible) or use relative paths.
-# If you are in a subfolder like /PI/folder/ and it's not working,
-# uncomment the RewriteBase below and set it to your subfolder path.
-# RewriteBase /PI/06-DanielSilva-Site13-FinalProject/
-# RewriteBase /
-
-# Protect sensitive files and directories
 RewriteRule ^includes/ - [F,L]
 RewriteRule ^sql/ - [F,L]
 RewriteRule ^backoffice/includes/ - [F,L]
 RewriteRule ^\.env$ - [F,L]
 RewriteRule ^config\.php$ - [F,L]
 
-# Redirect trailing slashes (except for directories)
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
 RewriteRule ^ %1 [L,R=301]
 
-# Pretty URLs
-# If the file exists, don't rewrite
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
@@ -35,13 +25,10 @@ RewriteRule ^contact$ contact.php [L,QSA]
 RewriteRule ^about$ about.php [L,QSA]
 RewriteRule ^news$ news.php [L,QSA]
 
-# Sitemap and Robots
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 RewriteRule ^robots\.txt$ robots.txt [L]
 
-# Detail pages with slugs
 RewriteRule ^product/([^/]+)$ detail.php?slug=$1 [L,QSA]
 RewriteRule ^news/([^/]+)$ news-detail.php?slug=$1 [L,QSA]
 
-# Handle common issues
 ErrorDocument 404 /PI/06-DanielSilva-Site13-FinalProject/index.php

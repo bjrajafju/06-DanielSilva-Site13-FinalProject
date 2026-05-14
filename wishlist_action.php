@@ -18,7 +18,6 @@ if ($product_id && $action) {
     }
 }
 
-// Redirect back to referring page or wishlist page
 $redirect = $_SERVER['HTTP_REFERER'] ?? 'wishlist.php';
 header("Location: $redirect");
 exit;

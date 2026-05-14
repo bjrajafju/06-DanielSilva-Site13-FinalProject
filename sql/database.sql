@@ -320,7 +320,7 @@ CREATE TABLE
     KEY `variant_id` (`variant_id`),
     CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`),
     CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`variant_id`) REFERENCES `product_variants` (`id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 35 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 36 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -359,7 +359,7 @@ CREATE TABLE
     PRIMARY KEY (`id`),
     KEY `user_id` (`user_id`),
     CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 10 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -860,7 +860,7 @@ CREATE TABLE
     PRIMARY KEY (`id`),
     KEY `order_id` (`order_id`),
     CONSTRAINT `order_addresses_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 21 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 23 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1097,6 +1097,34 @@ VALUES
     'Porto',
     '4000',
     'Portugal'
+  ),
+  (
+    21,
+    13,
+    'billing',
+    'Daniel',
+    'Silva',
+    '+351912985203',
+    '20 Praceta de Irene de Castro',
+    '8 hab 4',
+    'Porto',
+    'dv',
+    '4350-198',
+    'Portugal'
+  ),
+  (
+    22,
+    13,
+    'shipping',
+    'Daniel',
+    'Silva',
+    '+351912985203',
+    '20 Praceta de Irene de Castro',
+    '8 hab 4',
+    'Porto',
+    'dv',
+    '4350-198',
+    'Portugal'
   );
 
 /*!40000 ALTER TABLE `order_addresses` ENABLE KEYS */;
@@ -1124,7 +1152,7 @@ CREATE TABLE
     PRIMARY KEY (`id`),
     KEY `order_id` (`order_id`),
     CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 18 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 19 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1152,7 +1180,8 @@ VALUES
   (14, 11, 2, 10, 'Camisa Branca Elegante', 34.99, 3),
   (15, 12, 6, 14, 'Sunglasses', 14.99, 1),
   (16, 12, 4, 12, 'Leather Shoes', 79.99, 3),
-  (17, 12, 3, 11, 'Running Shoes', 59.99, 5);
+  (17, 12, 3, 11, 'Running Shoes', 59.99, 5),
+  (18, 13, 6, 14, 'Óculos de Sol', 14.99, 3);
 
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 
@@ -1188,7 +1217,7 @@ CREATE TABLE
     KEY `payment_method_id` (`payment_method_id`),
     CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
     CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_methods` (`id`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 14 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1289,7 +1318,7 @@ VALUES
     259.89,
     10.00,
     269.89,
-    'completed',
+    'paid',
     '2026-05-11 11:01:28'
   ),
   (
@@ -1301,6 +1330,16 @@ VALUES
     564.91,
     'pending',
     '2026-05-12 11:16:52'
+  ),
+  (
+    13,
+    NULL,
+    1,
+    44.97,
+    10.00,
+    54.97,
+    'pending',
+    '2026-05-13 08:09:35'
   );
 
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
@@ -1571,7 +1610,7 @@ VALUES
     5,
     'pt',
     'Relógio Clássico',
-    'relogio-classico',
+    'rel-gio-cl-ssico',
     'Relógio minimalista',
     'Descrição completa...',
     'Resistente à água'
@@ -1580,21 +1619,21 @@ VALUES
     23,
     6,
     'gb',
-    'Sunglasses',
-    'sunglasses',
-    'Stylish sunglasses',
+    'Elegant suit',
+    'elegant-suit',
+    'Elegant suit and tie',
     'Full description...',
-    'UV Protection'
+    'Elegant and high class'
   ),
   (
     24,
     6,
     'pt',
-    'Óculos de Sol',
-    'oculos-sol',
-    'Óculos elegantes',
+    'Fato elegante',
+    'fato-elegante',
+    'Fato e gravata elegantes',
     'Descrição completa...',
-    'Proteção UV'
+    'Elegante e alta classe'
   );
 
 /*!40000 ALTER TABLE `product_translations` ENABLE KEYS */;
@@ -1645,7 +1684,7 @@ VALUES
   (11, 3, 4, 1, 1, 5),
   (12, 4, 4, 1, 1, 7),
   (13, 5, 1, 3, 1, 6),
-  (14, 6, 2, 5, 1, 6);
+  (14, 6, 2, 5, 1, 3);
 
 /*!40000 ALTER TABLE `product_variants` ENABLE KEYS */;
 
@@ -1693,60 +1732,60 @@ VALUES
     'P001',
     1,
     29.99,
-    'img/product-1.jpg',
+    'img/product-3.jpg',
     1,
     '2026-05-02 16:52:58',
-    '2026-05-02 16:52:58'
+    '2026-05-14 07:24:22'
   ),
   (
     2,
     'P002',
     1,
     34.99,
-    'img/product-2.jpg',
+    'img/product-1.jpg',
     1,
     '2026-05-02 16:52:58',
-    '2026-05-02 16:52:58'
+    '2026-05-14 07:24:22'
   ),
   (
     3,
     'P003',
-    2,
+    6,
     59.99,
-    'img/product-3.jpg',
+    'img/img_6a0579b3533de8.52506234.jpg',
     1,
     '2026-05-02 16:52:58',
-    '2026-05-02 16:52:58'
+    '2026-05-14 08:28:51'
   ),
   (
     4,
     'P004',
-    2,
+    6,
     79.99,
-    'img/product-4.jpg',
+    'img/img_6a0579f3ed0d71.88006496.jpg',
     1,
     '2026-05-02 16:52:58',
-    '2026-05-02 16:52:58'
+    '2026-05-14 08:29:55'
   ),
   (
     5,
     'P005',
-    3,
+    4,
     19.99,
-    'img/product-5.jpg',
+    'img/img_6a05791b8dedd7.23447228.jpg',
     1,
     '2026-05-02 16:52:58',
-    '2026-05-02 16:52:58'
+    '2026-05-14 08:27:04'
   ),
   (
     6,
     'P006',
-    3,
+    1,
     14.99,
     'img/product-6.jpg',
     1,
     '2026-05-02 16:52:58',
-    '2026-05-12 11:44:06'
+    '2026-05-14 08:21:07'
   );
 
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
@@ -1848,7 +1887,7 @@ CREATE TABLE
     `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
     PRIMARY KEY (`id`),
     UNIQUE KEY `settings_key` (`settings_key`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 8 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1910,6 +1949,41 @@ VALUES
     'Dani Shopper',
     '2026-05-11 10:23:58',
     '2026-05-11 10:57:27'
+  ),
+  (
+    8,
+    'meta_title',
+    'DaniShopper - A Tua Loja Online',
+    '2026-05-13 07:41:29',
+    '2026-05-13 07:41:29'
+  ),
+  (
+    9,
+    'meta_description',
+    'Encontra os melhores produtos aos melhores preços na DaniShopper.',
+    '2026-05-13 07:41:29',
+    '2026-05-13 07:41:29'
+  ),
+  (
+    10,
+    'meta_keywords',
+    'ecommerce, shop, online, fashion',
+    '2026-05-13 07:41:29',
+    '2026-05-13 07:41:29'
+  ),
+  (
+    11,
+    'og_image',
+    'img/og-default.jpg',
+    '2026-05-13 07:41:29',
+    '2026-05-13 07:41:29'
+  ),
+  (
+    12,
+    'favicon',
+    'img/favicon.ico',
+    '2026-05-13 07:41:29',
+    '2026-05-13 07:41:29'
   );
 
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
@@ -1951,6 +2025,89 @@ VALUES
   (5, 'XL');
 
 /*!40000 ALTER TABLE `sizes` ENABLE KEYS */;
+
+UNLOCK TABLES;
+
+--
+-- Table structure for table `social_links`
+--
+DROP TABLE IF EXISTS `social_links`;
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+
+/*!50503 SET character_set_client = utf8mb4 */;
+
+CREATE TABLE
+  `social_links` (
+    `id` int (11) NOT NULL AUTO_INCREMENT,
+    `platform` varchar(50) NOT NULL,
+    `url` varchar(255) NOT NULL,
+    `icon` varchar(50) NOT NULL,
+    `is_active` tinyint (1) DEFAULT 1,
+    `sort_order` int (11) DEFAULT 0,
+    `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+    PRIMARY KEY (`id`)
+  ) ENGINE = InnoDB AUTO_INCREMENT = 6 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `social_links`
+--
+LOCK TABLES `social_links` WRITE;
+
+/*!40000 ALTER TABLE `social_links` DISABLE KEYS */;
+
+INSERT INTO
+  `social_links`
+VALUES
+  (
+    1,
+    'Facebook',
+    'https://facebook.com',
+    'fab fa-facebook-f',
+    1,
+    1,
+    '2026-05-14 07:40:51'
+  ),
+  (
+    2,
+    'Twitter',
+    'https://twitter.com',
+    'fab fa-twitter',
+    1,
+    3,
+    '2026-05-14 07:40:51'
+  ),
+  (
+    3,
+    'LinkedIn',
+    'https://linkedin.com',
+    'fab fa-linkedin-in',
+    0,
+    2,
+    '2026-05-14 07:40:51'
+  ),
+  (
+    4,
+    'Instagram',
+    'https://instagram.com',
+    'fab fa-instagram',
+    1,
+    4,
+    '2026-05-14 07:40:51'
+  ),
+  (
+    5,
+    'YouTube',
+    'https://youtube.com',
+    'fab fa-youtube',
+    1,
+    5,
+    '2026-05-14 07:40:51'
+  );
+
+/*!40000 ALTER TABLE `social_links` ENABLE KEYS */;
 
 UNLOCK TABLES;
 
@@ -4515,7 +4672,7 @@ CREATE TABLE
     `is_admin` tinyint (1) DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `email` (`email`)
-  ) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  ) ENGINE = InnoDB AUTO_INCREMENT = 6 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -4567,6 +4724,16 @@ VALUES
     '$2y$10$EIksbewMF/.5/QFNIHKet.tjUD2fiX2SMgNmL4DTJi0osRONUxxaG',
     '932329389',
     '2026-05-04 10:28:13',
+    1
+  ),
+  (
+    5,
+    'Admin',
+    'User',
+    'admin@gmail.com',
+    '$2y$10$jOybPtAkqVLyV0c/T15yy.8CaOSo63ghgjngmuIWTFsWu0R2O0TF6',
+    '123456789',
+    '2026-05-14 08:58:32',
     1
   );
 
@@ -4632,4 +4799,4 @@ UNLOCK TABLES;
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-13  8:35:37
+-- Dump completed on 2026-05-14  9:33:56

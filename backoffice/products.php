@@ -1,16 +1,13 @@
 <?php
 include_once 'includes/helpers.php';
 
-// Pagination
 $limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
-// Search
 $search = isset($_GET['search']) ? addslashes($_GET['search']) : '';
 $where = "1";
 if ($search) {
-    // Join with translations to search by title
     $products = db_select(
         "DISTINCT p.id",
         "products p",

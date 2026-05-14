@@ -14,7 +14,6 @@ if ($search) {
 $total_items = db_count('traduz', $where);
 $total_pages = ceil($total_items / $limit);
 
-// Group by code to show translations together
 $codes = db_select("DISTINCT code", "traduz", "", $where, "code ASC", "$offset, $limit");
 
 include 'layout/header.php';

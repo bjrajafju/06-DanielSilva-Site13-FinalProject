@@ -21,7 +21,6 @@ if (!$news) {
         exit;
     }
 }
-// SEO Variables
 $meta_title = $news['title'];
 $meta_description = $news['short_description'];
 $meta_image = $SETTINGS['url_site'] . '/' . $news['image'];

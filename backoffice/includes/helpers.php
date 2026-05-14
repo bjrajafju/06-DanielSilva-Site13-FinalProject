@@ -86,7 +86,7 @@ function get_dashboard_stats()
     // Pending Orders
     $pending = db_count('orders', "status = 'pending'");
 
-    // AOV (Average Order Value)
+    // Media dos orders 
     $aov = my_query("SELECT AVG(total) as aov FROM orders")[0]['aov'] ?? 0;
 
     // Total Users
@@ -129,7 +129,7 @@ function get_sales_trends($days = 15)
 
 function get_category_distribution()
 {
-    // Sum total revenue per category based on order items
+    // Somar total revenue per category based on order items
     $sql = "SELECT ct.name as category, SUM(oi.price * oi.quantity) as revenue
             FROM order_items oi
             JOIN product_variants pv ON pv.id = oi.variant_id
@@ -154,5 +154,3 @@ function get_top_selling_products_dashboard($limit = 5)
             LIMIT $limit";
     return my_query($sql);
 }
-
-

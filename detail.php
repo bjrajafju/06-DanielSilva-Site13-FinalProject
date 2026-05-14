@@ -30,7 +30,6 @@ $reviews = get_product_reviews($product['product_id']);
 $review_count = get_product_review_count($product['product_id']);
 $average_rating = get_product_average_rating($product['product_id']);
 
-// SEO Variables
 $meta_title = $product['title'];
 $meta_description = $product['short_description'];
 $meta_image = $SETTINGS['url_site'] . '/' . $product['image'];
@@ -282,7 +281,6 @@ $meta_image = $SETTINGS['url_site'] . '/' . $product['image'];
                                         const rating = this.getAttribute('data-rating');
                                         document.getElementById('rating-input').value = rating;
 
-                                        // Update visual stars
                                         document.querySelectorAll('.star-rating i').forEach(s => {
                                             if (s.getAttribute('data-rating') <= rating) {
                                                 s.classList.remove('far');
@@ -330,7 +328,6 @@ $meta_image = $SETTINGS['url_site'] . '/' . $product['image'];
                                         const selectedSize = document.querySelector('input[name="size"]:checked')?.value;
                                         const selectedColor = document.querySelector('input[name="color"]:checked')?.value;
 
-                                        // Update Colors based on Size
                                         if (selectedSize) {
                                             document.querySelectorAll('input[name="color"]').forEach(colorInput => {
                                                 const hasStock = variants.some(v => v.size_id == selectedSize && v.color_id == colorInput.value && v.stock > 0);
@@ -344,7 +341,6 @@ $meta_image = $SETTINGS['url_site'] . '/' . $product['image'];
                                             });
                                         }
 
-                                        // Update Sizes based on Color
                                         if (selectedColor) {
                                             document.querySelectorAll('input[name="size"]').forEach(sizeInput => {
                                                 const hasStock = variants.some(v => v.color_id == selectedColor && v.size_id == sizeInput.value && v.stock > 0);
@@ -358,7 +354,6 @@ $meta_image = $SETTINGS['url_site'] . '/' . $product['image'];
                                             });
                                         }
 
-                                        // Final validation for the Add to Cart button
                                         if (selectedSize && selectedColor) {
                                             const variant = variants.find(v => v.size_id == selectedSize && v.color_id == selectedColor);
                                             const isValid = variant && variant.stock > 0;

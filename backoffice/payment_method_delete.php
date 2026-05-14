@@ -4,7 +4,6 @@ include_once 'includes/helpers.php';
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
 if ($id) {
-    // Check if used in orders
     $orders = db_get_all('orders', "payment_method_id = $id");
     if ($orders) {
         set_alert("Não é possível eliminar o método de pagamento porque está a ser utilizado em encomendas.", "danger");

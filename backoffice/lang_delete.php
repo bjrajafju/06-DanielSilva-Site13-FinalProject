@@ -8,7 +8,6 @@ if ($id) {
     if ($lang) {
         $code = $lang['code'];
 
-        // Check if used in translations
         $count = db_count('product_translations', "lang_code = '$code'");
         if ($count > 0) {
             set_alert("Não é possível eliminar o idioma porque possui traduções associadas.", "danger");

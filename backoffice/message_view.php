@@ -6,7 +6,6 @@ $msg = db_get_one('messages', "id = $id");
 
 if (!$msg) redirect("messages.php");
 
-// Mark as read
 if (!$msg['is_read']) {
     db_update('messages', ['is_read' => 1], "id = $id");
 }

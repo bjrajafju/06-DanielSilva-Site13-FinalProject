@@ -6,7 +6,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Custom Scripts -->
 <script>
-    // Confirmation for delete actions
     document.querySelectorAll('.btn-delete').forEach(btn => {
         btn.addEventListener('click', (e) => {
             if (!confirm('Tem a certeza que deseja eliminar este item?')) {

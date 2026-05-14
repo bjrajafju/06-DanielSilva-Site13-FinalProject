@@ -9,7 +9,6 @@ if ($cart_item_id > 0 && $quantity >= 1) {
     if ($cart) {
         $cart_id = $cart['id'];
 
-        // Obter preço e stock do item
         $item_data = db_select(
             "p.price, pv.stock",
             "cart_items ci",
@@ -25,7 +24,6 @@ if ($cart_item_id > 0 && $quantity >= 1) {
             exit;
         }
 
-        // Atualizar quantidade garantindo que o item pertence ao carrinho do utilizador
         my_query("UPDATE cart_items SET quantity = $quantity WHERE id = $cart_item_id AND cart_id = $cart_id");
 
         $item_total = $price * $quantity;

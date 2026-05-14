@@ -8,7 +8,6 @@ if ($cart_item_id > 0) {
     if ($cart) {
         $cart_id = $cart['id'];
 
-        // Remover o item garantindo que pertence ao carrinho do utilizador
         my_query("DELETE FROM cart_items WHERE id = $cart_item_id AND cart_id = $cart_id");
 
         $totals = get_cart_totals($cart_id);

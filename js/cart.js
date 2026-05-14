@@ -27,7 +27,6 @@ $(document).ready(function () {
                     if (response.error === "out_of_stock") {
                         alert(TXT_OUT_OF_STOCK + response.max_stock);
                         $(this).val(response.max_stock);
-                        // Trigger recalculation with max stock
                         $(this).trigger("input");
                     } else {
                         alert("Erro ao atualizar quantidade.");
@@ -61,7 +60,6 @@ $(document).ready(function () {
                         $(".cart-subtotal").text(response.cart_subtotal);
                         $(".cart-total").text(response.cart_total);
 
-                        // Se o carrinho ficar vazio, recarrega para mostrar a mensagem
                         if ($("tbody tr").length === 0) {
                             location.reload();
                         }

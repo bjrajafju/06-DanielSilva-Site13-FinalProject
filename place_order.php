@@ -58,7 +58,6 @@ if (empty($billing['first_name']) || empty($billing['address_line1']) || !$billi
     die("Error: Missing required fields.");
 }
 
-// Stock validation
 foreach ($cart_items as $item) {
     if (!variant_has_stock($item['variant_id'], $item['quantity'])) {
         header("Location: cart.php?error=out_of_stock&variant_id=" . $item['variant_id']);
@@ -111,7 +110,6 @@ foreach ($cart_items as $item) {
         'quantity' => $item['quantity']
     ]);
 
-    // Reduce stock
     reduce_variant_stock($item['variant_id'], $item['quantity']);
 }
 
@@ -132,7 +130,6 @@ db_insert("order_addresses", [
     'country_name' => $billing_country_name
 ]);
 
-// aqui faço snapshot para se o user mudar dados eles ficam iguais na address
 db_insert("order_addresses", [
     'order_id' => $order_id,
     'type' => 'shipping',

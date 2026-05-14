@@ -14,14 +14,12 @@ if ($id) {
         }
     }
 
-    // Check for dependencies (orders, addresses, carts)
     $orders = db_get_all('orders', "user_id = $id");
     $addresses = db_get_all('addresses', "user_id = $id");
 
     if ($orders || $addresses) {
         set_alert("Não é possível eliminar o utilizador porque possui encomendas ou moradas associadas.", "danger");
     } else {
-        // Delete carts first
         $carts = db_get_all('carts', "user_id = $id");
         foreach ($carts as $c) {
             db_delete('cart_items', "cart_id = {$c['id']}");

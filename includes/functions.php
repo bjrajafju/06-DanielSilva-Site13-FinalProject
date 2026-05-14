@@ -651,7 +651,6 @@ function merge_carts($session_cart_id, $user_cart_id)
         $variant = db_get_one("product_variants", "id = $variant_id");
         $stock = $variant ? (int) $variant['stock'] : 0;
 
-        // Verificar se já existe no carrinho do user
         $existing = db_get_one("cart_items", "cart_id = $user_cart_id AND variant_id = $variant_id");
 
         if ($existing) {
@@ -669,7 +668,6 @@ function merge_carts($session_cart_id, $user_cart_id)
         }
     }
 
-    // Apagar o carrinho antigo da sessão
     return delete_cart($session_cart_id);
 }
 
@@ -694,7 +692,6 @@ function get_cart_totals($cart_id)
 {
     $cart_id = (int) $cart_id;
 
-    // Subtotal: sum of (price * quantity)
     $sql = "
         SELECT SUM(p.price * ci.quantity) as subtotal
         FROM cart_items ci
@@ -1144,7 +1141,7 @@ function get_user_stats($user_id)
         foreach ($orders as $order) {
             $total_spent += $order['total'];
         }
-        $last_order_date = $orders[0]['created_at']; // Since orders are DESC
+        $last_order_date = $orders[0]['created_at'];
     }
 
     return [
@@ -1173,7 +1170,7 @@ function change_user_password($user_id, $current_password, $new_password)
     return db_update("users", ['password' => $new_hash], "id = $user_id");
 }
 
-// Settings Helpers
+// cenas mais de logica em vez de tabelas
 function get_setting($key, $default = null)
 {
     $key = addslashes($key);
@@ -1193,7 +1190,7 @@ function set_setting($key, $value)
     }
 }
 
-// Email System
+// cena do email
 function send_email($to, $subject, $body, $isHtml = true)
 {
     require_once 'vendor/PHPMailer/PHPMailer.php';
@@ -1203,21 +1200,18 @@ function send_email($to, $subject, $body, $isHtml = true)
     $mail = new PHPMailer\PHPMailer\PHPMailer(true);
 
     try {
-        // Server settings
         $mail->isSMTP();
         $mail->Host = get_setting('smtp_host');
         $mail->SMTPAuth = true;
         $mail->Username = get_setting('smtp_user');
         $mail->Password = get_setting('smtp_pass');
-        $mail->SMTPSecure = get_setting('smtp_encryption'); // tls or ssl
+        $mail->SMTPSecure = get_setting('smtp_encryption');
         $mail->Port = get_setting('smtp_port');
         $mail->CharSet = 'UTF-8';
 
-        // Recipients
         $mail->setFrom(get_setting('smtp_from_email'), get_setting('smtp_from_name'));
         $mail->addAddress($to);
 
-        // Content
         $mail->isHTML($isHtml);
         $mail->Subject = $subject;
         $mail->Body = $body;
@@ -1230,17 +1224,15 @@ function send_email($to, $subject, $body, $isHtml = true)
     }
 }
 
-// Password Reset Logic
+// reset da password
 function create_password_reset($email)
 {
     $email = addslashes($email);
     $user = db_get_one("users", "email = '$email'");
 
-    // Generic success response logic: we always say "check your email" in the UI
     if (!$user)
         return true;
 
-    // Rate Limiting: Max 3 requests per hour per email/IP
     $ip = $_SERVER['REMOTE_ADDR'];
     $oneHourAgo = date('Y-m-d H:i:s', strtotime('-1 hour'));
 
@@ -1251,10 +1243,8 @@ function create_password_reset($email)
         return "rate_limited";
     }
 
-    // Invalidate previous active tokens for this user
     db_delete("password_resets", "user_id = {$user['id']}");
 
-    // Generate secure token
     $token = bin2hex(random_bytes(32));
     $token_hash = hash('sha256', $token);
     $expires_at = date('Y-m-d H:i:s', strtotime('+1 hour'));
@@ -1266,7 +1256,6 @@ function create_password_reset($email)
         'ip_address' => $ip
     ]);
 
-    // Send Email
     global $SETTINGS;
     $reset_link = $SETTINGS['url_site'] . "/reset-password.php?token=" . $token;
 
@@ -1308,7 +1297,6 @@ function reset_user_password($user_id, $new_password, $token)
     $hashed = password_hash($new_password, PASSWORD_DEFAULT);
 
     if (db_update("users", ['password' => $hashed], "id = $user_id")) {
-        // Delete token after successful reset
         $token_hash = hash('sha256', $token);
         db_delete("password_resets", "token_hash = '$token_hash'");
         return true;
@@ -1316,14 +1304,13 @@ function reset_user_password($user_id, $new_password, $token)
     return false;
 }
 
-// SEO & URL HELPERS
+// cenas do SEO e assim
 function get_url($path = '')
 {
     global $SETTINGS;
     $url_parts = parse_url($SETTINGS['url_site']);
     $base = rtrim($url_parts['path'] ?? '', '/');
 
-    // Simplistic pretty URL mapping
     if ($path == 'index.php' || $path == '')
         return $base . '/';
     if ($path == 'shop.php')
@@ -1347,7 +1334,6 @@ function get_url($path = '')
     if ($path == 'news.php')
         return $base . '/news';
 
-    // Detail pages with slugs
     if (preg_match('/detail\.php\?slug=(.+)/', $path, $matches)) {
         return $base . '/product/' . $matches[1];
     }

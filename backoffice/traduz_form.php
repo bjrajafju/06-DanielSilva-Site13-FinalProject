@@ -13,7 +13,6 @@ $languages = get_active_languages();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_code = $_POST['code'];
 
-    // If changing code, delete old ones
     if ($code && $code !== $new_code) {
         db_delete('traduz', "code = '" . addslashes($code) . "'");
     }

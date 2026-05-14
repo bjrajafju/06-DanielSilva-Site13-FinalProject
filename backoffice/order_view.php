@@ -10,7 +10,6 @@ if (!$order)
 $items = db_get_all('order_items', "order_id = $id");
 $addresses = db_get_all('order_addresses', "order_id = $id");
 
-// Handle Status Update
 if (isset($_POST['update_status'])) {
     $new_status = $_POST['status'];
     db_update('orders', ['status' => $new_status], "id = $id");

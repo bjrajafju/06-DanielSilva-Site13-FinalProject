@@ -15,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($res === "rate_limited") {
             $error_msg = t('forgot_password.rate_limited');
         } else {
-            // Always show success to prevent account enumeration
             $success_msg = t('forgot_password.success');
         }
     }

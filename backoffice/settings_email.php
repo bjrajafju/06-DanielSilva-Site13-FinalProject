@@ -4,7 +4,6 @@ include_once 'includes/helpers.php';
 $success_msg = "";
 $error_msg = "";
 
-// Handle Settings Update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     set_setting('smtp_host', $_POST['smtp_host']);
     set_setting('smtp_port', $_POST['smtp_port']);
@@ -16,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     $success_msg = "Definições guardadas com sucesso!";
 }
 
-// Handle Test Email
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_test'])) {
     $to = $_POST['test_email'];
     $subject = "E-mail de Teste de " . get_setting('smtp_from_name');

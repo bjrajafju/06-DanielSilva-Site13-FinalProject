@@ -1,14 +1,12 @@
 <?php
 include_once 'includes/helpers.php';
 
-// Data Aggregation
 $stats = get_dashboard_stats();
 $low_stock = get_low_stock_details(5);
 $sales_trends = get_sales_trends(15);
 $category_dist = get_category_distribution();
 $top_products = get_top_selling_products_dashboard(5);
 
-// Prepare Chart Data
 $chart_labels = [];
 $chart_data = [];
 foreach ($sales_trends as $day) {
@@ -410,7 +408,6 @@ include 'layout/sidebar.php';
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         <?php if (!empty($chart_data)): ?>
-            // Sales Trends Chart
             const ctxSales = document.getElementById('salesTrendsChart').getContext('2d');
             new Chart(ctxSales, {
                 type: 'line',
@@ -447,7 +444,6 @@ include 'layout/sidebar.php';
         <?php endif; ?>
 
         <?php if (!empty($cat_data)): ?>
-            // Category Distribution Chart
             const ctxCat = document.getElementById('categoryDistChart').getContext('2d');
             new Chart(ctxCat, {
                 type: 'doughnut',

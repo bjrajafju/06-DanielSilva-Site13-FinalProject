@@ -3,7 +3,6 @@ include_once 'config.php';
 
 $categories = get_categories();
 
-// SEO Setup
 $meta_title = isset($meta_title) ? $meta_title . " | DaniShopper" : get_setting('meta_title', 'DaniShopper');
 $meta_description = $meta_description ?? get_setting('meta_description', '');
 $meta_keywords = $meta_keywords ?? get_setting('meta_keywords', '');
@@ -262,9 +261,6 @@ $favicon = get_setting('favicon', 'img/favicon.ico');
         </div>
 
         <script>
-            // Garantir que o jQuery está carregado (o layout já inclui no footer, mas o header corre antes)
-            // Por isso usamos um intervalo ou colocamos no final do body se possível.
-            // Neste projeto, o footer é incluído DEPOIS do header, então o script deve correr no final.
             document.addEventListener("DOMContentLoaded", function() {
                 if (typeof jQuery !== 'undefined') {
                     $('#cartMergeModal').modal('show');

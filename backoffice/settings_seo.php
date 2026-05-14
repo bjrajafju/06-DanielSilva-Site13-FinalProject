@@ -4,7 +4,6 @@ include_once 'includes/helpers.php';
 $success_msg = "";
 $error_msg = "";
 
-// Handle Settings Update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     set_setting('meta_title', $_POST['meta_title']);
     set_setting('meta_description', $_POST['meta_description']);

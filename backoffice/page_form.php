@@ -24,11 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $page_id = $id;
         set_alert("Página atualizada com sucesso!");
     } else {
-        // We only allow editing existing pages for now as per requirements (About Us)
         redirect("pages.php");
     }
 
-    // Handle Translations
     foreach ($languages as $lang) {
         $lang_code = $lang['code'];
         $title = $_POST['trans'][$lang_code]['title'];

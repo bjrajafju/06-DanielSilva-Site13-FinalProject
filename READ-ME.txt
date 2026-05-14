@@ -1,11 +1,7 @@
-  =>  Template Name    : EShopper - Bootstrap Shop Template
+Login de Admin:
+email: admin@gmail.com
+password: superuser
 
-  =>  Template Link    : https://htmlcodex.com/bootstrap-shop-template
-
-  =>  Template License : https://htmlcodex.com/license (or read the LICENSE.txt file)
-
-  =>  Template Author  : HTML Codex
-
-  =>  Author Website   : https://htmlcodex.com
-
-  =>  About HTML Codex : HTML Codex is one of the top creators and publishers of Free HTML templates, HTML landing pages, HTML email templates and HTML snippets in the world. Read more at ( https://htmlcodex.com/about-us )
+O SQL de importar a base de dados (MySQL) está no ficheiro sql/database.sql
+Por causa de uns problemas com o xampp, eu corro o projeto abrindo o cmd na base e escrevendo o comando:
+php -S localhost:8000 router.php

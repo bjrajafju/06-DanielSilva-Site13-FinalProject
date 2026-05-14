@@ -7,7 +7,6 @@ $translations = $id ? get_entity_translations('category_translations', 'category
 $languages = get_active_languages();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle Image
     $image = handle_image_upload('image', $category['image'] ?? '');
 
     $data = ['image' => $image];
@@ -21,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         set_alert("Categoria criada com sucesso!");
     }
 
-    // Handle Translations
     foreach ($languages as $lang) {
         $lang_code = $lang['code'];
         $name = $_POST['trans'][$lang_code]['name'];

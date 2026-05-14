@@ -15,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = t('register.error.invalid_email');
     } else {
-        // Verificar se email já existe
         $existing = db_get_one("users", "email = '" . addslashes($email) . "'");
 
         if ($existing) {
@@ -38,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_first_name'] = $first_name;
                 $_SESSION['user_email'] = $email;
 
-                // Verificar se existe carrinho de sessão para sugerir merge
                 $session_cart = get_session_cart();
                 if ($session_cart) {
                     $_SESSION['show_cart_merge_popup'] = true;

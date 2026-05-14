@@ -25,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($id) {
-        // If removing admin status, check if this is the last admin
         if ($user['is_admin'] && !$is_admin) {
             $admin_count = db_count('users', "is_admin = 1");
             if ($admin_count <= 1) {

@@ -21,10 +21,8 @@ if ($action === 'merge') {
     $user_cart = get_user_cart($user_id);
 
     if (!$user_cart) {
-        // User não tem carrinho, basta associar o da sessão ao user
         attach_cart_to_user($session_cart_id, $user_id);
     } else {
-        // User já tem carrinho, fazer merge dos itens
         merge_carts($session_cart_id, $user_cart['id']);
     }
 } elseif ($action === 'discard') {

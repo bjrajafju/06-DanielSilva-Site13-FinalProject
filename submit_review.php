@@ -9,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $slug = $_POST['slug'] ?? '';
 
-    // If logged in, use session data
     if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id'];
         $name = $_SESSION['user_first_name'] . ' ' . $_SESSION['user_last_name'];

@@ -1360,3 +1360,9 @@ function get_url($path = '')
 
     return $base . '/' . ltrim($path, '/');
 }
+
+function get_social_links($only_active = true)
+{
+    $where = $only_active ? "is_active = 1" : "1";
+    return db_get_all('social_links', $where, 'sort_order ASC, platform ASC');
+}

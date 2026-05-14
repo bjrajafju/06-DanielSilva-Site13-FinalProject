@@ -49,13 +49,6 @@ $favicon = get_setting('favicon', 'img/favicon.ico');
     <div class="container-fluid">
         <div class="row bg-secondary py-2 px-xl-5">
             <div class="col-lg-6 d-none d-lg-block">
-                <div class="d-inline-flex align-items-center">
-                    <a class="text-dark" href=""><?php echo t('header.topbar.faqs'); ?></a>
-                    <span class="text-muted px-2">|</span>
-                    <a class="text-dark" href=""><?php echo t('header.topbar.help'); ?></a>
-                    <span class="text-muted px-2">|</span>
-                    <a class="text-dark" href=""><?php echo t('header.topbar.support'); ?></a>
-                </div>
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
@@ -74,11 +67,15 @@ $favicon = get_setting('favicon', 'img/favicon.ico');
                         </li>
                     </ul>
 
-                    <a class="text-dark px-2" href=""><i class="fab fa-facebook-f"></i></a>
-                    <a class="text-dark px-2" href=""><i class="fab fa-twitter"></i></a>
-                    <a class="text-dark px-2" href=""><i class="fab fa-linkedin-in"></i></a>
-                    <a class="text-dark px-2" href=""><i class="fab fa-instagram"></i></a>
-                    <a class="text-dark pl-2" href=""><i class="fab fa-youtube"></i></a>
+                    <?php
+                    $socials = get_social_links();
+                    foreach ($socials as $s):
+                    ?>
+                        <a class="text-dark px-2" href="<?= htmlspecialchars($s['url']) ?>" target="_blank"
+                            rel="noopener noreferrer">
+                            <i class="<?= htmlspecialchars($s['icon']) ?>"></i>
+                        </a>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -153,7 +150,7 @@ $favicon = get_setting('favicon', 'img/favicon.ico');
 
                         <?php
                         foreach ($categories as $cat):
-                            ?>
+                        ?>
 
                             <a href="<?= get_url('shop.php?categories[]=' . $cat['id']) ?>" class="nav-item nav-link">
                                 <?= $cat['name'] ?>
@@ -268,7 +265,7 @@ $favicon = get_setting('favicon', 'img/favicon.ico');
             // Garantir que o jQuery está carregado (o layout já inclui no footer, mas o header corre antes)
             // Por isso usamos um intervalo ou colocamos no final do body se possível.
             // Neste projeto, o footer é incluído DEPOIS do header, então o script deve correr no final.
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function() {
                 if (typeof jQuery !== 'undefined') {
                     $('#cartMergeModal').modal('show');
 
@@ -280,7 +277,7 @@ $favicon = get_setting('favicon', 'img/favicon.ico');
                                 action: action
                             },
                             dataType: 'json',
-                            success: function (response) {
+                            success: function(response) {
                                 if (response.success) {
                                     $('#cartMergeModal').modal('hide');
                                     location.reload();
@@ -289,11 +286,11 @@ $favicon = get_setting('favicon', 'img/favicon.ico');
                         });
                     }
 
-                    $('#btnMergeCart').on('click', function () {
+                    $('#btnMergeCart').on('click', function() {
                         handleMerge('merge');
                     });
 
-                    $('#btnDiscardCart').on('click', function () {
+                    $('#btnDiscardCart').on('click', function() {
                         handleMerge('discard');
                     });
                 }

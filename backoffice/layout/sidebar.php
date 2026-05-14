@@ -52,6 +52,10 @@
         <li class="<?= basename($_SERVER['PHP_SELF']) == 'reviews.php' ? 'active' : '' ?>">
             <a href="reviews.php"><i class="fas fa-star"></i> Avaliações</a>
         </li>
+        <li
+            class="<?= (basename($_SERVER['PHP_SELF']) == 'social_links.php' || basename($_SERVER['PHP_SELF']) == 'social_link_form.php') ? 'active' : '' ?>">
+            <a href="social_links.php"><i class="fas fa-share-alt"></i> Redes Sociais</a>
+        </li>
 
         <div class="sidebar-heading">Sistema</div>
         <li class="<?= basename($_SERVER['PHP_SELF']) == 'messages.php' ? 'active' : '' ?>">
